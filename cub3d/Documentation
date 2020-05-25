@@ -1,0 +1,23 @@
+gcc cub3d.c get_next_line.c get_next_line_utils.c get_color.c file_handling.c map_checking.c print_screen.c libft1.c libft2.c -lmlx -lXext -lX11 -lpub -lm
+
+
+Blue: 255 +(1<<16)+(1<<8);
+Red: 1 +(255<<16)+(1<<8);
+Green: 1 +(1<<16)+(255<<8);
+
+Pixel display from upper left corner to lower right corner
+
+a = FOV / data_t->res_w * i;
+b = FOV - (30 - a);
+champ de vision divise par largeur ecran multiplie par colonne de pixel de l ecran traitee.
+champ de vision moins la moitie moins a
+on obtient l angle exact traite et on peut lui donner ses coordonnes pour les calculs suivants qui changent en fonction de la direction du vecteur
+
+dist += PlayerPtX + (PlayerPtY-(PlayerPtY/64) * (64) + 64))/tan(ALPHA)
+dist += data_t->position_x + (data_t->position_y-(data_t->position_y/BLOC_SIZE) * (BLOC_SIZE) + BLOC_SIZE))/tan(b)
+
+updown/leftright
+
+10  11
+
+00  01
