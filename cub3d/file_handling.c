@@ -80,6 +80,8 @@ void	fill_map(char *line, data_t *data_t)
 	char	*temp;
 
 	k = ft_strlen(line);
+	if (k == 1 && line[0] == '\n')
+		return;
 	if (k > data_t->line)
 	{
 		if (data_t->column > 0)

@@ -18,11 +18,11 @@
 # define FOV 60.0
 
 # define KEYPRESS 2
-// # define KEYRELEASE 3
+# define KEYRELEASE 3
 # define KEYPRESSMASK 1
-// # define KEYRELEASEMASK 10
-# define KEY_S				1
-# define KEY_Z				6
+# define KEYRELEASEMASK 10
+# define KEY_S 122
+# define KEY_Z 115
 
 // #define XK_Left                          0xff51  /* Move left, left arrow */
 // #define XK_Up                            0xff52  /* Move up, up arrow */
