@@ -1,5 +1,12 @@
-gcc cub3d.c get_next_line.c get_next_line_utils.c get_color.c file_handling.c map_checking.c print_screen.c libft1.c libft2.c -lmlx -lXext -lX11 -lpub -lm
+gcc cub3d.c get_next_line.c get_next_line_utils.c get_color.c file_handling.c map_checking.c print_screen.c print_minimap.c libft1.c libft2.c -lmlx -lXext -lX11 -lpub -lm
 
+http://zupi.free.fr/PTuto/index.php?ch=ptuto&p=ray#50
+http://forums.mediabox.fr/wiki/tutoriaux/flashplatform/affichage/3d/raycasting/theorie/04-detection_des_murs
+https://www.manpagez.com/man/3/math/
+https://permadi.com/1996/05/ray-casting-tutorial-7/
+https://achedeuzot.me/2014/12/20/installer-la-minilibx/
+https://www.youtube.com/watch?v=gYRrGTC7GtA
+https://code.woboq.org/qt5/include/X11/keysymdef.h.html
 
 Blue: 255 +(1<<16)+(1<<8);
 Red: 1 +(255<<16)+(1<<8);

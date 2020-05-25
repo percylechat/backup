@@ -35,6 +35,33 @@ int	check_for_obstacle(int x, int y, data_t *data_t)
 		return (0);
 }
 
+void ft_move_updown(data_t *data_t, int m)
+{
+	if (m == 0)
+	{
+		data_t->map[(data_t->position_y + 1) * (data_t->line + 1) + data_t->position_x + 1] = data_t->map[data_t->position_y * (data_t->line + 1) + data_t->position_x + 1];
+		data_t->map[data_t->position_y * (data_t->line + 1) + data_t->position_x + 1] = '0';
+	}
+	else
+	{
+		data_t->map[(data_t->position_y - 1) * (data_t->line + 1) + data_t->position_x + 1] = data_t->map[data_t->position_y * (data_t->line + 1) + data_t->position_x + 1];
+		data_t->map[data_t->position_y * (data_t->line + 1) + data_t->position_x + 1] = '0';
+	}
+}
+
+void ft_keyboard_press(int key, data_t *data_t)
+{
+	if (key == KEY_S)
+		ft_move_updown(data_t, 0);
+	else if (key == KEY_Z)
+		ft_move_updown(data_t, 1);
+	// mlx_destroy_image(data_t->mlx_prog, data_t->mlx_win);
+	// data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h);
+		printf("%s", data_t->map);
+	// mlx_clear_window(data_t->mlx_prog, data_t->mlx_win);
+	// print_minimap(data_t);
+}
+
 int		main(int argc, char **argv)
 {
 	data_t	data_t[256];
@@ -47,11 +74,13 @@ int		main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if ((data_t->mlx_win = mlx_new_window(data_t->mlx_prog, data_t->res_w, data_t->res_h, "Cub3D")) == NULL)
 		return (EXIT_FAILURE);
+	data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h);
+	printf("%s", data_t->map);
 	// new_screen(data_t);
 	print_minimap(data_t);
-	mlx_key_hook(data_t->mlx_win, ft_keyboard, data_t)
-	mlx_loop(data_t->mlx_prog))
-	print_minimap(data_t);
+	mlx_hook(data_t->mlx_win, KEYPRESS, KEYPRESSMASK, &ft_keyboard_press, data_t);
+	mlx_loop(data_t->mlx_prog);
+
 
 
 

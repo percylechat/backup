@@ -17,6 +17,18 @@
 # define CHARARCTER_SIZE 32
 # define FOV 60.0
 
+# define KEYPRESS 2
+// # define KEYRELEASE 3
+# define KEYPRESSMASK 1
+// # define KEYRELEASEMASK 10
+# define KEY_S				1
+# define KEY_Z				6
+
+// #define XK_Left                          0xff51  /* Move left, left arrow */
+// #define XK_Up                            0xff52  /* Move up, up arrow */
+// #define XK_Right                         0xff53  /* Move right, right arrow */
+// #define XK_Down                          0xff54  /* Move down, down arrow */
+
 typedef struct data_t data_t;
 struct data_t
 {
