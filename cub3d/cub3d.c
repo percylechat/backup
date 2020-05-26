@@ -42,11 +42,16 @@ void ft_move_updown(data_t *data_t, int m)
 	// printf("%c\n", data_t->map[]);
 	if (m == 0)
 	{
-		printf("%c\n", data_t->map[(data_t->position_y + 2) * data_t->line + data_t->position_x]);
-		printf("%c\n",data_t->map[(data_t->position_y + 1) * data_t->line + data_t->position_x]);
-		data_t->map[(data_t->position_y + 1) * data_t->line + data_t->position_x] = data_t->map[data_t->position_y * data_t->line + data_t->position_x];
-		data_t->map[data_t->position_y * data_t->line + data_t->position_x] = '0';
-		data_t->position_y++;
+		if (data_t->position_y + 1 < data_t->line)
+		{
+			// GO lEFT
+			// printf("%c\n", data_t->map[data_t->position_y * data_t->line + data_t->position_x]);
+			// printf("%c\n",data_t->map[data_t->position_y * data_t->line + data_t->position_x]);
+			// data_t->map[(data_t->position_y + 1) * data_t->line + data_t->position_x] = data_t->map[data_t->position_y * data_t->line + data_t->position_x];
+			// data_t->map[data_t->position_y * data_t->line + data_t->position_x] = '0';
+			
+			data_t->position_y++;
+		}
 	}
 	else
 	{
@@ -96,7 +101,7 @@ int		main(int argc, char **argv)
 	data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h);
 	printf("%s", data_t->map);
 	// new_screen(data_t);
-	print_minimap(data_t);
+	// print_minimap(data_t);
 	mlx_hook(data_t->mlx_win, KEYPRESS, KEYPRESSMASK, &ft_keyboard_press, data_t);
 	mlx_hook(data_t->mlx_win, KEYRELEASE, KEYRELEASEMASK, &ft_keyboard_release, data_t);
 	mlx_loop(data_t->mlx_prog);

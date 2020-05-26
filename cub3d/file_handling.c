@@ -29,9 +29,9 @@ void	fix_line(data_t *data_t, int k)
 	char	*tempbis;
 
 	i = 0;
-	if (!(temp = malloc(sizeof(char) * ((data_t->line - k) + 1))))
+	if (!(temp = malloc(sizeof(char) * ((data_t->column - k) + 1))))
 		return ;
-	while (i < data_t->line - k)
+	while (i < data_t->column - k)
 	{
 		temp[i] = ' ';
 		i++;
@@ -52,8 +52,8 @@ void	fix_lines_before(data_t *data_t, int k)
 
 	i = 0;
 	j = 0;
-	m = k - data_t->line;
-	if (!(temp = malloc(sizeof(char) * ((k + 1) * data_t->column))))
+	m = k - data_t->column;
+	if (!(temp = malloc(sizeof(char) * ((k + 1) * data_t->line))))
 		return ;
 	while (data_t->map[i])
 	{
@@ -64,7 +64,7 @@ void	fix_lines_before(data_t *data_t, int k)
 				m--;
 				temp[j++] = ' ';
 			}
-		m = k - data_t->line;
+		m = k - data_t->column;
 		}
 	temp[j++] = data_t->map[i++];
 	}
@@ -82,13 +82,13 @@ void	fill_map(char *line, data_t *data_t)
 	k = ft_strlen(line);
 	if (k == 1 && line[0] == '\n')
 		return;
-	if (k > data_t->line)
+	if (k > data_t->column)
 	{
-		if (data_t->column > 0)
+		if (data_t->line > 0)
 			fix_lines_before(data_t, k);
-		data_t->line = k;
+		data_t->column = k;
 	}
-	if (data_t->column == 0)
+	if (data_t->line == 0)
 		data_t->map = ft_strdup(line);
 	else
 	{
@@ -97,9 +97,9 @@ void	fill_map(char *line, data_t *data_t)
 		data_t->map = ft_strjoin_map(temp, line);
 		free(temp);
 	}
-	if (data_t->line > k)
+	if (data_t->column > k)
 		fix_line(data_t, k);
-	data_t->column++;
+	data_t->line++;
 }
 
 void	get_content(char *line, data_t *data_t)
