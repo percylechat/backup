@@ -44,12 +44,10 @@ void ft_move_updown(data_t *data_t, int m)
 	{
 		if (data_t->position_y + 1 < data_t->line)
 		{
-			// GO lEFT
-			// printf("%c\n", data_t->map[data_t->position_y * data_t->line + data_t->position_x]);
-			// printf("%c\n",data_t->map[data_t->position_y * data_t->line + data_t->position_x]);
-			// data_t->map[(data_t->position_y + 1) * data_t->line + data_t->position_x] = data_t->map[data_t->position_y * data_t->line + data_t->position_x];
-			// data_t->map[data_t->position_y * data_t->line + data_t->position_x] = '0';
-			
+			printf("%c\n", data_t->map[data_t->position_y * data_t->line + data_t->position_x]);
+			printf("%c\n",data_t->map[data_t->position_y * data_t->line + data_t->position_x]);
+			data_t->map[(data_t->position_y + 1) * data_t->line + data_t->position_x] = data_t->map[data_t->position_y * data_t->line + data_t->position_x];
+			data_t->map[data_t->position_y * data_t->line + data_t->position_x] = '0';
 			data_t->position_y++;
 		}
 	}
