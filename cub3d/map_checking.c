@@ -45,18 +45,6 @@ int		check_E(data_t *data_t, int i)
 	return (0);
 }
 
-void	give_angle(data_t *data_t)
-{
-	if (data_t->orientation == 'N')
-		data_t->direction = 90;
-	if (data_t->orientation == 'E')
-		data_t->direction = 0;
-	if (data_t->orientation == 'W')
-		data_t->direction = 180;
-	if (data_t->orientation == 'S')
-		data_t->direction = 270;
-}
-
 void	check_map(data_t *data_t)
 {
 	int	i;

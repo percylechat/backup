@@ -73,19 +73,10 @@ int	accurate_position(data_t *data_t, int i);
 int main(int argc, char **argv);
 
 /*
-** get_color
-*/
-void get_color(char *line, int i, data_t *data_t);
-int get_red(char *line, int i);
-int get_green(char *line, int i);
-int get_blue(char *line, int i);
-int color_pixel(int r, int g, int b);
-
-/*
 ** file_handling
 */
-void get_res(char *line, int i, data_t *data_t);
-char *get_path(char *line, int i);
+void	fix_line(data_t *data_t, int k);
+void	fix_lines_before(data_t *data_t, int k);
 void fill_map(char *line, data_t *data_t);
 void get_content(char *line, data_t *data_t);
 void file_handling(char *name, data_t *data_t);
@@ -98,6 +89,13 @@ int check_E(data_t *data_t, int i);
 int check_S(data_t *data_t, int i);
 int check_W(data_t *data_t, int i);
 int check_N(data_t *data_t, int i);
+
+/*
+** move
+*/
+void ft_keyboard_release(int key, data_t *data_t);
+void ft_keyboard_press(int key, data_t *data_t);
+void ft_move_updown(data_t *data_t, int m);
 
 /*
 ** print_screen
@@ -113,6 +111,22 @@ void new_screen(data_t *data_t);
 */
 void    print_minimap(data_t *data_t);
 int	check_for_obstacle_m(int x, int y, data_t *data_t);
+
+/*
+** get_color
+*/
+void get_color(char *line, int i, data_t *data_t);
+int get_red(char *line, int i);
+int get_green(char *line, int i);
+int get_blue(char *line, int i);
+int color_pixel(int r, int g, int b);
+
+/*
+** cub3d_utils
+*/
+void get_res(char *line, int i, data_t *data_t);
+//char *get_path(char *line, int i);
+void	give_angle(data_t *data_t);
 
 /*
 ** get_next_line

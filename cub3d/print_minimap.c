@@ -48,7 +48,7 @@ int	check_for_obstacle_m(int x, int y, data_t *data_t)
 {
 	int res;
 
-	res = (y * (data_t->column + 1)) + x;
+	res = (y * (data_t->column + 1) + x);
 	// printf("res: %d map:%c \n", res, data_t->map[res]);
 	if (data_t->map[res] == '1')
 		return (1+(1<<16)+(255<<8));
