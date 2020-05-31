@@ -67,8 +67,8 @@ void	check_map(data_t *data_t)
 		data_t->map[i] == 'S' || data_t->map[i] == 'E')
 		{
 			data_t->orientation = data_t->map[i];
-			data_t->position_x = i % (data_t->line);
-			data_t->position_y = (i / data_t->line);
+			data_t->position_x = i % (data_t->column + 1);
+			data_t->position_y = (i / (data_t->column + 1));
 			give_angle(data_t);
 		}
 		i++;

@@ -19,7 +19,7 @@ int		give_udlr(data_t *data_t, int i)
 		b = data_t->direction - b;
 	else if (b < data_t->res_w / 2)
 		b = data_t->direction + b;
-	printf("%d", b);
+	// printf("%d", b);
 	return (b);
 }
 
@@ -32,25 +32,32 @@ void	find_vert_dist(data_t *data_t, float ray)
 
 	if (data_t->leftright == 1)
 	{
-		inter_x = (accurate_position(data_t, 1) / BLOC_SIZE) * BLOC_SIZE + BLOC_SIZE;
+		inter_x = (((data_t->position_x) * 64 + data_t->sub_position_x) / BLOC_SIZE) * BLOC_SIZE + BLOC_SIZE;
 		coeff_x = BLOC_SIZE;
 	}
 	else
 	{
-		inter_x = (accurate_position(data_t, 1) / BLOC_SIZE) * BLOC_SIZE - 1;
+		inter_x = (((data_t->position_x) * 64 + data_t->sub_position_x) / BLOC_SIZE) * BLOC_SIZE - 1;
 		coeff_x = BLOC_SIZE * -1;
 	}
-	inter_y = accurate_position(data_t, 0) + (accurate_position(data_t, 1) - inter_x) * tan(ray * M_PI / 180);
-	coeff_y = BLOC_SIZE / tan(ray * M_PI / 180);
-	while (check_for_obstacle((inter_x + coeff_x), (inter_y + coeff_y), data_t)
+	inter_y = ((data_t->position_y) * 64 + data_t->sub_position_y) + (((data_t->position_x) * 64 + data_t->sub_position_x) - inter_x) * tan(ray * M_PI / 180);
+	coeff_y = BLOC_SIZE * tan(ray * M_PI / 180);
+	while (check_for_obstacle(inter_x, inter_y, data_t)
 	!= 1)
 	{
 		inter_x += coeff_x;
-		inter_y += coeff_y;
+		inter_y -= coeff_y;
 	}
+	printf("pos y; %d\n", data_t->position_y);
+	printf("pos x; %d\n", data_t->position_x);
+	printf("inter y; %d\n", inter_y);
+	printf("coeff y; %d\n", coeff_y);
+	printf("inter x; %d\n", inter_x);
+	printf("coeff x; %d\n", coeff_x);
 	// printf("wall found");
-	data_t->dist_vert = sqrt(exp(accurate_position(data_t, 1) - (inter_x + coeff_x)) + exp(accurate_position(data_t, 0) - (inter_y + coeff_y)));
+	data_t->dist_vert = (exp(((data_t->position_x) * 64 + data_t->sub_position_x) - (inter_x)) + exp(((data_t->position_y) * 64 + data_t->sub_position_y) - (inter_y)));
 	// fabs(accurate_position(data_t, 0) - (inter_y + coeff_y) / cos(ray * M_PI / 180));
+	printf("vert %d\n", data_t->dist_vert);
 }
 
 void	find_hor_dist(data_t *data_t, float ray)
@@ -62,24 +69,25 @@ void	find_hor_dist(data_t *data_t, float ray)
 
 	if (data_t->updown == 1)
 	{
-		inter_y = (accurate_position(data_t, 0)/BLOC_SIZE) * (BLOC_SIZE) - 1;
+		inter_y = (((data_t->position_y - 1) * 64 + data_t->sub_position_y)/BLOC_SIZE) * (BLOC_SIZE) - 1;
 		coeff_y = BLOC_SIZE * -1;
 	}
 	else
 	{
-		inter_y = (accurate_position(data_t, 0)/BLOC_SIZE) * (BLOC_SIZE) + BLOC_SIZE;
+		inter_y = (((data_t->position_y - 1) * 64 + data_t->sub_position_y)/BLOC_SIZE) * (BLOC_SIZE) + BLOC_SIZE;
 		coeff_y = BLOC_SIZE;
 	}
-	inter_x = accurate_position(data_t, 1) + (accurate_position(data_t, 0) - inter_y) / tan(ray * M_PI / 180);
+	inter_x = (data_t->position_x * 64 + data_t->sub_position_x) + (((data_t->position_y - 1) * 64 + data_t->sub_position_y) - inter_y) / tan(ray * M_PI / 180);
 	coeff_x = BLOC_SIZE / tan(ray * M_PI / 180);
-	while (check_for_obstacle((inter_x + coeff_x), (inter_y + coeff_y), data_t)
+	while (check_for_obstacle(inter_x, inter_y, data_t)
 	!= 1)
 	{
 		inter_x += coeff_x;
 		inter_y += coeff_y;
 	}
-	data_t->dist_hor = sqrt(exp(accurate_position(data_t, 1) - (inter_x + coeff_x)) + exp(accurate_position(data_t, 0) - (inter_y + coeff_y)));
+	data_t->dist_hor = sqrt(exp(((data_t->position_x - 1) * 64 + data_t->sub_position_x) - (inter_x)) + exp(((data_t->position_y - 1) * 64 + data_t->sub_position_y) - (inter_y)));
 	// fabs(accurate_position(data_t, 1) - (inter_x + coeff_x) / cos(ray * M_PI / 180));
+	printf("%d\n", data_t->dist_hor);
 }
 
 void	print_column(data_t *data_t, int i)
@@ -89,23 +97,25 @@ void	print_column(data_t *data_t, int i)
 
 	j = 0;
 	k = 0;
+	printf("%d", data_t->wall_size);
 	while (j < data_t->res_h)
 	{
 		while (j < ((data_t->res_h - data_t->wall_size) / 2))
 		{
-			mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, j,
-	data_t->color_ceiling);
+	// 		mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, j,
+	// data_t->color_ceiling);
 			j++;
 		}
-		while (k < data_t->wall_size)
+		while (k < data_t->wall_size && j < data_t->res_h)
 		{
 			mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, j, (255
 	+(255<<16)+(1<<8)));
 			k++;
 			j++;
 		}
-		mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, j++,
+		mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, j,
 	data_t->color_floor);
+	j++;
 	}
 }
 
@@ -115,15 +125,15 @@ void	new_screen(data_t *data_t)
 	int		b;
 	float	ray;
 	float	ray_change;
-	i = 0;
+	i = 240;
 	b = give_udlr(data_t, i);
-	ray = b;
+	ray = 60.0;
 	ray_change = FOV / data_t->res_w;
 
-	while (i < data_t->res_w)
+	while (ray <= 60.0)
 	{
 		find_vert_dist(data_t, ray);
-		find_hor_dist(data_t, ray);
+		// find_hor_dist(data_t, ray);
 		if (data_t->dist_hor > data_t->dist_vert)
 			data_t->wall_size = data_t->dist_vert;
 		else
@@ -136,8 +146,10 @@ void	new_screen(data_t *data_t)
 	// 		// data_t->wall_size = (BLOC_SIZE / (data_t->dist_hor * cos((FOV/2) * M_PI / 180))) * ((data_t->res_w / 2) / tan((FOV/2) * M_PI / 180));
 	// 	// else
 	//   	// 	data_t->wall_size = (BLOC_SIZE / (data_t->dist_hor * cos((FOV / 2) * -1))) * ((data_t->res_w / 2) / tan((FOV/2) * M_PI / 180));
+		write(1, "ok", 2);
 		print_column(data_t, i);
 	  	i++;
-		ray -= ray_change;
+		printf("%d\n", i);
+		ray += ray_change;
 	}
 }

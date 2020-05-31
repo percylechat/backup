@@ -23,6 +23,8 @@
 # define KEYRELEASEMASK 10
 # define KEY_S 122
 # define KEY_Z 115
+# define KEY_Q 113
+# define KEY_D 100
 
 // #define XK_Left                          0xff51  /* Move left, left arrow */
 // #define XK_Up                            0xff52  /* Move up, up arrow */
@@ -69,7 +71,6 @@ struct data_t
 */
 int error_handling_start(int argc, char **argv);
 int check_for_obstacle(int x, int y, data_t *data_t);
-int	accurate_position(data_t *data_t, int i);
 int main(int argc, char **argv);
 
 /*

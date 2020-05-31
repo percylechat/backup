@@ -15,21 +15,14 @@ int	error_handling_start(int argc, char **argv)
 	return (1);
 }
 
-int	accurate_position(data_t *data_t, int i)
-{
-	if (i == 1)
-		return ((data_t->position_x - 1) * 64 + data_t->sub_position_x);
-	else if (i == 0)
-		return ((data_t->position_y - 1) * 64 + data_t->sub_position_y);
-}
-
 int	check_for_obstacle(int x, int y, data_t *data_t)
 {
 	//add option 2 sprites
+	printf("x: %d y: %d\n", x, y);
 	x /= BLOC_SIZE;
 	y /= BLOC_SIZE;
 	// printf("x: %d y: %d\n", x, y);
-	if (data_t->map[(y * (data_t->line + 1)) + x - 1] == '1')
+	if (data_t->map[(y * (data_t->column)) + x] == '1')
 		return (1);
 	else
 		return (0);
@@ -48,17 +41,13 @@ int		main(int argc, char **argv)
 	if ((data_t->mlx_win = mlx_new_window(data_t->mlx_prog, data_t->res_w, data_t->res_h, "Cub3D")) == NULL)
 		return (EXIT_FAILURE);
 	data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h);
-	printf("%s", data_t->map);
-	// new_screen(data_t);
-	print_minimap(data_t);
-	mlx_hook(data_t->mlx_win, KEYPRESS, KEYPRESSMASK, &ft_keyboard_press, data_t);
-	mlx_hook(data_t->mlx_win, KEYRELEASE, KEYRELEASEMASK, &ft_keyboard_release, data_t);
-	mlx_loop(data_t->mlx_prog);
-
-
-
-
-	sleep (6);
+	// printf("%s", data_t->map);
+	new_screen(data_t);
+	// print_minimap(data_t);
+	// mlx_hook(data_t->mlx_win, KEYPRESS, KEYPRESSMASK, &ft_keyboard_press, data_t);
+	// mlx_hook(data_t->mlx_win, KEYRELEASE, KEYRELEASEMASK, &ft_keyboard_release, data_t);
+	// mlx_loop(data_t->mlx_prog);
+	sleep (2);
 	printf("column %d\n", data_t->column);
 	printf("line %d\n", data_t->line);
 	printf("%s\n", data_t->tex_N);
