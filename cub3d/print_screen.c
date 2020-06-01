@@ -23,6 +23,38 @@ int		give_udlr(data_t *data_t, int i)
 	return (b);
 }
 
+void dist_finder(data_t *data_t, int inter_x, int inter_y, int i)
+{
+	float exp_x;
+	float exp_y;
+	float res_exp;
+
+	printf("%d\n", ((data_t->position_x) * 64 + data_t->sub_position_x));
+	printf("%d\n", inter_x);
+	printf("%d\n", ((data_t->position_y) * 64 + data_t->sub_position_y));
+	printf("%d\n", inter_y);
+	exp_x = (((data_t->position_x) * 64 + data_t->sub_position_x) - (inter_x)) * (((data_t->position_x) * 64 + data_t->sub_position_x) - (inter_x));
+
+	exp_y = ((data_t->position_y * 64 + data_t->sub_position_y) - inter_y) * ((data_t->position_y * 64 + data_t->sub_position_y) - inter_y);
+	printf("%f\n", exp_x);
+	printf("%f\n", exp_y);
+	res_exp =  exp_x + exp_y;
+	printf("%f\n", res_exp);
+	if (i == 1)
+		data_t->dist_vert = (int)sqrt(res_exp);
+	else
+		data_t->dist_hor = (int)sqrt(res_exp);
+	printf("dist %d\n", (int)data_t->dist_hor);
+}
+
+// printf("pos y; %d\n", data_t->position_y);
+// printf("pos x; %d\n", data_t->position_x);
+// printf("inter y; %d\n", inter_y);
+// printf("coeff y; %d\n", coeff_y);
+// printf("inter x; %d\n", inter_x);
+// printf("coeff x; %d\n", coeff_x);
+// printf("wall found");
+
 void	find_vert_dist(data_t *data_t, float ray)
 {
 	int		inter_x;
@@ -48,16 +80,7 @@ void	find_vert_dist(data_t *data_t, float ray)
 		inter_x += coeff_x;
 		inter_y -= coeff_y;
 	}
-	printf("pos y; %d\n", data_t->position_y);
-	printf("pos x; %d\n", data_t->position_x);
-	printf("inter y; %d\n", inter_y);
-	printf("coeff y; %d\n", coeff_y);
-	printf("inter x; %d\n", inter_x);
-	printf("coeff x; %d\n", coeff_x);
-	// printf("wall found");
-	data_t->dist_vert = (exp(((data_t->position_x) * 64 + data_t->sub_position_x) - (inter_x)) + exp(((data_t->position_y) * 64 + data_t->sub_position_y) - (inter_y)));
-	// fabs(accurate_position(data_t, 0) - (inter_y + coeff_y) / cos(ray * M_PI / 180));
-	printf("vert %d\n", data_t->dist_vert);
+	dist_finder(data_t, inter_x, inter_y, 1);
 }
 
 void	find_hor_dist(data_t *data_t, float ray)
@@ -85,9 +108,7 @@ void	find_hor_dist(data_t *data_t, float ray)
 		inter_x += coeff_x;
 		inter_y += coeff_y;
 	}
-	data_t->dist_hor = sqrt(exp(((data_t->position_x - 1) * 64 + data_t->sub_position_x) - (inter_x)) + exp(((data_t->position_y - 1) * 64 + data_t->sub_position_y) - (inter_y)));
-	// fabs(accurate_position(data_t, 1) - (inter_x + coeff_x) / cos(ray * M_PI / 180));
-	printf("%d\n", data_t->dist_hor);
+	dist_finder(data_t, inter_x, inter_y, 0);
 }
 
 void	print_column(data_t *data_t, int i)
@@ -125,15 +146,15 @@ void	new_screen(data_t *data_t)
 	int		b;
 	float	ray;
 	float	ray_change;
-	i = 240;
+	i = 1;
 	b = give_udlr(data_t, i);
-	ray = 60.0;
+	ray = 1.875;
 	ray_change = FOV / data_t->res_w;
 
 	while (ray <= 60.0)
 	{
 		find_vert_dist(data_t, ray);
-		// find_hor_dist(data_t, ray);
+		find_hor_dist(data_t, ray);
 		if (data_t->dist_hor > data_t->dist_vert)
 			data_t->wall_size = data_t->dist_vert;
 		else
