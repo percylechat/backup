@@ -13,7 +13,7 @@
 # include <math.h>
 
 # define BUFFER_SIZE 300
-# define BLOC_SIZE 64
+# define BLOC_SIZE 64.0
 # define CHARARCTER_SIZE 32
 # define FOV 60.0
 

@@ -15,12 +15,15 @@ int		give_udlr(data_t *data_t, int i)
 		data_t->leftright = 0;
 	else
 		data_t->leftright = 1;
-	if (b > data_t->res_w / 2)
-		b = data_t->direction - b;
-	else if (b < data_t->res_w / 2)
-		b = data_t->direction + b;
+	// if (b > data_t->res_w / 2)
+	// 	b = data_t->direction - b;
+	// else if (b < data_t->res_w / 2)
+	// 	b = data_t->direction + b;
 	// printf("%d", b);
-	return (b);
+	if (i < data_t->res_w / 2)
+		return (1.0);
+	else
+		return (-1.0);
 }
 
 void dist_finder(data_t *data_t, int inter_x, int inter_y, int i)
@@ -143,15 +146,14 @@ void	print_column(data_t *data_t, int i)
 void	new_screen(data_t *data_t)
 {
 	int		i;
-	int		b;
+	float	b;
 	float	ray;
 	float	ray_change;
-	i = 1;
-	b = give_udlr(data_t, i);
-	ray = 1.875;
-	ray_change = FOV / data_t->res_w;
 
-	while (ray <= 60.0)
+	i = 1;
+	ray = 60.0;
+	ray_change = FOV / data_t->res_w;
+	while (i <= data_t->res_w)
 	{
 		find_vert_dist(data_t, ray);
 		find_hor_dist(data_t, ray);
@@ -159,18 +161,21 @@ void	new_screen(data_t *data_t)
 			data_t->wall_size = data_t->dist_vert;
 		else
 			data_t->wall_size = data_t->dist_hor;
-	// // printf("vert: %d", data_t->dist_vert);
-	// // printf("hor: %d", data_t->dist_hor);
-	// 	// if (data_t->dist_vert < data_t->dist_hor)
-	// 	// 	data_t->dist_hor =  data_t->dist_vert;
-	// 	// if (i < data_t->res_w / 2)
-	// 		// data_t->wall_size = (BLOC_SIZE / (data_t->dist_hor * cos((FOV/2) * M_PI / 180))) * ((data_t->res_w / 2) / tan((FOV/2) * M_PI / 180));
-	// 	// else
-	//   	// 	data_t->wall_size = (BLOC_SIZE / (data_t->dist_hor * cos((FOV / 2) * -1))) * ((data_t->res_w / 2) / tan((FOV/2) * M_PI / 180));
-		write(1, "ok", 2);
 		print_column(data_t, i);
 	  	i++;
-		printf("%d\n", i);
-		ray += ray_change;
+		b = give_udlr(data_t, i);
+		if (i == data_t->res_w / 2)
+			ray = 90.0;
+		else
+			ray += ray_change * b;
 	}
 }
+
+// // printf("vert: %d", data_t->dist_vert);
+// // printf("hor: %d", data_t->dist_hor);
+// 	// if (data_t->dist_vert < data_t->dist_hor)
+// 	// 	data_t->dist_hor =  data_t->dist_vert;
+// 	// if (i < data_t->res_w / 2)
+// 		// data_t->wall_size = (BLOC_SIZE / (data_t->dist_hor * cos((FOV/2) * M_PI / 180))) * ((data_t->res_w / 2) / tan((FOV/2) * M_PI / 180));
+// 	// else
+//   	// 	data_t->wall_size = (BLOC_SIZE / (data_t->dist_hor * cos((FOV / 2) * -1))) * ((data_t->res_w / 2) / tan((FOV/2) * M_PI / 180));
