@@ -25,6 +25,7 @@
 # define KEY_Z 115
 # define KEY_Q 113
 # define KEY_D 100
+# define DR 0.0174533
 
 // #define XK_Left                          0xff51  /* Move left, left arrow */
 // #define XK_Up                            0xff52  /* Move up, up arrow */
@@ -60,11 +61,27 @@ struct data_t
     int           position_y;
     int           sub_position_x;
     int           sub_position_y;
-    //screen display
+    // //screen display
     int           dist_vert;
     int           dist_hor;
     int           wall_size;
 };
+
+// typedef struct data_t t_raycast;
+// struct data_t
+// {
+//     int           p_absolut__x;
+//     int           p_absolut_y;
+//     int           direction;
+//     int           column;
+//     float         ray;
+//     float         ray_change;
+//     int           dist_vert;
+//     int           dist_hor;
+//     int           wall_size;
+// };
+
+void drawRays3d(data_t *data_t);
 
 /*
 ** cub3D.c
@@ -101,10 +118,10 @@ void ft_move_updown(data_t *data_t, int m);
 /*
 ** print_screen
 */
-int give_udlr(data_t *data_t, int i);
+void   give_udlr(data_t *data_t);
 void find_vert_dist(data_t *data_t, float ray);
 void find_hor_dist(data_t *data_t, float ray);
-void print_column(data_t *data_t, int i);
+void print_column(data_t *data_t, int i, int side);
 void new_screen(data_t *data_t);
 
 /*

@@ -51,12 +51,17 @@ void ft_keyboard_press(int key, data_t *data_t)
         ft_move_leftright(data_t, 0);
     else if (key == KEY_D)
         ft_move_leftright(data_t, 1);
-    else
+	// else if (key == KEY_A)
+	// 	ft_rotate(data_t, 1);
+	// else if (key == KEY_E)
+	// 	ft_rotate(data_t, 0);
+	else
 		write(1, "fail", 4);
 	// mlx_destroy_image(data_t->mlx_prog, data_t->mlx_win);
 	// data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h);
 		printf("%s", data_t->map);
 	// mlx_clear_window(data_t->mlx_prog, data_t->mlx_win);
+	drawRays3d(data_t);
 	print_minimap(data_t);
 }
 

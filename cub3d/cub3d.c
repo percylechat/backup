@@ -18,10 +18,9 @@ int	error_handling_start(int argc, char **argv)
 int	check_for_obstacle(int x, int y, data_t *data_t)
 {
 	//add option 2 sprites
-	printf("x: %d y: %d\n", x, y);
-	x /= BLOC_SIZE;
-	y /= BLOC_SIZE;
 	// printf("x: %d y: %d\n", x, y);
+	if (x < 0 || y < 0)
+		return (0);
 	if (data_t->map[(y * (data_t->column)) + x] == '1')
 		return (1);
 	else
@@ -42,11 +41,13 @@ int		main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h);
 	// printf("%s", data_t->map);
-	new_screen(data_t);
+	// new_screen(data_t);
+		drawRays3d(data_t);
 	// print_minimap(data_t);
-	// mlx_hook(data_t->mlx_win, KEYPRESS, KEYPRESSMASK, &ft_keyboard_press, data_t);
-	// mlx_hook(data_t->mlx_win, KEYRELEASE, KEYRELEASEMASK, &ft_keyboard_release, data_t);
-	// mlx_loop(data_t->mlx_prog);
+	mlx_hook(data_t->mlx_win, KEYPRESS, KEYPRESSMASK, &ft_keyboard_press, data_t);
+	mlx_hook(data_t->mlx_win, KEYRELEASE, KEYRELEASEMASK, &ft_keyboard_release, data_t);
+	mlx_loop(data_t->mlx_prog);
+
 	sleep (2);
 	printf("column %d\n", data_t->column);
 	printf("line %d\n", data_t->line);
