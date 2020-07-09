@@ -40,9 +40,9 @@ int		main(int argc, char **argv)
 	if ((data_t->mlx_win = mlx_new_window(data_t->mlx_prog, data_t->res_w, data_t->res_h, "Cub3D")) == NULL)
 		return (EXIT_FAILURE);
 	data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h);
-	// printf("%s", data_t->map);
+	// // printf("%s", data_t->map);
 	// new_screen(data_t);
-		drawRays3d(data_t);
+	drawRays3d(data_t);
 	// print_minimap(data_t);
 	mlx_hook(data_t->mlx_win, KEYPRESS, KEYPRESSMASK, &ft_keyboard_press, data_t);
 	mlx_hook(data_t->mlx_win, KEYRELEASE, KEYRELEASEMASK, &ft_keyboard_release, data_t);

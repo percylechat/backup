@@ -86,5 +86,5 @@ void	get_color(char *line, int i, data_t *data_t)
 	if (line[i] == 'C')
 		data_t->color_ceiling = color_pixel(r, g, b);
 	if (line[i] == 'F')
-		data_t->color_ceiling = color_pixel(r, g, b);
+		data_t->color_floor = color_pixel(r, g, b);
 }

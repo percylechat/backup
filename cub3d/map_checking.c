@@ -50,9 +50,9 @@ void	check_map(data_t *data_t)
 	int	i;
 
 	i = 0;
-	ft_memmove((void *)&data_t->map[0], (void *)&data_t->map[1], 125);
 	data_t->line -= 2;
-	data_t->map[data_t->line * (data_t->column + 1)] = '\0';
+	ft_memmove((void *)&data_t->map[0], (void *)&data_t->map[1], data_t->line * (data_t->column + 1));
+	// data_t->map[data_t->line * (data_t->column + 1)] = '\0';
 	while (data_t->map[i])
 	{
 		if (data_t->map[i] == '0')
@@ -73,6 +73,41 @@ void	check_map(data_t *data_t)
 		}
 		i++;
 	}
-	data_t->sub_position_x = 32;
-	data_t->sub_position_y = 32;
+	transform_map(data_t);
+}
+
+void	transform_map(data_t *data_t)
+{
+	char **map;
+	int i;
+	int j;
+	int k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	printf("%d\n", data_t->line);
+	printf("%d\n", data_t->column);
+	if (!(map = malloc(sizeof(char*) * data_t->line + 1)))
+		return;
+	while (i < data_t->line + 1)
+	{
+		if (!(map[i] = malloc(sizeof(char*) * data_t->column + 1)))
+			return;
+		while (data_t->map[k] != '\n')
+		{
+			map[i][j] = data_t->map[k];
+			j++;
+			// printf("%d\n", j);
+			k++;
+		}
+		map[i][j] = '\0';
+		// printf("%s\n", map[i]);
+		j = 0;
+		k++;
+		i++;
+	}
+	data_t->maptab = map;
+	// map[i] = '\0';
+	// printf("%s", data_t->maptab[3]);
 }

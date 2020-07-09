@@ -25,60 +25,62 @@
 # define KEY_Z 115
 # define KEY_Q 113
 # define KEY_D 100
+# define KEY_A 97
+# define KEY_E 101
 # define DR 0.0174533
 
-// #define XK_Left                          0xff51  /* Move left, left arrow */
-// #define XK_Up                            0xff52  /* Move up, up arrow */
-// #define XK_Right                         0xff53  /* Move right, right arrow */
-// #define XK_Down                          0xff54  /* Move down, down arrow */
+// #define XK_Left						  0xff51  /* Move left, left arrow */
+// #define XK_Up							0xff52  /* Move up, up arrow */
+// #define XK_Right						 0xff53  /* Move right, right arrow */
+// #define XK_Down						  0xff54  /* Move down, down arrow */
 
 typedef struct data_t data_t;
 struct data_t
 {
   //uti mlx
-    void          *mlx_prog;
-    void          *mlx_win;
-    void          *mlx_img;
-    float           res_w;
-    float           res_h;
-    // info map
-    int           color_floor;
-    int           color_ceiling;
-    char          *tex_N;
-    char          *tex_W;
-    char          *tex_S;
-    char          *tex_E;
-    char          *tex_sprite;
-    char          *map;
-    int           column;
-    int           line;
-    //info character
-    char          orientation;
-    int           direction;
-    int           updown;
-    int           leftright;
-    int           position_x;
-    int           position_y;
-    int           sub_position_x;
-    int           sub_position_y;
-    // //screen display
-    int           dist_vert;
-    int           dist_hor;
-    int           wall_size;
+	void		  *mlx_prog;
+	void		  *mlx_win;
+	void		  *mlx_img;
+	float		   res_w;
+	float		   res_h;
+	// info map
+	int		   color_floor;
+	int		   color_ceiling;
+	char		  *tex_N;
+	char		  *tex_W;
+	char		  *tex_S;
+	char		  *tex_E;
+	char		  *tex_sprite;
+	char		  *map;
+	int		   column;
+	int		   line;
+	char		**maptab;
+	//info character
+	char		orientation;
+	double		direction_x;
+	double		direction_y;
+	double		camera_x;
+	double		camera_y;
+	double		position_x;
+	double		position_y;
+	// //screen display
+	int		   dist_vert;
+	int		   dist_hor;
+	int		   wall_size;
 };
 
 // typedef struct data_t t_raycast;
 // struct data_t
 // {
-//     int           p_absolut__x;
-//     int           p_absolut_y;
-//     int           direction;
-//     int           column;
-//     float         ray;
-//     float         ray_change;
-//     int           dist_vert;
-//     int           dist_hor;
-//     int           wall_size;
+//	 int		   p_absolut__x;
+//	 int		   p_absolut_y;
+//	 int		   direction;
+//	 int		   column;
+//	 float		 ray;
+//	 float		 ray_change;
+//	 int		   dist_vert;
+//	 int		   dist_hor;
+//	 int		   wall_size;
 // };
 
 void drawRays3d(data_t *data_t);
@@ -127,7 +129,8 @@ void new_screen(data_t *data_t);
 /*
 ** print_minimap
 */
-void    print_minimap(data_t *data_t);
+void	print_black(data_t *data_t);
+void	print_minimap(data_t *data_t);
 int	check_for_obstacle_m(int x, int y, data_t *data_t);
 
 /*
