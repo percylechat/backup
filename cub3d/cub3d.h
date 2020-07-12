@@ -146,8 +146,8 @@ int color_pixel(int r, int g, int b);
 ** cub3d_utils
 */
 void get_res(char *line, int i, data_t *data_t);
-//char *get_path(char *line, int i);
 void	give_angle(data_t *data_t);
+void	print_black(data_t *data_t);
 
 /*
 ** get_next_line

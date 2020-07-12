@@ -1,5 +1,6 @@
 #include "cub3d.h"
 
+//OBSOLETE FILE
 
 float		give_udlr(data_t *data_t, int i)
 {

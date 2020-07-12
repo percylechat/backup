@@ -1,4 +1,4 @@
-
+// i hate makefiles so it doesn't work yet
 
 NAME = cub3d.a
 

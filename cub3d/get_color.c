@@ -1,5 +1,8 @@
 #include "cub3d.h"
 
+//called by get_content in file_handling.c
+//creates appropriate integrer for ceiling and floor colors.
+
 int		color_pixel(int r, int g, int b)
 {
 	return (b + (r<<16) + (g<<8));

@@ -1,5 +1,6 @@
 #include "cub3d.h"
 
+//check if map is valid (surrounded by walls)
 
 int		check_N(data_t *data_t, int i)
 {
@@ -45,6 +46,7 @@ int		check_E(data_t *data_t, int i)
 	return (0);
 }
 
+//fixes some map stuff, check if for each blank space (0) there is a wall for every direction, then create a double array for map.
 void	check_map(data_t *data_t)
 {
 	int	i;
@@ -76,6 +78,7 @@ void	check_map(data_t *data_t)
 	transform_map(data_t);
 }
 
+//creates double array for map and put it in struct.
 void	transform_map(data_t *data_t)
 {
 	char **map;
@@ -86,8 +89,6 @@ void	transform_map(data_t *data_t)
 	i = 0;
 	j = 0;
 	k = 0;
-	printf("%d\n", data_t->line);
-	printf("%d\n", data_t->column);
 	if (!(map = malloc(sizeof(char*) * data_t->line + 1)))
 		return;
 	while (i < data_t->line + 1)
@@ -98,16 +99,12 @@ void	transform_map(data_t *data_t)
 		{
 			map[i][j] = data_t->map[k];
 			j++;
-			// printf("%d\n", j);
 			k++;
 		}
 		map[i][j] = '\0';
-		// printf("%s\n", map[i]);
 		j = 0;
 		k++;
 		i++;
 	}
 	data_t->maptab = map;
-	// map[i] = '\0';
-	// printf("%s", data_t->maptab[3]);
 }

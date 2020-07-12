@@ -1,5 +1,6 @@
-
 #include "cub3d.h"
+
+//OBSOLETE FILE
 
 int	color_map_1(void *win, void *mlx,int w,int h)
 {

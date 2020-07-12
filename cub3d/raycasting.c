@@ -1,5 +1,22 @@
 #include "cub3d.h"
 
+//painstackingly tries to display a wall
+//more bugged than fallout 76
+
+//called by ft_keyboard_press in move.c and by main
+
+//SO
+//basically we have the coordinates of the player (position x and y), the global direction of the ray (direction x and y) and the camera plane (camera x and y).
+//first you calculate the specific ray (camerax) and the first intersection for horizontal coordinates (ray x) and vertical ones (ray y)
+//these intersections give the global ray dorection and indications with whick we can move further along (deltadirx and deltadiry, then stepx and stepy).
+//sidedist x and y tell you which intersection you should check first (because it's the closest to the player).
+//then you check each intersection and add little by little to move along (j should be smaller than 8 so we don't check to much and if it's too far too bad for this wall).
+//finally you calculate the wall size and print it.
+
+//This is how i understand it. Please see the tutorial below that i blatantly ripped off
+//https://lodev.org/cgtutor/raycasting.html
+//please send help
+
 void drawRays3d(data_t *data_t)
 {
 	int j = 0;
@@ -12,8 +29,8 @@ void drawRays3d(data_t *data_t)
 	float perpWallDist;
 	int stepX;
 	int stepY;
-	int hit = 0; //was there a wall hit?
-	int side; //was a NS or a EW wall hit?
+	int hit = 0;
+	int side;
 	int i = 1;
 	while (i <= data_t->res_w)
 	{
@@ -22,9 +39,6 @@ void drawRays3d(data_t *data_t)
 		float camerax = 2 * i / data_t->res_w - 1;
 		float ray_x = data_t->direction_x + data_t->camera_x * camerax;
 		float ray_y = data_t->direction_y + data_t->camera_y * camerax;
-		// printf("%s\n", );
-		printf("ray y %f\n", ray_y);
-		printf("ray x %f\n", ray_x);
 		if (ray_x != 0)
 			deltaDistX = abs(1 / ray_x);
 		else
@@ -53,10 +67,8 @@ void drawRays3d(data_t *data_t)
 			stepY = 1;
 			sideDistY = (mapY + 1.0 - data_t->position_y) * deltaDistY;
 		}
-		// printf("mapx: %d mapy %d\n", mapX, mapY);
 		while (hit == 0 && j < 8)
 		{
-//jump to next map square, OR in x-direction, OR in y-direction
 			if (sideDistX < sideDistY)
 			{
 				sideDistX += deltaDistX;
@@ -69,8 +81,6 @@ void drawRays3d(data_t *data_t)
 				mapY += stepY;
 				side = 1;
 			}
-	  //Check if ray has hit a wall
-			// printf("mapxbis: %d mapybis: %d\n", mapX, mapY);
 			if (check_for_obstacle(mapX, mapY, data_t) > 0)
 				hit = 1;
 			j++;
@@ -82,12 +92,12 @@ void drawRays3d(data_t *data_t)
 		else
 			perpWallDist = (mapY - data_t->position_y + (1 - stepY) / 2) / ray_y;
 		data_t->wall_size = (int)(data_t->res_h / perpWallDist);
-		// printf("wall: %d\n", data_t->wall_size);
 		print_column(data_t, i, side);
-		i += 30;
+		i += 1;
 	}
 }
 
+//print the pixel line for each ray.
 void	print_column(data_t *data_t, int i, int side)
 {
 	int		j;
@@ -95,7 +105,6 @@ void	print_column(data_t *data_t, int i, int side)
 
 	j = 0;
 	k = 0;
-	// printf("%d", data_t->wall_size);
 	while (j < data_t->res_h)
 	{
 		while (j < ((data_t->res_h - data_t->wall_size) / 2))

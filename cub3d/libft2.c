@@ -6,12 +6,13 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 11:36:39 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/05/26 11:44:24 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/07/12 19:31:49 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+//joins 2 char arrays for the map?
 char	*ft_strjoin_map(char *s1, char *s2)
 {
 	int		j;
@@ -34,6 +35,7 @@ char	*ft_strjoin_map(char *s1, char *s2)
 	return (dest);
 }
 
+//tells if character is a digit or not.
 int		ft_isdigit(int c)
 {
 	if (c < 48 || c > 57)
@@ -41,7 +43,7 @@ int		ft_isdigit(int c)
 	return (1);
 }
 
-
+//moves memory from a place to another.
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t			i;

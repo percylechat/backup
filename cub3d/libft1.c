@@ -6,11 +6,14 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 12:49:16 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/05/09 13:56:34 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/07/12 19:30:58 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+//OLD PROJECT
+//subordinates functions
 
 static int		conv_char_int(char str, int k)
 {
@@ -19,6 +22,7 @@ static int		conv_char_int(char str, int k)
 	return (k);
 }
 
+//transforms a char array into an int.
 int				ft_atoi(const char *str)
 {
 	int			i;
@@ -85,6 +89,7 @@ static int		trim_last(char const *s1, char const *set, int k)
 	return (k);
 }
 
+//deletes characters from the beginning and the end of a string.
 char			*ft_strtrim(char const *s1, char const *set)
 {
 	int		i;

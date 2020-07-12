@@ -1,5 +1,11 @@
 #include "cub3d.h"
 
+//functions reads map infos and put them in struct.
+
+//NOTE: does map correction really works on all cases of nonrectangular maps? I don't remember.
+
+//called by fill_map
+//if line in map is smaller than lines before, corrects line by adding spaces.
 void	fix_line(data_t *data_t, int k)
 {
 	char	*temp;
@@ -21,6 +27,8 @@ void	fix_line(data_t *data_t, int k)
 	free(tempbis);
 }
 
+//called by fill_map
+//if line in map is bigger than lines before, corrects previous lines by adding spaces.
 void	fix_lines_before(data_t *data_t, int k)
 {
 	int		i;
@@ -52,6 +60,8 @@ void	fix_lines_before(data_t *data_t, int k)
 	free(temp);
 }
 
+//called by get_content
+//takes line of map one by one and add them to giant array. since map can be nonrectangular, also corrects smaller lines by adding spaces.
 void	fill_map(char *line, data_t *data_t)
 {
 	int		k;
@@ -80,6 +90,9 @@ void	fill_map(char *line, data_t *data_t)
 	data_t->line++;
 }
 
+//Called by file_handling
+//dispatch line acquired by get_next_line to subordinates functions according to beginning of line.
+//also deletes spaces because the subject indicates so.
 void	get_content(char *line, data_t *data_t)
 {
 	int		i;
@@ -105,6 +118,8 @@ void	get_content(char *line, data_t *data_t)
 		fill_map(line, data_t);
 }
 
+// called by main
+// first open file with infos, then copy information in struct bit by bit.
 //WARNING absolut path
 void	file_handling(char *name, data_t *data_t)
 {
@@ -128,4 +143,5 @@ void	file_handling(char *name, data_t *data_t)
 	if (line != NULL)
 		get_content(line, data_t);
 	free(line);
+	close(fd);
 }

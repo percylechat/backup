@@ -1,11 +1,10 @@
 #include "cub3d.h"
 
+//Charachetr movement related to pressed touches.
+
+//check if character position is in a wall or not (for bonus) and change map according to new charater position if it changes coordinates.
 void	check_move(data_t *data_t, double temp, double tempbis)
 {
-	printf(" new x %d\n", (int)data_t->position_x);
-	printf(" new y %d\n", (int)data_t->position_y);
-	printf(" x %d\n", (int)temp);
-	printf(" y %d\n", (int)tempbis);
 	//BONUS
 	if (check_for_obstacle(data_t->position_x, data_t->position_y, data_t) == 1)
 	{
@@ -14,16 +13,15 @@ void	check_move(data_t *data_t, double temp, double tempbis)
 	}
 	if ((int)data_t->position_x != (int)temp || (int)data_t->position_y != (int)tempbis)
 	{
-		data_t->map[(int)data_t->position_y * (data_t->column + 1) + (int)data_t->position_x] = data_t->orientation;
-		data_t->map[(int)tempbis * (data_t->column + 1) + (int)temp] = '0';
+		data_t->maptab[(int)data_t->position_y][(int)data_t->position_x] = data_t->orientation;
+		data_t->maptab[(int)tempbis][(int)temp] = '0';
 	}
 }
 
+//characher goes backward or forward.
+//ZERO is backward, ONE is forward
 void ft_move_updown(data_t *data_t, int m)
 {
-	// printf("%f\n", data_t->position_x);
-	// printf("%f\n", data_t->position_y);
-	// printf("%c\n", data_t->map[]);
 	double temp;
 	double tempbis;
 
@@ -40,14 +38,13 @@ void ft_move_updown(data_t *data_t, int m)
 		data_t->position_y += data_t->direction_y * (0.5);
 	}
 	check_move(data_t, temp, tempbis);
-	// write(1, "ok", 2);
 }
 
+//should makes character movre from left to right.
+//ZERO is left and ONE is right
+//does it work? the image of the walls says yes, the minimap says no.
 void ft_move_leftright(data_t *data_t, int m)
 {
-	// printf("%f\n", data_t->position_x);
-	// printf("%f\n", data_t->position_y);
-	// printf("%c\n", data_t->map[]);
 	double temp;
 	double tempbis;
 
@@ -64,9 +61,10 @@ void ft_move_leftright(data_t *data_t, int m)
 		data_t->position_y -= data_t->direction_x * (0.5);
 	}
 	check_move(data_t, temp, tempbis);
-	write(1, "ok", 2);
 }
 
+//makes character rotate the head.
+// ONE should be left and ZERO right.
 void	ft_rotate(data_t *data_t, int m)
 {
 	double temp;
@@ -91,9 +89,10 @@ void	ft_rotate(data_t *data_t, int m)
 	}
 }
 
+//kinda called by main
+//assign movement depending of touch and displays new image.
 void ft_keyboard_press(int key, data_t *data_t)
 {
-	printf("%d\n", key);
 	if (key == KEY_S)
 		ft_move_updown(data_t, 0);
 	else if (key == KEY_Z)
@@ -108,15 +107,12 @@ void ft_keyboard_press(int key, data_t *data_t)
 		ft_rotate(data_t, 0);
 	else
 		write(1, "fail", 4);
-	// mlx_destroy_image(data_t->mlx_prog, data_t->mlx_win);
-	// data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h);
-		printf("%s", data_t->map);
-	// mlx_clear_window(data_t->mlx_prog, data_t->mlx_win);
 	print_black(data_t);
 	drawRays3d(data_t);
 	print_minimap(data_t);
 }
 
+//is useless, since i work on tapped touch and won't take into account time pressed and frames.
 void ft_keyboard_release(int key, data_t *data_t)
 {
 	if (key == KEY_S)

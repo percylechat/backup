@@ -6,11 +6,15 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 16:33:17 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/02/04 14:00:12 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/07/12 19:19:14 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+//OLD PROJECT, subordinate functions
+//read line by line in a file, took me 2 months -_-
+//shouldn't be a source of issues since it has been debugged.
 
 int		ft_strlen(const char *s)
 {
