@@ -31,7 +31,7 @@ void drawRays3d(data_t *data_t)
 	int stepY;
 	int hit = 0;
 	int side;
-	int i = 1;
+	int i = 0;
 	while (i <= data_t->res_w)
 	{
 		mapX = (int)data_t->position_x;
@@ -39,14 +39,17 @@ void drawRays3d(data_t *data_t)
 		float camerax = 2 * i / data_t->res_w - 1;
 		float ray_x = data_t->direction_x + data_t->camera_x * camerax;
 		float ray_y = data_t->direction_y + data_t->camera_y * camerax;
-		if (ray_x != 0)
-			deltaDistX = abs(1 / ray_x);
-		else
-			deltaDistX = 1;
-		if (ray_y != 0)
-			deltaDistY = abs(1 / ray_y);
-		else
-			deltaDistY = 1;
+
+		double deltaDistX = (ray_y == 0) ? 0 : ((ray_x == 0) ? 1 : fabs(1 / ray_x));
+        double deltaDistY = (ray_x == 0) ? 0 : ((ray_y == 0) ? 1 : fabs(1 / ray_y));
+		// if (ray_x != 0)
+		// 	deltaDistX = abs(1 / ray_x);
+		// else
+		// 	deltaDistX = 1;
+		// if (ray_y != 0)
+		// 	deltaDistY = abs(1 / ray_y);
+		// else
+		// 	deltaDistY = 1;
 		if (ray_x < 0)
 		{
 			stepX = -1;
@@ -119,7 +122,7 @@ void	print_column(data_t *data_t, int i, int side)
 				mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, j, (255
 	+(255<<16)+(1<<8)));
 			else
-			mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, j, (255
+				mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, j, (255
 +(1<<16)+(255<<8)));
 			k++;
 			j++;

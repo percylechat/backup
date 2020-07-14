@@ -19,7 +19,10 @@ void	check_move(data_t *data_t, double temp, double tempbis)
 }
 
 //characher goes backward or forward.
-//ZERO is backward, ONE is forward
+//ZERO is S, ONE is Z
+
+//NOTE wrong direction if you look north. Should it be adapte to direction?
+
 void ft_move_updown(data_t *data_t, int m)
 {
 	double temp;
@@ -93,6 +96,7 @@ void	ft_rotate(data_t *data_t, int m)
 //assign movement depending of touch and displays new image.
 void ft_keyboard_press(int key, data_t *data_t)
 {
+
 	if (key == KEY_S)
 		ft_move_updown(data_t, 0);
 	else if (key == KEY_Z)
@@ -106,7 +110,8 @@ void ft_keyboard_press(int key, data_t *data_t)
 	else if (key == KEY_E)
 		ft_rotate(data_t, 0);
 	else
-		write(1, "fail", 4);
+	{	write(1, key, 3);
+		write(1, "fail", 4);}
 	print_black(data_t);
 	drawRays3d(data_t);
 	print_minimap(data_t);

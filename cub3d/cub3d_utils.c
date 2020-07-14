@@ -55,12 +55,12 @@ void	give_angle(data_t *data_t)
 		data_t->camera_x = 2 * atan(0.66/1.0);
 		data_t->camera_y = 0;
 	if (data_t->orientation == 'E')
-		data_t->direction_x = -1;
+		data_t->direction_x = 1;
 		data_t->direction_y = 0;
 		data_t->camera_x = 0;
-		data_t->camera_y = 2 * atan(0.66/1.0);
+		data_t->camera_y = -(2 * atan(0.66/1.0));
 	if (data_t->orientation == 'W')
-		data_t->direction_x = 1;
+		data_t->direction_x = -1;
 		data_t->direction_y = 0;
 		data_t->camera_x = 0;
 		data_t->camera_y = 2 * atan(0.66/1.0);
