@@ -33,7 +33,7 @@ void ft_move_updown(data_t *data_t, int m)
 	if (m == 0)
 	{
 		data_t->position_x -= data_t->direction_x * (0.5);
-		data_t->position_y -= data_t->direction_y * (0.5);
+		data_t->position_y -= data_t->direction_x * (0.5);
 	}
 	else
 	{
@@ -90,6 +90,14 @@ void	ft_rotate(data_t *data_t, int m)
 		data_t->camera_x = data_t->camera_x * cos(-0.5) - data_t->camera_y * sin(-0.5);
 		data_t->camera_y = temp * sin(-0.5) + data_t->camera_y * cos(-0.5);
 	}
+	if (data_t->direction_x > 1)
+		data_t->direction_x = ((data_t->direction_x - 1) - 1) * -1;
+	if (data_t->direction_y > 1)
+		data_t->direction_y = ((data_t->direction_y - 1) - 1) * -1;
+	if (data_t->direction_x < -1)
+		data_t->direction_x = ((data_t->direction_x + 1) + 1) * -1;
+	if (data_t->direction_y < -1)
+		data_t->direction_y = ((data_t->direction_y + 1) + 1) * -1;
 }
 
 //kinda called by main

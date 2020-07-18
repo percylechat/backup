@@ -96,6 +96,7 @@ void drawRays3d(data_t *data_t)
 			perpWallDist = (mapY - data_t->position_y + (1 - stepY) / 2) / ray_y;
 		data_t->wall_size = (int)(data_t->res_h / perpWallDist);
 		print_column(data_t, i, side);
+		data_t->wall_size = 0;
 		i += 1;
 	}
 }

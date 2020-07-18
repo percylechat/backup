@@ -61,7 +61,7 @@ void	check_map(data_t *data_t)
 		{
 			if ((check_N(data_t, i) + check_S(data_t, i) + check_E(data_t, i) + check_W(data_t, i)) != 4)
 			{
-				write(1, "ERROR", 5);
+				write(1, "ERROR, fail map", 15);
 				return;
 			}
 		}
