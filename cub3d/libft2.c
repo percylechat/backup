@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 11:36:39 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/07/12 19:31:49 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/07/21 18:52:51 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@ char	*ft_strjoin_map(char *s1, char *s2)
 	k = 0;
 	if (!(dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 2)))
 		return (NULL);
-	while (s1[j])
+	while (s1[j] != '\n')
 	{
 		dest[j] = s1[j];
 		j++;
 	}
-	dest[j++] = '\n';
+	dest[j] = '\n';
+	j++;
 	while (s2[k])
 		dest[j++] = s2[k++];
-	dest[j] = '\0';
+	dest[j] = '\n';
 	return (dest);
 }
 

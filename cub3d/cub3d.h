@@ -84,6 +84,7 @@ struct data_t
 // };
 
 void drawRays3d(data_t *data_t);
+char		**ft_split(char const *str, char c, data_t *data_t);
 
 /*
 ** cub3D.c

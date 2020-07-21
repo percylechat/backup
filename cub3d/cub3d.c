@@ -34,11 +34,17 @@ int		main(int argc, char **argv)
 {
 	data_t	data_t[256];
 
+int i = 0;
+
 	if (error_handling_start(argc, argv) == 0)
 		return (0);
 	file_handling(argv[1], data_t);
-		printf("\n%s\n", data_t->map);
+		printf("map :%s\n", data_t->map);
+		// printf("%d\n", data_t->line);
+		// printf("%d\n", data_t->column);
 	check_map(data_t);
+	// while (data_t->maptab[i])
+		printf("tab :%s\n", data_t->maptab[0]);
 	// if ((data_t->mlx_prog = mlx_init()) == NULL)
 	// 	return (EXIT_FAILURE);
 	// if ((data_t->mlx_win = mlx_new_window(data_t->mlx_prog, data_t->res_w, data_t->res_h, "Cub3D")) == NULL)
@@ -48,5 +54,5 @@ int		main(int argc, char **argv)
 	// mlx_hook(data_t->mlx_win, KEYPRESS, KEYPRESSMASK, &ft_keyboard_press, data_t);
 	// mlx_hook(data_t->mlx_win, KEYRELEASE, KEYRELEASEMASK, &ft_keyboard_release, data_t);
 	// mlx_loop(data_t->mlx_prog);
-	return (0);
+	// return (0);
 }

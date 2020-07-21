@@ -6,88 +6,134 @@
 
 //called by fill_map
 //if line in map is smaller than lines before, corrects line by adding spaces.
-void	fix_line(data_t *data_t, int k)
+// void	fix_line(data_t *data_t, int k)
+// {
+// 	char	*temp;
+// 	int		i;
+// 	char	*tempbis;
+//
+// 	i = 0;
+// 	if (!(temp = malloc(sizeof(char) * ((data_t->column - k) + 1))))
+// 		return ;
+// 	while (i < data_t->column - k)
+// 	{
+// 		temp[i] = ' ';
+// 		i++;
+// 	}
+// 	temp[i] = '\0';
+// 	tempbis = ft_strjoin(data_t->map, temp);
+// 	free (data_t->map);
+// 	data_t->map = strdup(tempbis);
+// 	free(tempbis);
+// }
+//
+// //called by fill_map
+// //if line in map is bigger than lines before, corrects previous lines by adding spaces.
+// void	fix_lines_before(data_t *data_t, int k)
+// {
+// 	int		i;
+// 	int		j;
+// 	int		m;
+// 	char	*temp;
+//
+// 	i = 0;
+// 	j = 0;
+// 	m = k - data_t->column;
+// 	if (!(temp = malloc(sizeof(char) * ((k + 1) * data_t->line))))
+// 		return ;
+// 	while (data_t->map[i])
+// 	{
+// 		if (data_t->map[i] == '\n')
+// 		{
+// 			while (m > 0)
+// 			{
+// 				m--;
+// 				temp[j++] = ' ';
+// 			}
+// 		m = k - data_t->column;
+// 		}
+// 	temp[j++] = data_t->map[i++];
+// 	}
+// 	temp[j] = '\0';
+// 	free(data_t->map);
+// 	data_t->map = ft_strdup(temp);
+// 	free(temp);
+// }
+//
+// //called by get_content
+// //takes line of map one by one and add them to giant array. since map can be nonrectangular, also corrects smaller lines by adding spaces.
+// void	fill_map(char *line, data_t *data_t)
+// {
+// 	int		k;
+// 	char	*temp;
+//
+// 	k = ft_strlen(line);
+// 	if ((k == 1 && line[0] == '\n') || (k = 0 && line[0] == '\0'))
+// 		return;
+// 	if (k > data_t->column)
+// 	{
+// 		if (data_t->line > 0)
+// 			fix_lines_before(data_t, k);
+// 		data_t->column = k;
+// 	}
+// 	if (data_t->line == 0)
+// 		data_t->map = ft_strdup(line);
+// 	else
+// 	{
+// 		temp = ft_strdup(data_t->map);
+// 		free (data_t->map);
+// 		data_t->map = ft_strjoin_map(temp, line);
+// 		free(temp);
+// 	}
+// 	if (data_t->column > k)
+// 		fix_line(data_t, k);
+// 	data_t->line++;
+// }
+
+char	*ft_strdup_map(const char *src)
 {
-	char	*temp;
+	char	*dest;
+	int		j;
 	int		i;
-	char	*tempbis;
 
 	i = 0;
-	if (!(temp = malloc(sizeof(char) * ((data_t->column - k) + 1))))
-		return ;
-	while (i < data_t->column - k)
+	if (!src)
 	{
-		temp[i] = ' ';
+		dest = malloc(1);
+		dest[0] = '\0';
+		return (dest);
+	}
+	else
+		j = ft_strlen((char *)src);
+	if (!(dest = malloc(sizeof(char) * (j + 1))))
+		return (NULL);
+	while (src[i])
+	{
+		dest[i] = src[i];
 		i++;
 	}
-	temp[i] = '\0';
-	tempbis = ft_strjoin(data_t->map, temp);
-	free (data_t->map);
-	data_t->map = strdup(tempbis);
-	free(tempbis);
+	dest[i] = '\n';
+	return (dest);
 }
 
-//called by fill_map
-//if line in map is bigger than lines before, corrects previous lines by adding spaces.
-void	fix_lines_before(data_t *data_t, int k)
+void 	fill_map(char *line, data_t *data_t)
 {
-	int		i;
-	int		j;
-	int		m;
-	char	*temp;
-
-	i = 0;
-	j = 0;
-	m = k - data_t->column;
-	if (!(temp = malloc(sizeof(char) * ((k + 1) * data_t->line))))
-		return ;
-	while (data_t->map[i])
+	printf("%s\n", line);
+	if (line[0] != '\0' && line[0] != '\n')
 	{
-		if (data_t->map[i] == '\n')
+		if (data_t->line == 0)
 		{
-			while (m > 0)
-			{
-				m--;
-				temp[j++] = ' ';
-			}
-		m = k - data_t->column;
+			data_t->map = ft_strdup_map(line);
+			data_t->column = ft_strlen(line);
 		}
-	temp[j++] = data_t->map[i++];
+		else
+		{
+			data_t->map = ft_strjoin_map(data_t->map, line);
+			if (ft_strlen(line) > data_t->column)
+				data_t->column = ft_strlen(line);
+		}
+		data_t->line++;
 	}
-	temp[j] = '\0';
-	free(data_t->map);
-	data_t->map = ft_strdup(temp);
-	free(temp);
-}
-
-//called by get_content
-//takes line of map one by one and add them to giant array. since map can be nonrectangular, also corrects smaller lines by adding spaces.
-void	fill_map(char *line, data_t *data_t)
-{
-	int		k;
-	char	*temp;
-
-	k = ft_strlen(line);
-	if (k == 1 && line[0] == '\n')
-		return;
-	if (k > data_t->column)
-	{
-		if (data_t->line > 0)
-			fix_lines_before(data_t, k);
-		data_t->column = k;
-	}
-	if (data_t->line == 0)
-		data_t->map = ft_strdup(line);
-	else
-	{
-		temp = ft_strdup(data_t->map);
-		free (data_t->map);
-		data_t->map = ft_strjoin_map(temp, line);
-		free(temp);
-	}
-	if (data_t->column > k)
-		fix_line(data_t, k);
-	data_t->line++;
 }
 
 //Called by file_handling
