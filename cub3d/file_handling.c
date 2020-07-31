@@ -116,23 +116,101 @@ char	*ft_strdup_map(const char *src)
 	return (dest);
 }
 
+
+static char	*ft_attrib(int n, char *res, int i)
+{
+	int j;
+
+	j = 0;
+	if (n == -2147483648)
+		n++;
+	if (n < 0)
+	{
+		n *= -1;
+		j = 1;
+	}
+	while (i >= j)
+	{
+		res[i] = n % 10 + 48;
+		n /= 10;
+		i--;
+	}
+	return (res);
+}
+
+static int	ft_mallocsize(int n)
+{
+	int i;
+
+	i = 1;
+	if (n <= 0)
+		i++;
+	while (n % 10 != 0 || n != 0)
+	{
+		n /= 10;
+		i++;
+	}
+	return (i);
+}
+
+static char	*ft_int_min(void)
+{
+	char	*res;
+	int		i;
+
+	i = 12;
+	if (!(res = malloc(sizeof(char) * i)))
+		return (NULL);
+	res[0] = '-';
+	ft_attrib(-2147483648, res, i - 2);
+	res[10] += 1;
+	res[11] = '\0';
+	return (res);
+}
+
+char		*ft_itoa(int n)
+{
+	char	*res;
+	int		i;
+
+	if (n == -0)
+		n = 0;
+	if (n == -2147483648)
+	{
+		res = (char *)ft_int_min();
+		return (res);
+	}
+	i = ft_mallocsize(n);
+	if (!(res = malloc(sizeof(char) * i)))
+		return (NULL);
+	if (n < 0)
+		res[0] = '-';
+	ft_attrib(n, res, i - 2);
+	res[i - 1] = '\0';
+	return (res);
+}
+
 void 	fill_map(char *line, data_t *data_t)
 {
-	printf("%s\n", line);
+	// printf("%s\n", line);
 	if (line[0] != '\0' && line[0] != '\n')
 	{
 		if (data_t->line == 0)
 		{
-			data_t->map = ft_strdup_map(line);
+			data_t->map = ft_strdup(line);
 			data_t->column = ft_strlen(line);
 		}
 		else
 		{
-			data_t->map = ft_strjoin_map(data_t->map, line);
+			data_t->map = ft_strjoin(data_t->map, line);
 			if (ft_strlen(line) > data_t->column)
 				data_t->column = ft_strlen(line);
 		}
+		data_t->column_size[data_t->line] = ft_strlen(line);
+		printf("nbr: %d\n", data_t->column_size[data_t->line]);
 		data_t->line++;
+		printf("line: %s\n", line);
+		printf("map: %s\n", data_t->map);
 	}
 }
 

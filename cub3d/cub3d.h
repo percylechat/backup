@@ -53,6 +53,7 @@ struct data_t
 	char		  *tex_sprite;
 	char		  *map;
 	int		   column;
+	int			column_size[1024];
 	int		   line;
 	char		**maptab;
 	//info character
@@ -84,7 +85,7 @@ struct data_t
 // };
 
 void drawRays3d(data_t *data_t);
-char		**ft_split(char const *str, char c, data_t *data_t);
+char		**ft_split_map(data_t *data_t);
 
 /*
 ** cub3D.c

@@ -70,7 +70,7 @@ void drawRays3d(data_t *data_t)
 			stepY = 1;
 			sideDistY = (mapY + 1.0 - data_t->position_y) * deltaDistY;
 		}
-		while (hit == 0 && j < 8)
+		while (hit == 0)
 		{
 			if (sideDistX < sideDistY)
 			{
@@ -86,7 +86,6 @@ void drawRays3d(data_t *data_t)
 			}
 			if (check_for_obstacle(mapX, mapY, data_t) > 0)
 				hit = 1;
-			j++;
 		}
 		j = 0;
 		hit = 0;
