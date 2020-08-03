@@ -113,7 +113,7 @@ void	*ft_memcpy_line(void *dst, const void *src, size_t n)
 	char	*buffer_d;
 	char	*buffer_s;
 
-	printf("%d\n", (int)n);
+	// printf("%d\n", (int)n);
 	if ((dst == src) || (!dst && !src) || !n)
 		return ((void *)dst);
 	buffer_s = (char *)src;
@@ -126,7 +126,7 @@ void	*ft_memcpy_line(void *dst, const void *src, size_t n)
 		i++;
 	}
 	buffer_d[i] = '\0';
-	printf("linememcpy: %s\n", dst);
+	// printf("linememcpy: %s\n", dst);
 	return ((void *)dst);
 }
 
@@ -151,9 +151,9 @@ char		**ft_split_map(data_t *data_t)
 		// 	j++;
 		// 	i++;
 		// }
-		printf("test: %s\n", test);
+		// printf("test: %s\n", test);
 		data_t->maptab[k] = ft_strdup(test);
-		printf("test2: %s\n", data_t->maptab[k]);
+		// printf("test2: %s\n", data_t->maptab[k]);
 		i += data_t->column_size[k];
 		k++;
 	}

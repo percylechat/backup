@@ -20,8 +20,8 @@ int	error_handling_start(int argc, char **argv)
 //check in the map if the coordonates contain a wall or not. To be improved with sprite detection.
 int	check_for_obstacle(int x, int y, data_t *data_t)
 {
-		write(1, "ok", 2);
-	printf("x: %d y:%d\n", x, y);
+		// write(1, "ok", 2);
+	// printf("x: %d y:%d\n", x, y);
 	if (x < 0 || y < 0 || x > data_t->column_size[y] || y >= data_t->line)
 		return (0);
 	if (data_t->maptab[y][x] == '1')

@@ -207,10 +207,10 @@ void 	fill_map(char *line, data_t *data_t)
 				data_t->column = ft_strlen(line);
 		}
 		data_t->column_size[data_t->line] = ft_strlen(line);
-		printf("nbr: %d\n", data_t->column_size[data_t->line]);
+		// printf("nbr: %d\n", data_t->column_size[data_t->line]);
 		data_t->line++;
-		printf("line: %s\n", line);
-		printf("map: %s\n", data_t->map);
+		// printf("line: %s\n", line);
+		// printf("map: %s\n", data_t->map);
 	}
 }
 

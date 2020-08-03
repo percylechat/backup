@@ -21,7 +21,7 @@ void	check_move(data_t *data_t, double temp, double tempbis)
 //characher goes backward or forward.
 //ZERO is S, ONE is Z
 
-//NOTE wrong direction if you look north. Should it be adapte to direction?
+//NOTE m == 0 doesnt work
 
 void ft_move_updown(data_t *data_t, int m)
 {
@@ -30,12 +30,12 @@ void ft_move_updown(data_t *data_t, int m)
 
 	temp = data_t->position_x;
 	tempbis = data_t->position_y;
-	if (m == 0)
+	if (m == 1)
 	{
 		data_t->position_x -= data_t->direction_x * (0.5);
-		data_t->position_y -= data_t->direction_x * (0.5);
+		data_t->position_y -= data_t->direction_y * (0.5);
 	}
-	else
+	else if (m == 0)
 	{
 		data_t->position_x += data_t->direction_x * (0.5);
 		data_t->position_y += data_t->direction_y * (0.5);
