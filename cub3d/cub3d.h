@@ -51,6 +51,11 @@ struct data_t
 	char		  *tex_S;
 	char		  *tex_E;
 	char		  *tex_sprite;
+	void		*img_N;
+	void		*img_S;
+	void		*img_E;
+	void		*img_W;
+	void		*img_Spri;
 	char		  *map;
 	int		   column;
 	int			column_size[1024];
@@ -85,6 +90,22 @@ struct data_t
 // };
 
 void drawRays3d(data_t *data_t);
+char		*ft_itoa(int n);
+char	*ft_strdup_map(const char *src);
+
+/*
+** cub3d_utils
+*/
+void get_res(char *line, int i, data_t *data_t);
+void	give_angle(data_t *data_t);
+void	print_black(data_t *data_t);
+char	*ft_strdup_map(const char *src);
+char	*ft_strjoin_map(char *s1, char *s2);
+
+/*
+** cub3d_utils2
+*/
+void	*ft_memcpy_line(void *dst, const void *src, size_t n);
 char		**ft_split_map(data_t *data_t);
 
 /*
@@ -97,8 +118,7 @@ int main(int argc, char **argv);
 /*
 ** file_handling
 */
-void	fix_line(data_t *data_t, int k);
-void	fix_lines_before(data_t *data_t, int k);
+void	get_res(char *line, int i, data_t *data_t);
 void fill_map(char *line, data_t *data_t);
 void get_content(char *line, data_t *data_t);
 void file_handling(char *name, data_t *data_t);
@@ -107,10 +127,10 @@ void file_handling(char *name, data_t *data_t);
 ** map_checking
 */
 void check_map(data_t *data_t);
-int check_E(data_t *data_t, int i);
-int check_S(data_t *data_t, int i);
-int check_W(data_t *data_t, int i);
-int check_N(data_t *data_t, int i);
+int check_E(data_t *data_t, int x, int y);
+int check_S(data_t *data_t, int x, int y);
+int check_W(data_t *data_t, int x, int y);
+int check_N(data_t *data_t, int x, int y);
 
 /*
 ** move
@@ -143,13 +163,6 @@ int get_red(char *line, int i);
 int get_green(char *line, int i);
 int get_blue(char *line, int i);
 int color_pixel(int r, int g, int b);
-
-/*
-** cub3d_utils
-*/
-void get_res(char *line, int i, data_t *data_t);
-void	give_angle(data_t *data_t);
-void	print_black(data_t *data_t);
 
 /*
 ** get_next_line

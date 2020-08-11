@@ -72,7 +72,7 @@ void	ft_rotate(data_t *data_t, int m)
 {
 	double temp;
 
-	if (m == 1)
+	if (m == 0)
 	{
 		temp = data_t->direction_x;
 		data_t->direction_x = data_t->direction_x * cos(0.5) - data_t->direction_y * sin(0.5);
