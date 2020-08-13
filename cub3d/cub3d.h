@@ -51,7 +51,8 @@ struct data_t
 	char		  *tex_S;
 	char		  *tex_E;
 	char		  *tex_sprite;
-	void		*img_N;
+	void		*img_N_p;
+	char		*img_N_mod;
 	void		*img_S;
 	void		*img_E;
 	void		*img_W;
@@ -75,6 +76,26 @@ struct data_t
 	int		   wall_size;
 };
 
+typedef struct s_raycast t_raycast;
+struct s_raycast
+{
+	float sideDistX;
+	float sideDistY;
+	float deltaDistX;
+	float deltaDistY;
+	float perpWallDist;
+	int stepX;
+	int stepY;
+	int side;
+	int mapY;
+	int mapX;
+	int hit;
+	float camerax;
+	float ray_x;
+	float ray_y;
+	// double deltaDistX;
+	// double deltaDistY;
+};
 // typedef struct data_t t_raycast;
 // struct data_t
 // {
@@ -92,6 +113,7 @@ struct data_t
 void drawRays3d(data_t *data_t);
 char		*ft_itoa(int n);
 char	*ft_strdup_map(const char *src);
+void	get_texture(data_t *data_t);
 
 /*
 ** cub3d_utils

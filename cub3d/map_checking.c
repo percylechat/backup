@@ -79,11 +79,4 @@ void	check_map(data_t *data_t)
 		x = 0;
 		y++;
 	}
-	get_texture(data_t);
-}
-
-void	get_texture(data_t *data_t)
-{
-	data_t->img_N = mlx_xpm_to_image(data_t->mlx_prog, *data_t->tex_N, (int)BLOC_SIZE, (int)BLOC_SIZE);
-	mlx_put_image_to_window(data_t->mlx_prog, data_t->mlx_win ,data_t->img_N, 64, 64);
 }

@@ -19,82 +19,79 @@
 
 void drawRays3d(data_t *data_t)
 {
-	int j = 0;
-	int mapX = (int)data_t->position_x;
-	int mapY = (int)data_t->position_y;
-	float sideDistX;
-	float sideDistY;
-	float deltaDistX;
-	float deltaDistY;
-	float perpWallDist;
-	int stepX;
-	int stepY;
-	int hit = 0;
-	int side;
-	int i = 0;
+	int j;
+	int i;
+	t_raycast t_raycast[256];
+
+	i = 0;
+	j = 0;
+	t_raycast->hit = 0;
 	while (i <= data_t->res_w)
 	{
-		mapX = (int)data_t->position_x;
-		mapY = (int)data_t->position_y;
-		float camerax = 2 * i / data_t->res_w - 1;
-		float ray_x = data_t->direction_x + data_t->camera_x * camerax;
-		float ray_y = data_t->direction_y + data_t->camera_y * camerax;
-
-		double deltaDistX = (ray_y == 0) ? 0 : ((ray_x == 0) ? 1 : fabs(1 / ray_x));
-        double deltaDistY = (ray_x == 0) ? 0 : ((ray_y == 0) ? 1 : fabs(1 / ray_y));
-		// if (ray_x != 0)
-		// 	deltaDistX = abs(1 / ray_x);
-		// else
-		// 	deltaDistX = 1;
-		// if (ray_y != 0)
-		// 	deltaDistY = abs(1 / ray_y);
-		// else
-		// 	deltaDistY = 1;
-		if (ray_x < 0)
+		t_raycast->mapX = (int)data_t->position_x;
+		t_raycast->mapY = (int)data_t->position_y;
+		t_raycast->camerax = 2 * i / data_t->res_w - 1;
+		t_raycast->ray_x = data_t->direction_x + data_t->camera_x * t_raycast->camerax;
+		t_raycast->ray_y = data_t->direction_y + data_t->camera_y * t_raycast->camerax;
+		t_raycast->deltaDistX = (t_raycast->ray_y == 0) ? 0 : ((t_raycast->ray_x == 0) ? 1 : fabs(1 / t_raycast->ray_x));
+        t_raycast->deltaDistY = (t_raycast->ray_x == 0) ? 0 : ((t_raycast->ray_y == 0) ? 1 : fabs(1 / t_raycast->ray_y));
+		if (t_raycast->ray_x < 0)
 		{
-			stepX = -1;
-			sideDistX = (data_t->position_x - mapX) * deltaDistX;
+			t_raycast->stepX = -1;
+			t_raycast->sideDistX = (data_t->position_x - t_raycast->mapX) * t_raycast->deltaDistX;
 		}
 		else
 		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - data_t->position_x) * deltaDistX;
+			t_raycast->stepX = 1;
+			t_raycast->sideDistX = (t_raycast->mapX + 1.0 - data_t->position_x) * t_raycast->deltaDistX;
 		}
-		if (ray_y < 0)
+		if (t_raycast->ray_y < 0)
 		{
-			stepY = -1;
-			sideDistY = (data_t->position_y - mapY) * deltaDistY;
+			t_raycast->stepY = -1;
+			t_raycast->sideDistY = (data_t->position_y - t_raycast->mapY) * t_raycast->deltaDistY;
 		}
 		else
 		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - data_t->position_y) * deltaDistY;
+			t_raycast->stepY = 1;
+			t_raycast->sideDistY = (t_raycast->mapY + 1.0 - data_t->position_y) * t_raycast->deltaDistY;
 		}
-		while (hit == 0)
+		while (t_raycast->hit == 0)
 		{
-			if (sideDistX < sideDistY)
+			if (t_raycast->sideDistX < t_raycast->sideDistY)
 			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
+				t_raycast->sideDistX += t_raycast->deltaDistX;
+				t_raycast->mapX += t_raycast->stepX;
+				t_raycast->side = 0;
 			}
 			else
 			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
+				t_raycast->sideDistY += t_raycast->deltaDistY;
+				t_raycast->mapY += t_raycast->stepY;
+				t_raycast->side = 1;
 			}
-			if (check_for_obstacle(mapX, mapY, data_t) > 0)
-				hit = 1;
+			if (check_for_obstacle(t_raycast->mapX, t_raycast->mapY, data_t) > 0)
+				t_raycast->hit = 1;
 		}
 		j = 0;
-		hit = 0;
-		if (side == 0)
-			perpWallDist = (mapX - data_t->position_x + (1 - stepX) / 2) / ray_x;
+		t_raycast->hit = 0;
+		if (t_raycast->side == 0)
+			t_raycast->perpWallDist = (t_raycast->mapX - data_t->position_x + (1 - t_raycast->stepX) / 2) / t_raycast->ray_x;
 		else
-			perpWallDist = (mapY - data_t->position_y + (1 - stepY) / 2) / ray_y;
-		data_t->wall_size = (int)(data_t->res_h / perpWallDist);
-		print_column(data_t, i, side);
+			t_raycast->perpWallDist = (t_raycast->mapY - data_t->position_y + (1 - t_raycast->stepY) / 2) / t_raycast->ray_y;
+		data_t->wall_size = (int)(data_t->res_h / t_raycast->perpWallDist);
+		//
+		// double wallX; //where exactly the wall was hit
+	    // if (side == 0) wallX = data_t->position_y + perpWallDist * ray_y;
+	    // else wallX = data_t->position_x + perpWallDist * ray_x;
+	    // wallX -= (int)wallX;
+		//
+	    // //x coordinate on the texture
+		// //texWidth largeur de image
+	    // int texX = int(wallX * double(texWidth));
+	    // if(side == 0 && ray_x > 0) texX = texWidth - texX - 1;
+	    // if(side == 1 && ray_y < 0) texX = texWidth - texX - 1;
+
+		print_column(data_t, i, t_raycast->side);
 		data_t->wall_size = 0;
 		i += 1;
 	}
@@ -131,4 +128,18 @@ void	print_column(data_t *data_t, int i, int side)
 	data_t->color_floor);
 	j++;
 	}
+}
+
+void	get_texture(data_t *data_t)
+{
+	int bits_per_pixel;
+	int size_line;
+	int endian;
+	int size;
+	char *test;
+
+	size = 64;
+	data_t->img_N_p = mlx_xpm_file_to_image(data_t->mlx_prog, data_t->tex_N, &size, &size);
+	if ((test = mlx_get_data_addr(data_t->img_N_p ,&bits_per_pixel, &size_line, &endian)) == NULL)
+		write(1, "error", 5);
 }
