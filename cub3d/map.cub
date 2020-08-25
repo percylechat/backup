@@ -1,5 +1,5 @@
 R 640 400
-NO pics/redbrick.xpm
+NO text.xpm
 SO ./path_to_the_south_texture
 WE ./path_to_the_west_texture
 EA ./path_to_the_east_texture
@@ -14,6 +14,6 @@ C 225,30,0
    100000001
    100000001
    100000001
-   100000001
-   100S00111
+   100S00001
+   100000111
    111111111

@@ -111,6 +111,7 @@ struct s_raycast
 // };
 
 void drawRays3d(data_t *data_t);
+void	check_step(t_raycast *t_raycast, data_t *data_t);
 char		*ft_itoa(int n);
 char	*ft_strdup_map(const char *src);
 void	get_texture(data_t *data_t);
