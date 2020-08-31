@@ -34,6 +34,16 @@
 // #define XK_Right						 0xff53  /* Move right, right arrow */
 // #define XK_Down						  0xff54  /* Move down, down arrow */
 
+typedef struct s_tex t_tex;
+struct s_tex
+{
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+	void	*address;
+	char	*content;
+};
+
 typedef struct data_t data_t;
 struct data_t
 {
@@ -51,12 +61,12 @@ struct data_t
 	char		  *tex_S;
 	char		  *tex_E;
 	char		  *tex_sprite;
-	void		*img_N_p;
-	char		*img_N_mod;
-	void		*img_S;
-	void		*img_E;
-	void		*img_W;
-	void		*img_Spri;
+	t_tex		*tex_N_s;
+	t_tex		*tex_S_s;
+	t_tex		*tex_E_s;
+	t_tex		*tex_W_s;
+	t_tex		*tex_Sp_s;
+	void 	*img_N_p;
 	char		  *map;
 	int		   column;
 	int			column_size[1024];
@@ -93,8 +103,15 @@ struct s_raycast
 	float camerax;
 	float ray_x;
 	float ray_y;
-	// double deltaDistX;
-	// double deltaDistY;
+	int deb;
+	int end;
+	double wallX;
+	int wallY;
+	int texX;
+	double step;
+	double texPos;
+	int texY;
+	int color;
 };
 // typedef struct data_t t_raycast;
 // struct data_t
@@ -186,6 +203,14 @@ int get_red(char *line, int i);
 int get_green(char *line, int i);
 int get_blue(char *line, int i);
 int color_pixel(int r, int g, int b);
+
+/*
+** get_texture
+*/
+t_tex	*get_tex(data_t *data_t, char *path);
+void 	init_texture(data_t *data_t);
+t_tex choose_texture(data_t *data_t,t_raycast *t_raycast, int i);
+
 
 /*
 ** get_next_line

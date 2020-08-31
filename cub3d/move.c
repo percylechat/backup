@@ -98,6 +98,7 @@ void	ft_rotate(data_t *data_t, int m)
 		data_t->direction_x = ((data_t->direction_x + 1) + 1) * -1;
 	if (data_t->direction_y < -1)
 		data_t->direction_y = ((data_t->direction_y + 1) + 1) * -1;
+	printf("%f %f\n", data_t->direction_x, data_t->direction_y);
 }
 
 //kinda called by main
