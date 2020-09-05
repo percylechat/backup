@@ -112,6 +112,7 @@ struct s_raycast
 	double texPos;
 	int texY;
 	int color;
+	char prev_wall;
 };
 // typedef struct data_t t_raycast;
 // struct data_t
