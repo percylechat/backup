@@ -103,6 +103,11 @@ struct s_raycast
 	float camerax;
 	float ray_x;
 	float ray_y;
+};
+
+typedef struct s_print t_print;
+struct s_print
+{
 	int deb;
 	int end;
 	double wallX;
@@ -112,21 +117,7 @@ struct s_raycast
 	double texPos;
 	int texY;
 	int color;
-	char prev_wall;
 };
-// typedef struct data_t t_raycast;
-// struct data_t
-// {
-//	 int		   p_absolut__x;
-//	 int		   p_absolut_y;
-//	 int		   direction;
-//	 int		   column;
-//	 float		 ray;
-//	 float		 ray_change;
-//	 int		   dist_vert;
-//	 int		   dist_hor;
-//	 int		   wall_size;
-// };
 
 void drawRays3d(data_t *data_t);
 void	check_step(t_raycast *t_raycast, data_t *data_t);
