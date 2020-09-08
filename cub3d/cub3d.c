@@ -18,12 +18,32 @@ int	error_handling_start(int argc, char **argv)
 
 //Called by drawRays3d in raycasting.c
 //check in the map if the coordonates contain a wall or not. To be improved with sprite detection.
-int	check_for_obstacle(int x, int y, data_t *data_t)
+int	check_for_obstacle(int x, int y, data_t *data_t, t_sprite *t_sprite)
 {
+	t_list *lst;
+
 	if (x < 0 || y < 0 || x > data_t->column_size[y] || y >= data_t->line)
 		return (0);
 	if (data_t->maptab[y][x] == '1')
 		return (1);
+	if (data_t->maptab[y][x] == '2')
+	{
+		// if (t_sprite->nbr_sprite == 0)
+		// {
+		// 	t_sprite->nbr_sprite++;
+		// 	t_sprite->list = ft_lstnew(x, y);
+		// }
+		// if (t_sprite->nbr_sprite >= 1 && t_sprite->t_list->position_x != x && t_sprite->t_list->position_y != y)
+		// {
+		// 	while (t_sprite->t_list->next)
+		// 	{
+		// 		t_sprite->t_list->position_x != x && t_sprite->t_list->position_y != y
+		// 	}
+		// 	ft_lstadd_back(t_sprite->list, ft_lstnew(x, y));
+		// 	t_sprite->nbr_sprite++;
+		// }
+		return (0);
+	}
 	else
 		return (0);
 }
@@ -44,8 +64,8 @@ int i = 0;
 	if ((data_t->mlx_win = mlx_new_window(data_t->mlx_prog, data_t->res_w, data_t->res_h, "Cub3D")) == NULL)
 		return (EXIT_FAILURE);
 	check_map(data_t);
-	init_texture(data_t);
-				write(1, "ping", 4);
+	// init_texture(data_t);
+	// 			write(1, "ping", 4);
 	data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h);
 	// get_texture(data_t);
 	drawRays3d(data_t);

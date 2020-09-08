@@ -6,11 +6,11 @@
 void	check_move(data_t *data_t, double temp, double tempbis)
 {
 	//BONUS
-	if (check_for_obstacle(data_t->position_x, data_t->position_y, data_t) == 1)
-	{
-		data_t->position_x =  temp;
-		data_t->position_y = tempbis;
-	}
+	// if (check_for_obstacle(data_t->position_x, data_t->position_y, data_t) == 1)
+	// {
+	// 	data_t->position_x =  temp;
+	// 	data_t->position_y = tempbis;
+	// }
 	if ((int)data_t->position_x != (int)temp || (int)data_t->position_y != (int)tempbis)
 	{
 		data_t->maptab[(int)data_t->position_y][(int)data_t->position_x] = data_t->orientation;

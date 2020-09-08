@@ -1,16 +1,16 @@
 R 640 400
-NO redbrick.xpm
-SO colorstone.xpm
-WE bluebrick.xpm
-EA text1.xpm
-S colorstone.xpm
+NO pics/redbrick.xpm
+SO pics/colorstone.xpm
+WE pics/bluebrick.xpm
+EA pics/text1.xpm
+S pics/colorstone.xpm
 F 220,220,80
 C 225,30,0
 
    11111111111111
    10001000000001
-   10000000000001
-   10000000000001
+   10000200000001
+   10000000020001
    10000N00000001
-   10000000000111
+   10200000000111
    11111111111111

@@ -47,7 +47,7 @@ t_tex get_tex_E(data_t *data_t)
 	data_t->tex_E_s = &tex_E;
 	return (tex_E);
 }
-void get_tex_sp(data_t *data_t)
+t_tex get_tex_sp(data_t *data_t)
 {
 	int size;
 	t_tex tex_sp;
@@ -56,6 +56,7 @@ void get_tex_sp(data_t *data_t)
 	tex_sp.address = mlx_xpm_file_to_image(data_t->mlx_prog, data_t->tex_sprite, &size, &size);
 	tex_sp.content = mlx_get_data_addr(tex_sp.address ,&tex_sp.bits_per_pixel, &tex_sp.size_line, &tex_sp.endian);
 	data_t->tex_Sp_s = &tex_sp;
+	return (tex_sp);
 }
 
 void 	init_texture(data_t *data_t)

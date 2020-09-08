@@ -84,6 +84,8 @@ struct data_t
 	int		   dist_vert;
 	int		   dist_hor;
 	int		   wall_size;
+	int tot_sprite;
+	char *sprite_spot;
 };
 
 typedef struct s_raycast t_raycast;
@@ -119,6 +121,25 @@ struct s_print
 	int color;
 };
 
+typedef struct		s_list
+{
+	int			x;
+	int			y;
+	struct s_list	*next;
+}					t_list;
+
+typedef struct s_sprite t_sprite;
+struct s_sprite
+{
+	int	nbr_sprite;
+	int	color;
+	t_list	*list;
+};
+
+t_tex get_tex_sp(data_t *data_t);
+void	ft_lstadd_back(t_list **alst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
+t_list	*ft_lstnew(int i, int j);
 void drawRays3d(data_t *data_t);
 void	check_step(t_raycast *t_raycast, data_t *data_t);
 char		*ft_itoa(int n);
@@ -144,7 +165,7 @@ char		**ft_split_map(data_t *data_t);
 ** cub3D.c
 */
 int error_handling_start(int argc, char **argv);
-int check_for_obstacle(int x, int y, data_t *data_t);
+int check_for_obstacle(int x, int y, data_t *data_t, t_sprite *t_sprite);
 int main(int argc, char **argv);
 
 /*
