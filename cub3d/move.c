@@ -53,7 +53,7 @@ void ft_move_leftright(data_t *data_t, int m)
 
 	temp = data_t->position_x;
 	tempbis = data_t->position_y;
-	if (m == 0)
+	if (m == 1)
 	{
 		data_t->position_x += data_t->camera_x * (0.5);
 		data_t->position_y += data_t->camera_y * (0.5);
