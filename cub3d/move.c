@@ -55,13 +55,13 @@ void ft_move_leftright(data_t *data_t, int m)
 	tempbis = data_t->position_y;
 	if (m == 0)
 	{
-		data_t->position_x += data_t->direction_y * (0.5);
-		data_t->position_y += data_t->direction_x * (0.5);
+		data_t->position_x += data_t->camera_x * (0.5);
+		data_t->position_y += data_t->camera_y * (0.5);
 	}
 	else
 	{
-		data_t->position_x -= data_t->direction_y * (0.5);
-		data_t->position_y -= data_t->direction_x * (0.5);
+		data_t->position_x -= data_t->camera_x * (0.5);
+		data_t->position_y -= data_t->camera_y * (0.5);
 	}
 	check_move(data_t, temp, tempbis);
 }
