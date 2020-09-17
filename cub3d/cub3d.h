@@ -54,8 +54,8 @@ struct data_t
 	float		   res_w;
 	float		   res_h;
 	// info map
-	int		   color_floor;
-	int		   color_ceiling;
+	unsigned int		   color_floor;
+	unsigned int		   color_ceiling;
 	char		  *tex_N;
 	char		  *tex_W;
 	char		  *tex_S;
@@ -118,16 +118,31 @@ struct s_print
 	double step;
 	double texPos;
 	int texY;
-	int color;
+	unsigned int color;
 };
 
 typedef struct s_sprite t_sprite;
 struct s_sprite
 {
-	int	is_sprite;
-	int	color;
-	char	*buffer;
-	int	*ordered_sprite;
+	int		is_sprite;
+	unsigned int		color;
+	float	*buffer;
+	int		*ordered_sprite;
+	int		sprite_h;
+	int		sprite_w;
+	int		start_h;
+	int		start_w;
+	int		end_h;
+	int		end_w;
+	float spriteX;
+	float spriteY;
+	float invDet;
+	float transformX;
+	float transformY;
+	int spriteScreenX;
+	int wall_x;
+	int tex_x;
+	int wall_y;
 };
 
 // typedef struct		s_list
@@ -215,7 +230,7 @@ void get_color(char *line, int i, data_t *data_t);
 int get_red(char *line, int i);
 int get_green(char *line, int i);
 int get_blue(char *line, int i);
-int color_pixel(int r, int g, int b);
+unsigned int color_pixel(int r, int g, int b);
 
 /*
 ** get_texture

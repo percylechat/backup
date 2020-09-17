@@ -121,7 +121,7 @@ void ft_keyboard_press(int key, data_t *data_t)
 	else
 	{	write(1, key, 3);
 		write(1, "fail", 4);}
-	print_black(data_t);
+	// print_black(data_t);
 	drawRays3d(data_t);
 	print_minimap(data_t);
 }

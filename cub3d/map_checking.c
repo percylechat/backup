@@ -101,8 +101,8 @@ void	check_map(data_t *data_t)
 					return;
 				}
 				data_t->orientation = data_t->maptab[y][x];
-				data_t->position_x = x;
-				data_t->position_y = y;
+				data_t->position_x = x + 0.5;
+				data_t->position_y = y + 0.5;
 				give_angle(data_t);
 			}
 			if (data_t->maptab[y][x] == '2')

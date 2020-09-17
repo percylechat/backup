@@ -3,9 +3,9 @@
 //called by get_content in file_handling.c
 //creates appropriate integrer for ceiling and floor colors.
 
-int		color_pixel(int r, int g, int b)
+unsigned int		color_pixel(int r, int g, int b)
 {
-	return (b + (r<<16) + (g<<8));
+	return ((unsigned int)b + (unsigned int)(r<<16) + (unsigned int)(g<<8));
 }
 
 int		get_blue(char *line, int i)
