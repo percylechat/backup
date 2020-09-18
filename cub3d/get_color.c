@@ -29,7 +29,7 @@ int		get_blue(char *line, int i)
 	if (j > 3)
 	{
 		write(1, "ERROR: wrong color input", 24);
-		return (NULL);
+		return (0);
 	}
 	clr[j] = '\0';
 	return (ft_atoi(clr));
@@ -52,7 +52,7 @@ int		get_green(char *line, int i)
 	if (j > 3)
 	{
 		write(1, "ERROR: wrong color input", 24);
-		return (NULL);
+		return (0);
 	}
 	clr[j] = '\0';
 	return (ft_atoi(clr));
@@ -71,7 +71,7 @@ int		get_red(char *line, int i)
 	if (j > 3)
 	{
 		write(1, "ERROR: wrong color input", 24);
-		return (NULL);
+		return (0);
 	}
 	clr[j] = '\0';
 	return (ft_atoi(clr));

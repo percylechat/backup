@@ -118,8 +118,11 @@ void ft_keyboard_press(int key, data_t *data_t)
 		ft_rotate(data_t, 1);
 	else if (key == KEY_E)
 		ft_rotate(data_t, 0);
+	else if (key = KEY_ESC)
+		ft_quit(data_t);
 	else
 	{	write(1, key, 3);
+		printf("%d\n", key);
 		write(1, "fail", 4);}
 	// print_black(data_t);
 	drawRays3d(data_t);

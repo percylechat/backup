@@ -33,6 +33,13 @@ int	check_for_obstacle(int x, int y, data_t *data_t, t_sprite *t_sprite)
 		return (0);
 }
 
+void		ft_quit(data_t *data_t)
+{
+	mlx_destroy_image(data_t->mlx_prog, data_t->mlx_img);
+	mlx_destroy_window(data_t->mlx_prog, data_t->mlx_win);
+	exit(0);
+}
+
 // IS main
 // first initialize image, then starts controls loop.
 int		main(int argc, char **argv)

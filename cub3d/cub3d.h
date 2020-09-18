@@ -27,6 +27,7 @@
 # define KEY_D 100
 # define KEY_A 97
 # define KEY_E 101
+# define KEY_ESC 65307
 # define DR 0.0174533
 
 // #define XK_Left						  0xff51  /* Move left, left arrow */
@@ -181,6 +182,7 @@ char		**ft_split_map(data_t *data_t);
 */
 int error_handling_start(int argc, char **argv);
 int check_for_obstacle(int x, int y, data_t *data_t, t_sprite *t_sprite);
+void		ft_quit(data_t *data_t);
 int main(int argc, char **argv);
 
 /*

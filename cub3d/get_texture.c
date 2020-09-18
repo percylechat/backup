@@ -59,19 +59,6 @@ t_tex get_tex_sp(data_t *data_t)
 	return (tex_sp);
 }
 
-void 	init_texture(data_t *data_t)
-{
-	get_tex_sp(data_t);
-	// get_tex_N(data_t);
-	printf("%x\n", data_t->tex_Sp_s);
-	printf("%x\n", data_t->tex_N_s);
-	get_tex_S(data_t);
-	get_tex_W(data_t);
-	get_tex_E(data_t);
-	printf("%x\n", data_t->tex_N_s);
-		printf("%x\n", data_t->tex_S_s);
-}
-
 t_tex choose_texture(data_t *data_t,t_raycast *t_raycast, int i)
 {
 	t_tex tex_return;
