@@ -273,4 +273,8 @@ int		ft_isdigit(int c);
 char	*ft_strjoin_map(char *s1, char *s2);
 void	*ft_memmove(void *dst, const void *src, size_t len);
 
+/*
+** libft3
+*/
+void	ft_putstr_fd(char *s, int fd);
 #endif

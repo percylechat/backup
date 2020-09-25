@@ -118,6 +118,9 @@ int 	*sort_sprite(int *temp)
 		}
 		i += 3;
 	}
+	// int b = 0;
+	// while (temp[b])
+	// 	printf("before: %d\n", temp[b++]);
 	return (temp);
 }
 
@@ -238,4 +241,5 @@ void	drawRays3d(data_t *data_t)
 	}
 	if (t_sprite->is_sprite > 0)
 		print_sprite(data_t, i, t_sprite, t_raycast);
+	free(t_sprite->buffer);
 }

@@ -5,16 +5,13 @@
 //check if character position is in a wall or not (for bonus) and change map according to new charater position if it changes coordinates.
 void	check_move(data_t *data_t, double temp, double tempbis)
 {
-	//BONUS
-	// if (check_for_obstacle(data_t->position_x, data_t->position_y, data_t) == 1)
-	// {
-	// 	data_t->position_x =  temp;
-	// 	data_t->position_y = tempbis;
-	// }
+	char spot;
+
 	if ((int)data_t->position_x != (int)temp || (int)data_t->position_y != (int)tempbis)
 	{
+		data_t->maptab[(int)data_t->position_y][(int)data_t->position_x] = spot;
 		data_t->maptab[(int)data_t->position_y][(int)data_t->position_x] = data_t->orientation;
-		data_t->maptab[(int)tempbis][(int)temp] = '0';
+		data_t->maptab[(int)tempbis][(int)temp] = spot;
 	}
 }
 

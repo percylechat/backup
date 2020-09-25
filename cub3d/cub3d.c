@@ -1,16 +1,28 @@
 #include "cub3d.h"
 
+int 	ft_issave(char *txt)
+{
+	if (txt[0] != '-' || txt[1] != '-' || txt[2] != 's' || txt[3] != 'a' || txt[4] != 'v' || txt[5] != 'e')
+		return (0);
+	return (1);
+}
+
 //beginning of an error handling protocol. Called in Main.
 int	error_handling_start(int argc, char **argv)
 {
-	if (strstr(argv[1], ".cub") == NULL)
+	if (argc > 3 || argc < 2)
 	{
-		write(1, "ERROR: wrong map extension", 26);
+		ft_putstr_fd("Error\nWrong number of arguments", 1);
 		return (0);
 	}
-	if (argc == 3 && argv[2] != "--save")
+	else if (strstr(argv[1], ".cub") == NULL)
 	{
-		write(1, "ERROR: wrong arguments", 22);
+		ft_putstr_fd("Error\nWrong map extension", 1);
+		return (0);
+	}
+	else if (argc == 3 && ft_issave(argv[2]) != 1)
+	{
+		ft_putstr_fd("Error\nWrong option", 1);
 		return (0);
 	}
 	return (1);
@@ -46,10 +58,10 @@ int		main(int argc, char **argv)
 {
 	data_t	data_t[256];
 
-int i = 0;
+	int i = 0;
 
 	if (error_handling_start(argc, argv) == 0)
-		return (0);
+		return(0);
 	file_handling(argv[1], data_t);
 	if ((data_t->mlx_prog = mlx_init()) == NULL)
 		return (EXIT_FAILURE);

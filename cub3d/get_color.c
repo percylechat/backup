@@ -10,10 +10,6 @@ unsigned int		color_pixel(int r, int g, int b)
 
 int		get_blue(char *line, int i)
 {
-	char	clr[5];
-	int		j;
-
-	j = 0;
 	while (ft_isdigit(line[i]) == 0)
 		i++;
 	while (ft_isdigit(line[i]) != 0)
@@ -22,59 +18,44 @@ int		get_blue(char *line, int i)
 		i++;
 	while (ft_isdigit(line[i]) != 0)
 		i++;
-	while (ft_isdigit(line[i]) == 0)
+	while (line[i] == ' ')
 		i++;
-	while (ft_isdigit(line[i]) != 0)
-		clr[j++] = line[i++];
-	if (j > 3)
-	{
-		write(1, "ERROR: wrong color input", 24);
-		return (0);
-	}
-	clr[j] = '\0';
-	return (ft_atoi(clr));
+	if (line[i] == ',')
+		i++;
+	else
+		return (-1);
+	return (ft_atoi(&line[i]));
 }
 
 int		get_green(char *line, int i)
 {
-	char	clr[5];
-	int		j;
-
-	j = 0;
-	while (ft_isdigit(line[i]) == 0)
+	while (line[i] == ' ')
 		i++;
 	while (ft_isdigit(line[i]) != 0)
 		i++;
-	while (ft_isdigit(line[i]) == 0)
+	while (line[i] == ' ')
 		i++;
-	while (ft_isdigit(line[i]) != 0)
-		clr[j++] = line[i++];
-	if (j > 3)
-	{
-		write(1, "ERROR: wrong color input", 24);
-		return (0);
-	}
-	clr[j] = '\0';
-	return (ft_atoi(clr));
+	if (line[i] == ',')
+		i++;
+	else
+		return (-1);
+	return (ft_atoi(&line[i]));
 }
 
-int		get_red(char *line, int i)
+void	error_color(data_t *data_t)
 {
-	char	clr[5];
-	int		j;
-
-	j = 0;
-	while (ft_isdigit(line[i]) == 0)
-		i++;
-	while (ft_isdigit(line[i]) != 0)
-		clr[j++] = line[i++];
-	if (j > 3)
-	{
-		write(1, "ERROR: wrong color input", 24);
-		return (0);
-	}
-	clr[j] = '\0';
-	return (ft_atoi(clr));
+	ft_putstr_fd("Error\nColors should be separated by commas, each value between 0 and 255", 1);
+	if (data_t->tex_N)
+		free(data_t->tex_N);
+	if (data_t->tex_S)
+		free(data_t->tex_S);
+	if (data_t->tex_W)
+		free(data_t->tex_W);
+	if (data_t->tex_E)
+		free(data_t->tex_E);
+	if (data_t->tex_sprite)
+		free(data_t->tex_sprite);
+	exit(0);
 }
 
 void	get_color(char *line, int i, data_t *data_t)
@@ -83,9 +64,14 @@ void	get_color(char *line, int i, data_t *data_t)
 	int		g;
 	int		b;
 
-	r = get_red(line, i);
-	g = get_green(line, i);
-	b = get_blue(line, i);
+	r = ft_atoi(&line[i + 1]);
+	g = get_green(line, i + 1);
+	b = get_blue(line, i + 1);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+	{
+		error_color(data_t);
+		return;
+	}
 	if (line[i] == 'C')
 		data_t->color_ceiling = color_pixel(r, g, b);
 	if (line[i] == 'F')

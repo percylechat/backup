@@ -4,24 +4,17 @@
 
 void	get_res(char *line, int i, data_t *data_t)
 {
-	char	res[5];
-	char	res2[5];
-	int		j;
-
-	j = 0;
-	while (ft_isdigit(line[i]) == 0)
-		i++;
- 	while (ft_isdigit(line[i]) != 0)
-		res[j++] = line[i++];
-	res[j] = '\0';
-	data_t->res_w = ft_atoi(res);
-	j = 0;
+	data_t->res_w = ft_atoi(&line[i + 1]);
 	while (ft_isdigit(line[i]) == 0)
 		i++;
 	while (ft_isdigit(line[i]) != 0)
-		res2[j++] = line[i++];
-	res[j] = '\0';
-	data_t->res_h = ft_atoi(res2);
+		i++;
+	data_t->res_h = ft_atoi(&line[i]);
+	if (data_t->res_w < 200)
+		data_t->res_w = 200;
+	if (data_t->res_h < 200)
+		data_t->res_h = 200;
+	// warning need reso max et check reso ecran
 }
 
 void 	fill_map(char *line, data_t *data_t)
@@ -59,15 +52,15 @@ void	get_content(char *line, data_t *data_t)
 	else if (line[i] == 'R')
 		get_res(line, i, data_t);
 	else if (line[i] == 'N')
-		data_t->tex_N = ft_strdup(ft_strtrim(&line[i + 2], " "));
+		data_t->tex_N = ft_strtrim(&line[i + 2], " ");
 	else if (line[i] == 'W')
-		data_t->tex_W = ft_strdup(ft_strtrim(&line[i + 2], " "));
+		data_t->tex_W = ft_strtrim(&line[i + 2], " ");
 	else if (line[i] == 'E')
-		data_t->tex_E = ft_strdup(ft_strtrim(&line[i + 2], " "));
+		data_t->tex_E = ft_strtrim(&line[i + 2], " ");
 	else if (line[i] == 'S' && line[i + 1] == 'O')
-		data_t->tex_S = ft_strdup(ft_strtrim(&line[i + 2], " "));
+		data_t->tex_S = ft_strtrim(&line[i + 2], " ");
 	else if (line[i] == 'S')
-		data_t->tex_sprite = ft_strdup(ft_strtrim(&line[i + 1], " "));
+		data_t->tex_sprite = ft_strtrim(&line[i + 1], " ");
 	else
 		fill_map(line, data_t);
 }
@@ -82,10 +75,9 @@ void	file_handling(char *name, data_t *data_t)
 
 	data_t->column = 0;
 	data_t->line = 0;
-	if ((fd = open("/home/budal-bi/Workspace/C/cub3d/map.cub", O_RDONLY)) == -1)
+	if ((fd = open("map.cub", O_RDONLY)) == -1)
 	{
-		perror("test");
-		write(1, "ERROR: can't open file", 22);
+		ft_putstr_fd("Error\nCan't open map file", 1);
 		return ;
 	}
 	while (get_next_line(fd, &line) != 0)

@@ -1,17 +1,18 @@
 #include "cub3d.h"
 
-// t_list	*ft_lstnew(int x, int y, float z)
-// {
-// 	t_list *new_el;
-//
-// 	if (!(new_el = (t_list*)malloc(sizeof(t_list*))))
-// 		return (NULL);
-// 	new_el->pos_x = x;
-// 	new_el->pos_y = y;
-// 	new_el->dist = z;
-// 	new_el->next = NULL;
-// 	return (new_el);
-// }
+void	ft_putstr_fd(char *s, int fd)
+{
+	int i;
+
+	i = 0;
+	if (!s || !fd)
+		return ;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+}
 
 static char	*ft_attrib(int n, char *res, int i)
 {
