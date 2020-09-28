@@ -19,6 +19,8 @@ void	get_res(char *line, int i, data_t *data_t)
 
 void 	fill_map(char *line, data_t *data_t)
 {
+	char *temp;
+
 	if (line[0] != '\0' && line[0] != '\n')
 	{
 		if (data_t->line == 0)
@@ -28,7 +30,10 @@ void 	fill_map(char *line, data_t *data_t)
 		}
 		else
 		{
-			data_t->map = ft_strjoin(data_t->map, line);
+			temp = ft_strdup(data_t->map);
+			free(data_t->map);
+			data_t->map = ft_strjoin(temp, line);
+			free(temp);
 			if (ft_strlen(line) > data_t->column)
 				data_t->column = ft_strlen(line);
 		}

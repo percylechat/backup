@@ -1,41 +1,35 @@
 #include "cub3d.h"
 
-void	*ft_memcpy_line(void *dst, const void *src, size_t n)
+char *line_copy(char *src, int i)
 {
-	size_t	i;
-	char	*buffer_d;
-	char	*buffer_s;
+	int j;
+	char *dst;
 
-	if ((dst == src) || (!dst && !src) || !n)
-		return ((void *)dst);
-	buffer_s = (char *)src;
-	buffer_d = dst;
-	i = 0;
-	while (i < n)
+	j = 0;
+	if (!(dst = malloc(sizeof(char) * i + 1)))
+		return (NULL);
+	while (j < i)
 	{
-		buffer_d[i] = buffer_s[i];
-		i++;
+		dst[j] = src[j];
+		j++;
 	}
-	buffer_d[i] = '\0';
-	return ((void *)dst);
+	dst[j] = '\0';
+	return (dst);
 }
 
 char		**ft_split_map(data_t *data_t)
 {
 	int		i;
-	int		j;
 	int		k;
 	char *test;
 
-	j = 0;
 	k = 0;
 	i = 0;
 	if (!(data_t->maptab = malloc(sizeof(char *) * (data_t->line + 1))))
 		return (NULL);
 	while (k < data_t->line)
 	{
-		test = ft_memcpy_line(&data_t->maptab[k], &data_t->map[i], data_t->column_size[k]);
-		data_t->maptab[k] = ft_strdup(test);
+		data_t->maptab[k] = line_copy(&data_t->map[i], data_t->column_size[k]);
 		i += data_t->column_size[k];
 		k++;
 	}

@@ -63,11 +63,11 @@ int		main(int argc, char **argv)
 	if (error_handling_start(argc, argv) == 0)
 		return(0);
 	file_handling(argv[1], data_t);
+	check_map(data_t);
 	if ((data_t->mlx_prog = mlx_init()) == NULL)
 		return (EXIT_FAILURE);
 	if ((data_t->mlx_win = mlx_new_window(data_t->mlx_prog, data_t->res_w, data_t->res_h, "Cub3D")) == NULL)
 		return (EXIT_FAILURE);
-	check_map(data_t);
 	// init_texture(data_t);
 	// 			write(1, "ping", 4);
 	data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h);

@@ -71,6 +71,50 @@ void	sprite_roundup(data_t *data_t, int x, int y)
 	free(temp);
 }
 
+void 	ft_quit_map(data_t *data_t)
+{
+	int i;
+
+	i = 0;
+	ft_putstr_fd("Error\nInvalid map", 1);
+	free(data_t->tex_N);
+	free(data_t->tex_S);
+	free(data_t->tex_W);
+	free(data_t->tex_E);
+	free(data_t->tex_sprite);
+	free(data_t->map);
+	while (i < data_t->line + 1)
+		free(data_t->maptab[i++]);
+	free(data_t->maptab);
+	exit(0);
+}
+
+int 	init_map(data_t *data_t, int y, int x)
+{
+	if (((check_N(data_t, x, y) + check_S(data_t, x, y) + check_E(data_t, x, y)
++ check_W(data_t, x, y)) != 4 && data_t->maptab[y][x] != '1' && data_t->maptab[y][x] != ' ') || (data_t->maptab[y][x] != '0' &&
+data_t->maptab[y][x] != 'W' && data_t->maptab[y][x] != 'N' &&
+data_t->maptab[y][x] != 'S' && data_t->maptab[y][x] != 'E' &&
+data_t->maptab[y][x] != '2' && data_t->maptab[y][x] != '1' &&
+data_t->maptab[y][x] != ' '))
+		return (-1);
+	if (data_t->maptab[y][x] == 'W' || data_t->maptab[y][x] == 'N' ||
+data_t->maptab[y][x] == 'S' || data_t->maptab[y][x] == 'E')
+	{
+		data_t->orientation = data_t->maptab[y][x];
+		data_t->position_x = x + 0.5;
+		data_t->position_y = y + 0.5;
+		give_angle(data_t);
+	}
+	if (data_t->maptab[y][x] == '2')
+		sprite_roundup(data_t, x, y);
+	return (0);
+}
+
+int		sanity_check(data_t)
+{
+	if (!data_t->maptab)
+}
 
 //fixes some map stuff, check if for each blank space (0) there is a wall for every direction, then create a double array for map.
 void	check_map(data_t *data_t)
@@ -85,31 +129,19 @@ void	check_map(data_t *data_t)
 	{
 		while (x < data_t->column_size[y])
 		{
-			if (data_t->maptab[y][x] == '0')
+			if (init_map(data_t, y, x) != 0)
 			{
-				if ((check_N(data_t, x, y) + check_S(data_t, x, y) + check_E(data_t, x, y) + check_W(data_t, x, y)) != 4)
-				{
-					write(1, "ERROR, fail map", 15);
-					return;
-				}
+				ft_quit_map(data_t);
+				return;
 			}
-			if (data_t->maptab[y][x] == 'W' || data_t->maptab[y][x] == 'N' || data_t->maptab[y][x] == 'S' || data_t->maptab[y][x] == 'E')
-			{
-				if ((check_N(data_t, x, y) + check_S(data_t, x, y) + check_E(data_t, x, y) + check_W(data_t, x, y)) != 4)
-				{
-					write(1, "ERROR, fail map", 15);
-					return;
-				}
-				data_t->orientation = data_t->maptab[y][x];
-				data_t->position_x = x + 0.5;
-				data_t->position_y = y + 0.5;
-				give_angle(data_t);
-			}
-			if (data_t->maptab[y][x] == '2')
-				sprite_roundup(data_t, x, y);
 			x++;
 		}
 		x = 0;
 		y++;
+	}
+	if (sanity_check != 0)
+	{
+		ft_quit_map(data_t);
+		return;
 	}
 }
