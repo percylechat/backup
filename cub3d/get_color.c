@@ -1,8 +1,5 @@
 #include "cub3d.h"
 
-//called by get_content in file_handling.c
-//creates appropriate integrer for ceiling and floor colors.
-
 unsigned int		color_pixel(int r, int g, int b)
 {
 	return ((unsigned int)b + (unsigned int)(r<<16) + (unsigned int)(g<<8));
@@ -40,22 +37,6 @@ int		get_green(char *line, int i)
 	else
 		return (-1);
 	return (ft_atoi(&line[i]));
-}
-
-void	error_color(data_t *data_t)
-{
-	ft_putstr_fd("Error\nColors should be separated by commas, each value between 0 and 255", 1);
-	if (data_t->tex_N)
-		free(data_t->tex_N);
-	if (data_t->tex_S)
-		free(data_t->tex_S);
-	if (data_t->tex_W)
-		free(data_t->tex_W);
-	if (data_t->tex_E)
-		free(data_t->tex_E);
-	if (data_t->tex_sprite)
-		free(data_t->tex_sprite);
-	exit(0);
 }
 
 void	get_color(char *line, int i, data_t *data_t)

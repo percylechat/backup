@@ -6,15 +6,11 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 16:33:29 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/07/12 19:19:18 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/09/29 11:56:00 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-//OLD PROJECT, main functions
-//read line by line in a file, took me 2 months -_-
-//shouldn't be a source of issues since it has been debugged.
 
 char	*new_buffer(char *buffer, char *reste)
 {

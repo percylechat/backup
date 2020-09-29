@@ -30,11 +30,6 @@
 # define KEY_ESC 65307
 # define DR 0.0174533
 
-// #define XK_Left						  0xff51  /* Move left, left arrow */
-// #define XK_Up							0xff52  /* Move up, up arrow */
-// #define XK_Right						 0xff53  /* Move right, right arrow */
-// #define XK_Down						  0xff54  /* Move down, down arrow */
-
 typedef struct s_tex t_tex;
 struct s_tex
 {
@@ -178,6 +173,13 @@ void	*ft_memcpy_line(void *dst, const void *src, size_t n);
 char		**ft_split_map(data_t *data_t);
 
 /*
+** texture
+*/
+void	text_print(t_tex tex, int h, t_print *t_print, data_t *data_t, int i);
+void	print_wall(data_t *data_t, t_raycast *t_raycast, int i, t_print *t_print);
+void 	calc_texture(data_t *data_t, t_raycast *t_raycast, int i);
+
+/*
 ** cub3D.c
 */
 int error_handling_start(int argc, char **argv);
@@ -196,11 +198,25 @@ void file_handling(char *name, data_t *data_t);
 /*
 ** map_checking
 */
+void	sprite_roundup(data_t *data_t, int x, int y);
+int 	init_map(data_t *data_t, int y, int x);
 void check_map(data_t *data_t);
+
+/*
+** map_checking_dir
+*/
 int check_E(data_t *data_t, int x, int y);
 int check_S(data_t *data_t, int x, int y);
 int check_W(data_t *data_t, int x, int y);
 int check_N(data_t *data_t, int x, int y);
+
+/*
+** sprite
+*/
+int 	*sort_sprite(int *temp);
+void	calc_sprite(data_t *data_t, t_sprite *t_sprite, t_raycast *t_raycast);
+void	sprite_size(t_sprite *t_sprite, data_t *data_t);
+void 	print_sprite(data_t *data_t, int i, t_sprite *t_sprite, t_raycast *t_raycast);
 
 /*
 ** move
@@ -226,10 +242,16 @@ void	print_minimap(data_t *data_t);
 int	check_for_obstacle_m(int x, int y, data_t *data_t);
 
 /*
+** ft_error
+*/
+void	error_color(data_t *data_t);
+void	error_sanity_check(data_t *data_t);
+void 	ft_quit_map(data_t *data_t, char *str);
+
+/*
 ** get_color
 */
 void get_color(char *line, int i, data_t *data_t);
-int get_red(char *line, int i);
 int get_green(char *line, int i);
 int get_blue(char *line, int i);
 unsigned int color_pixel(int r, int g, int b);

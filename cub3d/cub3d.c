@@ -52,26 +52,37 @@ void		ft_quit(data_t *data_t)
 	exit(0);
 }
 
+int 	launch_mlx(data_t *data_t)
+{
+	if ((data_t->mlx_prog = mlx_init()) == NULL)
+	{
+		ft_quit_map(data_t, "Error\nFailed to launch Xserver");
+		return (0);
+	}
+	if ((data_t->mlx_win = mlx_new_window(data_t->mlx_prog, data_t->res_w, data_t->res_h, "Cub3D")) == NULL)
+	{
+		ft_quit_map(data_t, "Error\nFailed to create window");
+		return (0);
+	}
+	if ((data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h)) == NULL)
+	{
+		ft_quit_map(data_t, "Error\nFailed to create image");
+		return (0);
+	}
+}
+
 // IS main
 // first initialize image, then starts controls loop.
 int		main(int argc, char **argv)
 {
 	data_t	data_t[256];
 
-	int i = 0;
-
 	if (error_handling_start(argc, argv) == 0)
-		return(0);
+		return (0);
 	file_handling(argv[1], data_t);
 	check_map(data_t);
-	if ((data_t->mlx_prog = mlx_init()) == NULL)
-		return (EXIT_FAILURE);
-	if ((data_t->mlx_win = mlx_new_window(data_t->mlx_prog, data_t->res_w, data_t->res_h, "Cub3D")) == NULL)
-		return (EXIT_FAILURE);
-	// init_texture(data_t);
-	// 			write(1, "ping", 4);
-	data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h);
-	// get_texture(data_t);
+	if (launch_mlx(data_t) == 0)
+		return (0);
 	drawRays3d(data_t);
 	mlx_hook(data_t->mlx_win, KEYPRESS, KEYPRESSMASK, &ft_keyboard_press, data_t);
 	mlx_hook(data_t->mlx_win, KEYRELEASE, KEYRELEASEMASK, &ft_keyboard_release, data_t);

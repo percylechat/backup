@@ -1,7 +1,5 @@
 #include "cub3d.h"
 
-//functions reads map infos and put them in struct.
-
 void	get_res(char *line, int i, data_t *data_t)
 {
 	data_t->res_w = ft_atoi(&line[i + 1]);
@@ -19,7 +17,7 @@ void	get_res(char *line, int i, data_t *data_t)
 
 void 	fill_map(char *line, data_t *data_t)
 {
-	char *temp;
+	char	*temp;
 
 	if (line[0] != '\0' && line[0] != '\n')
 	{
@@ -42,9 +40,6 @@ void 	fill_map(char *line, data_t *data_t)
 	}
 }
 
-//Called by file_handling
-//dispatch line acquired by get_next_line to subordinates functions according to beginning of line.
-//also deletes spaces because the subject indicates so.
 void	get_content(char *line, data_t *data_t)
 {
 	int		i;
@@ -70,8 +65,6 @@ void	get_content(char *line, data_t *data_t)
 		fill_map(line, data_t);
 }
 
-// called by main
-// first open file with infos, then copy information in struct bit by bit.
 //WARNING absolut path
 void	file_handling(char *name, data_t *data_t)
 {
