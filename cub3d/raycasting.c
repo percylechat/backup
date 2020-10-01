@@ -76,7 +76,7 @@ void	drawRays3d(data_t *data_t)
 
 	i = 0;
 	t_sprite->is_sprite = 0;
-	if (!(t_sprite->buffer = malloc(sizeof(float) * data_t->res_w)))
+	if (!(t_sprite->buffer = malloc(sizeof(float) * data_t->res_w + 1)))
 	{
 		ft_quit_map("ERROR\nInsufficient memory", data_t);
 		return;

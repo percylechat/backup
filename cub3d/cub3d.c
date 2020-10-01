@@ -47,8 +47,27 @@ int	check_for_obstacle(int x, int y, data_t *data_t, t_sprite *t_sprite)
 
 void		ft_quit(data_t *data_t)
 {
+	int i;
+
+	i = 0;
+	free(data_t->tex_N);
+	free(data_t->tex_S);
+	free(data_t->tex_W);
+	free(data_t->tex_E);
+	free(data_t->tex_sprite);
+	free(data_t->map);
+	while (i < data_t->line + 1)
+		free(data_t->maptab[i++]);
+	free(data_t->maptab);
+	if (data_t->sprite_spot)
+		free(data_t->sprite_spot);
 	mlx_destroy_image(data_t->mlx_prog, data_t->mlx_img);
+	mlx_destroy_image(data_t->mlx_prog, data_t->N_tex.address);
+	mlx_destroy_image(data_t->mlx_prog, data_t->S_tex.address);
+	mlx_destroy_image(data_t->mlx_prog, data_t->E_tex.address);
+	mlx_destroy_image(data_t->mlx_prog, data_t->W_tex.address);
 	mlx_destroy_window(data_t->mlx_prog, data_t->mlx_win);
+	free(data_t->mlx_prog);
 	exit(0);
 }
 
@@ -69,6 +88,10 @@ int 	launch_mlx(data_t *data_t)
 		ft_quit_map(data_t, "Error\nFailed to create image");
 		return (0);
 	}
+	data_t->N_tex = get_tex_N(data_t);
+	data_t->W_tex = get_tex_W(data_t);
+	data_t->E_tex = get_tex_E(data_t);
+	data_t->S_tex = get_tex_S(data_t);
 }
 
 // IS main
@@ -85,7 +108,7 @@ int		main(int argc, char **argv)
 		return (0);
 	drawRays3d(data_t);
 	mlx_hook(data_t->mlx_win, KEYPRESS, KEYPRESSMASK, &ft_keyboard_press, data_t);
-	mlx_hook(data_t->mlx_win, KEYRELEASE, KEYRELEASEMASK, &ft_keyboard_release, data_t);
+	// mlx_hook(data_t->mlx_win, KEYRELEASE, KEYRELEASEMASK, &ft_keyboard_release, data_t);
 	mlx_loop(data_t->mlx_prog);
 	return (0);
 }

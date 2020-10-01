@@ -57,12 +57,6 @@ struct data_t
 	char		  *tex_S;
 	char		  *tex_E;
 	char		  *tex_sprite;
-	t_tex		*tex_N_s;
-	t_tex		*tex_S_s;
-	t_tex		*tex_E_s;
-	t_tex		*tex_W_s;
-	t_tex		*tex_Sp_s;
-	void 	*img_N_p;
 	char		  *map;
 	int		   column;
 	int			column_size[1024];
@@ -77,11 +71,13 @@ struct data_t
 	double		position_x;
 	double		position_y;
 	// //screen display
-	int		   dist_vert;
-	int		   dist_hor;
 	int		   wall_size;
 	int			tot_sprite;
 	char		*sprite_spot;
+	t_tex N_tex;
+	t_tex S_tex;
+	t_tex E_tex;
+	t_tex W_tex;
 };
 
 typedef struct s_raycast t_raycast;
@@ -141,15 +137,6 @@ struct s_sprite
 	int wall_y;
 };
 
-// typedef struct		s_list
-// {
-// 	int	pos_x;
-// 	int	pos_y;
-// 	float	dist;
-// 	struct s_list	*next;
-// }
-
-// t_list	*ft_lstnew(int x, int y, float z);
 t_tex get_tex_sp(data_t *data_t);
 void drawRays3d(data_t *data_t);
 void	check_step(t_raycast *t_raycast, data_t *data_t);
@@ -178,6 +165,14 @@ char		**ft_split_map(data_t *data_t);
 void	text_print(t_tex tex, int h, t_print *t_print, data_t *data_t, int i);
 void	print_wall(data_t *data_t, t_raycast *t_raycast, int i, t_print *t_print);
 void 	calc_texture(data_t *data_t, t_raycast *t_raycast, int i);
+
+/*
+** get_texture
+*/
+t_tex get_tex_N(data_t *data_t);
+t_tex get_tex_W(data_t *data_t);
+t_tex get_tex_E(data_t *data_t);
+t_tex get_tex_S(data_t *data_t);
 
 /*
 ** cub3D.c

@@ -11,16 +11,16 @@ void	sprite_roundup(data_t *data_t, int x, int y)
 	add[1] = x;
 	add[2] = '\0';
 	data_t->tot_sprite += 1;
-	if (data_t->sprite_spot)
+	if (!data_t->sprite_spot)
+	{
+		data_t->sprite_spot = ft_strdup(add);
+		temp = NULL;
+	}
+	else
 	{
 		temp = ft_strjoin(data_t->sprite_spot, add);
 		free(data_t->sprite_spot);
 		data_t->sprite_spot = ft_strdup(temp);
-	}
-	else
-	{
-		data_t->sprite_spot = ft_strdup(add);
-		temp = NULL;
 	}
 	free(temp);
 	free(add);

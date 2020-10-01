@@ -95,7 +95,6 @@ void	ft_rotate(data_t *data_t, int m)
 		data_t->direction_x = ((data_t->direction_x + 1) + 1) * -1;
 	if (data_t->direction_y < -1)
 		data_t->direction_y = ((data_t->direction_y + 1) + 1) * -1;
-	printf("%f %f\n", data_t->direction_x, data_t->direction_y);
 }
 
 //kinda called by main
@@ -127,10 +126,10 @@ void ft_keyboard_press(int key, data_t *data_t)
 }
 
 //is useless, since i work on tapped touch and won't take into account time pressed and frames.
-void ft_keyboard_release(int key, data_t *data_t)
-{
-	if (key == KEY_S)
-		return ;
-	else
-		return ;
-}
+// void ft_keyboard_release(int key, data_t *data_t)
+// {
+// 	if (key == KEY_S)
+// 		return ;
+// 	else
+// 		return ;
+// }
