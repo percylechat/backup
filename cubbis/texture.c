@@ -1,25 +1,51 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   texture.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/10 18:33:32 by budal-bi          #+#    #+#             */
+/*   Updated: 2020/10/10 18:33:32 by budal-bi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	text_print(t_tex tex, int h, t_print *t_print, data_t *data_t, int i)
 {
 	t_print->texY = (int)t_print->texPos & ((int)BLOC_SIZE - 1);
 	t_print->texPos += t_print->step;
-// 	t_print->color = color_pixel(tex.content[t_print->texX * 4 + tex.size_line
-// * t_print->texY], tex.content[t_print->texX * 4 + tex.size_line *
-// t_print->texY + 2], tex.content[t_print->texX * 4 + tex.size_line *
-// t_print->texY + 1]);
-	// mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, h, t_print->color);
-	data_t->img.content[i * 4 + h * data_t->img.size_line + 3] = tex.content[t_print->texX * 4 + tex.size_line
-* t_print->texY + 3];
-	data_t->img.content[i * 4 + h * data_t->img.size_line] = tex.content[t_print->texX * 4 + tex.size_line
-* t_print->texY];
-	data_t->img.content[i * 4 + h * data_t->img.size_line + 1] = tex.content[t_print->texX * 4 + tex.size_line
-* t_print->texY + 1];
-data_t->img.content[i * 4 + h * data_t->img.size_line + 2] = tex.content[t_print->texX * 4 + tex.size_line
-* t_print->texY + 2];
-	// copier chaque pixel de texture dans le image
-// 	r g b a
-// 	a b g r
+	data_t->img.content[i * 4 + h * data_t->img.size_line + 3] =
+tex.content[t_print->texX * 4 + tex.size_line * t_print->texY + 3];
+	data_t->img.content[i * 4 + h * data_t->img.size_line] =
+tex.content[t_print->texX * 4 + tex.size_line * t_print->texY];
+	data_t->img.content[i * 4 + h * data_t->img.size_line + 1] =
+tex.content[t_print->texX * 4 + tex.size_line * t_print->texY + 1];
+data_t->img.content[i * 4 + h * data_t->img.size_line + 2] =
+tex.content[t_print->texX * 4 + tex.size_line * t_print->texY + 2];
+}
+
+void	print_cf(data_t *data_t, int h, int i, int g)
+{
+	if (g == 1)
+	{
+		data_t->img.content[i * 4 + h * data_t->img.size_line] =
+data_t->color_ceiling.r;
+		data_t->img.content[i * 4 + h * data_t->img.size_line + 1] =
+data_t->color_ceiling.g;
+		data_t->img.content[i * 4 + h * data_t->img.size_line + 2] =
+data_t->color_ceiling.b;
+	}
+	else
+	{
+		data_t->img.content[i * 4 + h * data_t->img.size_line] =
+data_t->color_floor.r;
+		data_t->img.content[i * 4 + h * data_t->img.size_line + 1] =
+data_t->color_floor.g;
+		data_t->img.content[i * 4 + h * data_t->img.size_line + 2] =
+data_t->color_floor.b;
+	}
 }
 
 void	print_wall(data_t *data_t, t_raycast *t_raycast, int i, t_print *t_print)
@@ -30,35 +56,26 @@ void	print_wall(data_t *data_t, t_raycast *t_raycast, int i, t_print *t_print)
 	h = 0;
 	t_print->step = 1.0 * BLOC_SIZE / data_t->wall_size;
 	t_print->texPos = (t_print->deb - data_t->res_h / 2 + data_t->wall_size / 2)
- * t_print->step;
+* t_print->step;
 	tex = choose_texture(data_t, t_raycast);
 	while (h < data_t->res_h)
 	{
 		while (h < t_print->deb)
 		{
-			data_t->img.content[i * 4 + h * data_t->img.size_line] = data_t->color_ceiling.r;
-			data_t->img.content[i * 4 + h * data_t->img.size_line + 1] = data_t->color_ceiling.g;
-			data_t->img.content[i * 4 + h * data_t->img.size_line + 2] = data_t->color_ceiling.b;
+			print_cf(data_t, h, i, 1);
 			h++;
 		}
-// 			mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, h++,
-// data_t->color_floor);
 		while (h > t_print->deb && h < t_print->end)
 		{
 			text_print(tex, h, t_print, data_t, i);
 			h++;
 		}
-		data_t->img.content[i * 4 + h * data_t->img.size_line] = data_t->color_floor.r;
-		data_t->img.content[i * 4 + h * data_t->img.size_line + 1] = data_t->color_floor.g;
-		data_t->img.content[i * 4 + h * data_t->img.size_line + 2] = data_t->color_floor.b;
+		print_cf(data_t, h, i, 0);
 		h++;
-		// data_t->img.content[i * 4 + h++ * data_t->img.size_line] = data_t->color_floor;
-// 		mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, h++,
-// data_t->color_ceiling);
 	}
 }
 
-void 	calc_texture(data_t *data_t, t_raycast *t_raycast, int i)
+void	calc_texture(data_t *data_t, t_raycast *t_raycast, int i)
 {
 	t_print t_print[1];
 

@@ -1,11 +1,16 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/10 18:14:51 by budal-bi          #+#    #+#             */
+/*   Updated: 2020/10/10 18:15:58 by budal-bi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int 	ft_issave(char *txt)
-{
-	if (txt[0] != '-' || txt[1] != '-' || txt[2] != 's' || txt[3] != 'a' || txt[4] != 'v' || txt[5] != 'e')
-		return (0);
-	return (1);
-}
+#include "cub3d.h"
 
 //beginning of an error handling protocol. Called in Main.
 int	error_handling_start(int argc, char **argv)
@@ -26,23 +31,6 @@ int	error_handling_start(int argc, char **argv)
 		return (0);
 	}
 	return (1);
-}
-
-//Called by drawRays3d in raycasting.c
-//check in the map if the coordonates contain a wall or not. To be improved with sprite detection.
-int	check_for_obstacle(int x, int y, data_t *data_t, t_sprite *t_sprite)
-{
-	if (x < 0 || y < 0 || x > data_t->column_size[y] || y >= data_t->line)
-		return (0);
-	if (data_t->maptab[y][x] == '1')
-		return (1);
-	if (data_t->maptab[y][x] == '2')
-	{
-		t_sprite->is_sprite = 1;
-		return (0);
-	}
-	else
-		return (0);
 }
 
 void		ft_quit(data_t *data_t)
@@ -69,17 +57,6 @@ void		ft_quit(data_t *data_t)
 	mlx_destroy_window(data_t->mlx_prog, data_t->mlx_win);
 	free(data_t->mlx_prog);
 	exit(0);
-}
-
-int		new_image(data_t *data_t)
-{
-	if ((data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h)) == NULL)
-	{
-		ft_quit_map(data_t, "Error\nFailed to create image");
-		return (0);
-	}
-	data_t->img.content = mlx_get_data_addr(data_t->mlx_img ,&data_t->img.bits_per_pixel, &data_t->img.size_line, &data_t->img.endian);
-	return (1);
 }
 
 int 	launch_mlx(data_t *data_t)

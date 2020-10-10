@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_handling.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/10 18:24:25 by budal-bi          #+#    #+#             */
+/*   Updated: 2020/10/10 18:24:26 by budal-bi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	get_res(char *line, int i, data_t *data_t)
@@ -64,7 +76,6 @@ void	get_content(char *line, data_t *data_t)
 		fill_map(line, data_t);
 }
 
-//WARNING absolut path
 void	file_handling(char *name, data_t *data_t)
 {
 	int		fd;

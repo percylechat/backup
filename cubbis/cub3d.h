@@ -167,31 +167,22 @@ t_tex get_tex_sp(data_t *data_t);
 void drawRays3d(data_t *data_t);
 void	check_step(t_raycast *t_raycast, data_t *data_t);
 char		*ft_itoa(int n);
-char	*ft_strdup_map(const char *src);
 void	get_texture(data_t *data_t);
-int		new_image(data_t *data_t);
 
 /*
 ** cub3d_utils
 */
-void get_res(char *line, int i, data_t *data_t);
+int 	ft_issave(char *txt);
+void 	give_angle_EW(data_t *data_t);
 void	give_angle(data_t *data_t);
-void	print_black(data_t *data_t);
-char	*ft_strdup_map(const char *src);
-char	*ft_strjoin_map(char *s1, char *s2);
+int		check_for_obstacle(int x, int y, data_t *data_t, t_sprite *t_sprite);
+int		new_image(data_t *data_t);
 
 /*
 ** cub3d_utils2
 */
-void	*ft_memcpy_line(void *dst, const void *src, size_t n);
-char		**ft_split_map(data_t *data_t);
-
-/*
-** texture
-*/
-void	text_print(t_tex tex, int h, t_print *t_print, data_t *data_t, int i);
-void	print_wall(data_t *data_t, t_raycast *t_raycast, int i, t_print *t_print);
-void 	calc_texture(data_t *data_t, t_raycast *t_raycast, int i);
+char	*line_copy(char *src, int i);
+char	**ft_split_map(data_t *data_t);
 
 /*
 ** get_texture
@@ -213,9 +204,9 @@ int main(int argc, char **argv);
 ** file_handling
 */
 void	get_res(char *line, int i, data_t *data_t);
-void fill_map(char *line, data_t *data_t);
-void get_content(char *line, data_t *data_t);
-void file_handling(char *name, data_t *data_t);
+void	fill_map(char *line, data_t *data_t);
+void	get_content(char *line, data_t *data_t);
+void	file_handling(char *name, data_t *data_t);
 
 /*
 ** map_checking
@@ -264,7 +255,6 @@ void new_screen(data_t *data_t);
 /*
 ** print_minimap
 */
-void	print_black(data_t *data_t);
 void	print_minimap(data_t *data_t);
 int	check_for_obstacle_m(int x, int y, data_t *data_t);
 
@@ -278,10 +268,10 @@ void 	ft_quit_map(data_t *data_t, char *str);
 /*
 ** get_color
 */
-void get_color(char *line, int i, data_t *data_t);
-int get_green(char *line, int i);
-int get_blue(char *line, int i);
-unsigned int color_pixel(int r, int g, int b);
+void			get_color(char *line, int i, data_t *data_t);
+int				get_green(char *line, int i);
+int				get_blue(char *line, int i);
+unsigned int	color_pixel(int r, int g, int b);
 
 /*
 ** get_texture
@@ -290,6 +280,13 @@ t_tex	*get_tex(data_t *data_t, char *path);
 void 	init_texture(data_t *data_t);
 t_tex choose_texture(data_t *data_t,t_raycast *t_raycast);
 
+/*
+** texture
+*/
+void	text_print(t_tex tex, int h, t_print *t_print, data_t *data_t, int i);
+void	print_cf(data_t *data_t, int h, int i, int g);
+void	print_wall(data_t *data_t, t_raycast *t_raycast, int i, t_print *t_print);
+void	calc_texture(data_t *data_t, t_raycast *t_raycast, int i);
 
 /*
 ** get_next_line
@@ -319,7 +316,6 @@ int		ft_atoi(const char *str);
 ** libft2
 */
 int		ft_isdigit(int c);
-char	*ft_strjoin_map(char *s1, char *s2);
 void	*ft_memmove(void *dst, const void *src, size_t len);
 
 /*
