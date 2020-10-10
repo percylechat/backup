@@ -163,11 +163,10 @@ struct s_sprite
 	int wall_y;
 };
 
-t_tex get_tex_sp(data_t *data_t);
+
 void drawRays3d(data_t *data_t);
 void	check_step(t_raycast *t_raycast, data_t *data_t);
 char		*ft_itoa(int n);
-void	get_texture(data_t *data_t);
 
 /*
 ** cub3d_utils
@@ -187,10 +186,11 @@ char	**ft_split_map(data_t *data_t);
 /*
 ** get_texture
 */
-t_tex get_tex_N(data_t *data_t);
-t_tex get_tex_W(data_t *data_t);
-t_tex get_tex_E(data_t *data_t);
-t_tex get_tex_S(data_t *data_t);
+t_tex	get_tex_N(data_t *data_t);
+t_tex	get_tex_W(data_t *data_t);
+t_tex	get_tex_E(data_t *data_t);
+t_tex	get_tex_S(data_t *data_t);
+void	get_texture(data_t *data_t);
 
 /*
 ** cub3D.c
@@ -231,9 +231,10 @@ void	ft_save(data_t *data_t);
 /*
 ** sprite
 */
-int 	*sort_sprite(int *temp);
+t_tex	get_tex_sp(data_t *data_t);
+int		*sort_sprite(int *temp);
 void	calc_sprite(data_t *data_t, t_sprite *t_sprite);
-void	sprite_size(t_sprite *t_sprite, data_t *data_t);
+void	sprite_size(t_sprite *t_sprite, data_t *data_t, int k);
 void 	print_sprite(data_t *data_t, t_sprite *t_sprite);
 
 /*

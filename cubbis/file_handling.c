@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:24:25 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/10 18:24:26 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/10 18:46:14 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	file_handling(char *name, data_t *data_t)
 	while (get_next_line(fd, &line) != 0)
 	{
 		if (line)
-		get_content(line, data_t);
+			get_content(line, data_t);
 		free(line);
 	}
 	if (line != NULL)
