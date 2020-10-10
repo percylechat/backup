@@ -71,6 +71,17 @@ void		ft_quit(data_t *data_t)
 	exit(0);
 }
 
+int		new_image(data_t *data_t)
+{
+	if ((data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h)) == NULL)
+	{
+		ft_quit_map(data_t, "Error\nFailed to create image");
+		return (0);
+	}
+	data_t->img.content = mlx_get_data_addr(data_t->mlx_img ,&data_t->img.bits_per_pixel, &data_t->img.size_line, &data_t->img.endian);
+	return (1);
+}
+
 int 	launch_mlx(data_t *data_t)
 {
 	int rh;
@@ -91,11 +102,8 @@ int 	launch_mlx(data_t *data_t)
 		ft_quit_map(data_t, "Error\nFailed to create window");
 		return (0);
 	}
-	if ((data_t->mlx_img = mlx_new_image(data_t->mlx_prog, data_t->res_w, data_t->res_h)) == NULL)
-	{
-		ft_quit_map(data_t, "Error\nFailed to create image");
+	if (new_image(data_t) == 0)
 		return (0);
-	}
 	data_t->N_tex = get_tex_N(data_t);
 	if (data_t->N_tex.address == NULL)
 	{

@@ -4,11 +4,22 @@ void	text_print(t_tex tex, int h, t_print *t_print, data_t *data_t, int i)
 {
 	t_print->texY = (int)t_print->texPos & ((int)BLOC_SIZE - 1);
 	t_print->texPos += t_print->step;
-	t_print->color = color_pixel(tex.content[t_print->texX * 4 + tex.size_line
-* t_print->texY + 2], tex.content[t_print->texX * 4 + tex.size_line *
-t_print->texY + 1], tex.content[t_print->texX * 4 + tex.size_line *
-t_print->texY]);
-	mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, h, t_print->color);
+// 	t_print->color = color_pixel(tex.content[t_print->texX * 4 + tex.size_line
+// * t_print->texY], tex.content[t_print->texX * 4 + tex.size_line *
+// t_print->texY + 2], tex.content[t_print->texX * 4 + tex.size_line *
+// t_print->texY + 1]);
+	// mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, h, t_print->color);
+	data_t->img.content[i * 4 + h * data_t->img.size_line + 3] = tex.content[t_print->texX * 4 + tex.size_line
+* t_print->texY + 3];
+	data_t->img.content[i * 4 + h * data_t->img.size_line] = tex.content[t_print->texX * 4 + tex.size_line
+* t_print->texY];
+	data_t->img.content[i * 4 + h * data_t->img.size_line + 1] = tex.content[t_print->texX * 4 + tex.size_line
+* t_print->texY + 1];
+data_t->img.content[i * 4 + h * data_t->img.size_line + 2] = tex.content[t_print->texX * 4 + tex.size_line
+* t_print->texY + 2];
+	// copier chaque pixel de texture dans le image
+// 	r g b a
+// 	a b g r
 }
 
 void	print_wall(data_t *data_t, t_raycast *t_raycast, int i, t_print *t_print)
@@ -24,15 +35,26 @@ void	print_wall(data_t *data_t, t_raycast *t_raycast, int i, t_print *t_print)
 	while (h < data_t->res_h)
 	{
 		while (h < t_print->deb)
-			mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, h++,
-data_t->color_floor);
+		{
+			data_t->img.content[i * 4 + h * data_t->img.size_line] = data_t->color_ceiling.r;
+			data_t->img.content[i * 4 + h * data_t->img.size_line + 1] = data_t->color_ceiling.g;
+			data_t->img.content[i * 4 + h * data_t->img.size_line + 2] = data_t->color_ceiling.b;
+			h++;
+		}
+// 			mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, h++,
+// data_t->color_floor);
 		while (h > t_print->deb && h < t_print->end)
 		{
 			text_print(tex, h, t_print, data_t, i);
 			h++;
 		}
-		mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, h++,
-data_t->color_ceiling);
+		data_t->img.content[i * 4 + h * data_t->img.size_line] = data_t->color_floor.r;
+		data_t->img.content[i * 4 + h * data_t->img.size_line + 1] = data_t->color_floor.g;
+		data_t->img.content[i * 4 + h * data_t->img.size_line + 2] = data_t->color_floor.b;
+		h++;
+		// data_t->img.content[i * 4 + h++ * data_t->img.size_line] = data_t->color_floor;
+// 		mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, i, h++,
+// data_t->color_ceiling);
 	}
 }
 

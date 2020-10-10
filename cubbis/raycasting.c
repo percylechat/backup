@@ -92,4 +92,5 @@ void	drawRays3d(data_t *data_t)
 	if (t_sprite->is_sprite > 0)
 		print_sprite(data_t, t_sprite);
 	free(t_sprite->buffer);
+	mlx_put_image_to_window(data_t->mlx_prog, data_t->mlx_win, data_t->mlx_img, 0, 0);
 }

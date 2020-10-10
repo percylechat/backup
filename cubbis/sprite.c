@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 16:22:42 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/09/29 13:00:09 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/10 15:48:45 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,21 @@ void 	print_sprite(data_t *data_t, t_sprite *t_sprite)
 				while (t_sprite->wall_y < t_sprite->end_h)
 				{
 					int d = t_sprite->wall_y * 256 - data_t->res_h * 128 + t_sprite->sprite_h * 128;
-					int texY = ((d * BLOC_SIZE) / t_sprite->sprite_h) / 256;
-					if (tex_sprite.endian == 0)
-						t_sprite->color = color_pixel(tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line * texY + 2], tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line * texY + 1], tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line * texY]);
-					else
-						t_sprite->color = color_pixel(tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line * texY], tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line * texY + 1], tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line * texY + 2]);
+					t_sprite->tex_y = ((d * BLOC_SIZE) / t_sprite->sprite_h) / 256;
+					// if (tex_sprite.endian == 0)
+						t_sprite->color = color_pixel(tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line * t_sprite->tex_y + 2], tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line * t_sprite->tex_y + 1], tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line * t_sprite->tex_y]);
+					// else
+					// 	t_sprite->color = color_pixel(tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line * texY], tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line * texY + 1], tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line * texY + 2]);
 					if (t_sprite->color != 0)
-						mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, t_sprite->wall_x, t_sprite->wall_y, t_sprite->color);
+						{data_t->img.content[t_sprite->wall_x * 4 + t_sprite->wall_y * data_t->img.size_line + 3] = tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line
+				* t_sprite->tex_y + 3];
+						data_t->img.content[t_sprite->wall_x * 4 + t_sprite->wall_y * data_t->img.size_line] = tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line
+				* t_sprite->tex_y];
+						data_t->img.content[t_sprite->wall_x * 4 + t_sprite->wall_y * data_t->img.size_line + 1] = tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line
+				* t_sprite->tex_y + 1];
+						data_t->img.content[t_sprite->wall_x * 4 + t_sprite->wall_y * data_t->img.size_line + 2] = tex_sprite.content[t_sprite->tex_x * 4 + tex_sprite.size_line
+				* t_sprite->tex_y + 2];}
+						// mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, t_sprite->wall_x, t_sprite->wall_y, t_sprite->color);
 					t_sprite->wall_y++;
 				}
 			}

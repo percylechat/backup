@@ -56,6 +56,14 @@ struct s_tex
 	char	*content;
 };
 
+typedef struct s_col t_col;
+struct s_col
+{
+	int r;
+	int g;
+	int b;
+};
+
 typedef struct data_t data_t;
 struct data_t
 {
@@ -63,11 +71,12 @@ struct data_t
 	void		  *mlx_prog;
 	void		  *mlx_win;
 	void		  *mlx_img;
+	t_tex		img;
 	float		   res_w;
 	float		   res_h;
 	// info map
-	unsigned int		   color_floor;
-	unsigned int		   color_ceiling;
+	t_col		   color_floor;
+	t_col		   color_ceiling;
 	char		  *tex_N;
 	char		  *tex_W;
 	char		  *tex_S;
@@ -150,6 +159,7 @@ struct s_sprite
 	int spriteScreenX;
 	int wall_x;
 	int tex_x;
+	int tex_y;
 	int wall_y;
 };
 
@@ -159,6 +169,7 @@ void	check_step(t_raycast *t_raycast, data_t *data_t);
 char		*ft_itoa(int n);
 char	*ft_strdup_map(const char *src);
 void	get_texture(data_t *data_t);
+int		new_image(data_t *data_t);
 
 /*
 ** cub3d_utils

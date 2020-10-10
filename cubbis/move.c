@@ -118,7 +118,12 @@ int  ft_keyboard_press(int key, data_t *data_t)
 		ft_quit(data_t);
 	else
 		{write(1, "fail", 4);}
-	// print_black(data_t);
+	mlx_destroy_image(data_t->mlx_prog, data_t->mlx_img);
+	if (new_image(data_t) == 0)
+	{
+		ft_quit_map(data_t, "Error\nFailed to create image");
+		return (0);
+	}
 	drawRays3d(data_t);
 	print_minimap(data_t);
 	return (0);

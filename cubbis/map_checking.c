@@ -53,7 +53,7 @@ int		sanity_check(data_t *data_t)
 {
 	if (!data_t->res_w || !data_t->res_h || !data_t->tex_S || !data_t->tex_E ||
 !data_t->tex_N || !data_t->tex_W || !data_t->tex_sprite || !data_t->map ||
-!data_t->color_floor || !data_t->color_ceiling)
+!data_t->color_floor.r || !data_t->color_ceiling.r)
 		return (1);
 	return (0);
 }

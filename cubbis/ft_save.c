@@ -38,9 +38,10 @@ void 	write_img(data_t *data_t, t_save *t_save, int fd)
 			// printf("%c\n", t_save->img[index]);
 			// printf("%c\n", t_save->img[index + 1]);
 			// printf("%c\n", t_save->img[index + 2]);
-			write(fd, &t_save->img[index], 1);
-			write(fd, &t_save->img[index + 1], 1);
-			write(fd, &t_save->img[index + 2], 1);
+			write(fd, &data_t->img.content[index], 1);
+			write(fd, &data_t->img.content[index + 1], 1);
+			write(fd, &data_t->img.content[index + 2], 1);
+			// write(fd, &data_t->img.content[index], 1);
 			x++;
 			// index = (y * t_save->sl) + (x * 4);
 			// test = t_save->img[index];

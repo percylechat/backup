@@ -45,16 +45,24 @@ void	get_color(char *line, int i, data_t *data_t)
 	int		g;
 	int		b;
 
-	r = ft_atoi(&line[i + 1]);
+	b = ft_atoi(&line[i + 1]);
 	g = get_green(line, i + 1);
-	b = get_blue(line, i + 1);
+	r = get_blue(line, i + 1);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
 		error_color(data_t);
 		return;
 	}
 	if (line[i] == 'C')
-		data_t->color_ceiling = color_pixel(r, g, b);
+	{
+		data_t->color_ceiling.r = r;
+		data_t->color_ceiling.g = g;
+		data_t->color_ceiling.b = b;
+	}
 	if (line[i] == 'F')
-		data_t->color_floor = color_pixel(r, g, b);
+	{
+		data_t->color_floor.b = b;
+		data_t->color_floor.g = g;
+		data_t->color_floor.r = r;
+	}
 }
