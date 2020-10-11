@@ -6,84 +6,82 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:45:02 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/10 18:45:51 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/11 15:40:42 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_tex get_tex_N(data_t *data_t)
+t_tex	get_tex_n(data_t *t_m)
 {
-	int size;
-	t_tex tex_N;
+	int		size;
+	t_tex	tex_n;
 
 	size = (int)BLOC_SIZE;
-	if ((tex_N.address = mlx_xpm_file_to_image(data_t->mlx_prog, data_t->tex_N,
+	if ((tex_n.address = mlx_xpm_file_to_image(t_m->mlx_prog, t_m->tex_n,
 &size, &size)) == NULL)
-		return (tex_N);
-	tex_N.content = mlx_get_data_addr(tex_N.address ,&tex_N.bits_per_pixel,
-&tex_N.size_line, &tex_N.endian);
-	return (tex_N);
+		return (tex_n);
+	tex_n.content = mlx_get_data_addr(tex_n.address, &tex_n.bits_per_pixel,
+&tex_n.size_line, &tex_n.endian);
+	return (tex_n);
 }
 
-t_tex get_tex_S(data_t *data_t)
+t_tex	get_tex_s(data_t *t_m)
 {
-	int size;
-	t_tex tex_S;
+	int		size;
+	t_tex	tex_s;
 
 	size = (int)BLOC_SIZE;
-	if ((tex_S.address = mlx_xpm_file_to_image(data_t->mlx_prog, data_t->tex_S,
+	if ((tex_s.address = mlx_xpm_file_to_image(t_m->mlx_prog, t_m->tex_s,
 &size, &size)) == NULL)
-		return (tex_S);
-	tex_S.content = mlx_get_data_addr(tex_S.address ,&tex_S.bits_per_pixel,
-&tex_S.size_line, &tex_S.endian);
-	return (tex_S);
+		return (tex_s);
+	tex_s.content = mlx_get_data_addr(tex_s.address, &tex_s.bits_per_pixel,
+&tex_s.size_line, &tex_s.endian);
+	return (tex_s);
 }
 
-t_tex get_tex_W(data_t *data_t)
+t_tex	get_tex_w(data_t *t_m)
 {
-	int size;
-	t_tex tex_W;
+	int		size;
+	t_tex	tex_w;
 
 	size = (int)BLOC_SIZE;
-	if ((tex_W.address = mlx_xpm_file_to_image(data_t->mlx_prog, data_t->tex_W,
+	if ((tex_w.address = mlx_xpm_file_to_image(t_m->mlx_prog, t_m->tex_w,
 &size, &size)) == NULL)
-		return (tex_W);
-	tex_W.content = mlx_get_data_addr(tex_W.address ,&tex_W.bits_per_pixel,
-&tex_W.size_line, &tex_W.endian);
-	return (tex_W);
+		return (tex_w);
+	tex_w.content = mlx_get_data_addr(tex_w.address, &tex_w.bits_per_pixel,
+&tex_w.size_line, &tex_w.endian);
+	return (tex_w);
 }
 
-t_tex get_tex_E(data_t *data_t)
+t_tex	get_tex_e(data_t *t_m)
 {
-	int size;
-	t_tex tex_E;
+	int		size;
+	t_tex	tex_e;
 
 	size = (int)BLOC_SIZE;
-	if ((tex_E.address = mlx_xpm_file_to_image(data_t->mlx_prog, data_t->tex_E,
-&size, &size)) == NULL)
-		return (tex_E);
-	tex_E.content = mlx_get_data_addr(tex_E.address ,&tex_E.bits_per_pixel,
-&tex_E.size_line, &tex_E.endian);
-	return (tex_E);
+	if ((tex_e.address = mlx_xpm_file_to_image(t_m->mlx_prog, t_m->tex_e,
+	&size, &size)) == NULL)
+		return (tex_e);
+	tex_e.content = mlx_get_data_addr(tex_e.address, &tex_e.bits_per_pixel,
+	&tex_e.size_line, &tex_e.endian);
+	return (tex_e);
 }
 
-t_tex choose_texture(data_t *data_t,t_raycast *t_raycast)
+t_tex	choose_texture(data_t *t_m, t_raycast *t_r)
 {
-	t_tex tex_return;
-
-	if (t_raycast->side == 1)
+	if (t_r->side == 1)
 	{
-		if (t_raycast->ray_y > 0)
-			return (tex_return = data_t->N_tex);
+		if (t_r->ray_y > 0)
+			return (t_m->n_tex);
 		else
-			return (tex_return = data_t->S_tex);
+			return (t_m->s_tex);
 	}
 	else
 	{
-		if (t_raycast->ray_x > 0)
-			return (tex_return = data_t->W_tex);
+		if (t_r->ray_x > 0)
+			return (t_m->w_tex);
 		else
-			return (tex_return = data_t->E_tex);
+			return (t_m->e_tex);
 	}
 }

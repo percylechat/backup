@@ -6,98 +6,99 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:33:32 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/10 18:33:32 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/11 15:56:00 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	text_print(t_tex tex, int h, t_print *t_print, data_t *data_t, int i)
+void	text_print(t_tex t_t, t_print *t_p, data_t *t_m, int index)
 {
-	t_print->texY = (int)t_print->texPos & ((int)BLOC_SIZE - 1);
-	t_print->texPos += t_print->step;
-	data_t->img.content[i * 4 + h * data_t->img.size_line + 3] =
-tex.content[t_print->texX * 4 + tex.size_line * t_print->texY + 3];
-	data_t->img.content[i * 4 + h * data_t->img.size_line] =
-tex.content[t_print->texX * 4 + tex.size_line * t_print->texY];
-	data_t->img.content[i * 4 + h * data_t->img.size_line + 1] =
-tex.content[t_print->texX * 4 + tex.size_line * t_print->texY + 1];
-data_t->img.content[i * 4 + h * data_t->img.size_line + 2] =
-tex.content[t_print->texX * 4 + tex.size_line * t_print->texY + 2];
+	t_p->texY = (int)t_p->texPos & ((int)BLOC_SIZE - 1);
+	t_p->texPos += t_p->step;
+	t_m->img.content[index + 3] =
+t_t.content[t_p->texX * 4 + t_t.size_line * t_p->texY + 3];
+	t_m->img.content[index] =
+t_t.content[t_p->texX * 4 + t_t.size_line * t_p->texY];
+	t_m->img.content[index + 1] =
+t_t.content[t_p->texX * 4 + t_t.size_line * t_p->texY + 1];
+	t_m->img.content[index + 2] =
+t_t.content[t_p->texX * 4 + t_t.size_line * t_p->texY + 2];
 }
 
-void	print_cf(data_t *data_t, int h, int i, int g)
+void	print_cf(data_t *t_m, int h, int i, int g)
 {
 	if (g == 1)
 	{
-		data_t->img.content[i * 4 + h * data_t->img.size_line] =
-data_t->color_ceiling.r;
-		data_t->img.content[i * 4 + h * data_t->img.size_line + 1] =
-data_t->color_ceiling.g;
-		data_t->img.content[i * 4 + h * data_t->img.size_line + 2] =
-data_t->color_ceiling.b;
+		t_m->img.content[i * 4 + h * t_m->img.size_line] =
+t_m->color_ceiling.r;
+		t_m->img.content[i * 4 + h * t_m->img.size_line + 1] =
+t_m->color_ceiling.g;
+		t_m->img.content[i * 4 + h * t_m->img.size_line + 2] =
+t_m->color_ceiling.b;
 	}
 	else
 	{
-		data_t->img.content[i * 4 + h * data_t->img.size_line] =
-data_t->color_floor.r;
-		data_t->img.content[i * 4 + h * data_t->img.size_line + 1] =
-data_t->color_floor.g;
-		data_t->img.content[i * 4 + h * data_t->img.size_line + 2] =
-data_t->color_floor.b;
+		t_m->img.content[i * 4 + h * t_m->img.size_line] =
+t_m->color_floor.r;
+		t_m->img.content[i * 4 + h * t_m->img.size_line + 1] =
+t_m->color_floor.g;
+		t_m->img.content[i * 4 + h * t_m->img.size_line + 2] =
+t_m->color_floor.b;
 	}
 }
 
-void	print_wall(data_t *data_t, t_raycast *t_raycast, int i, t_print *t_print)
+void	print_wall(data_t *t_m, t_raycast *t_r, int i, t_print *t_p)
 {
-	t_tex tex;
-	int h;
+	t_tex	tex;
+	int		h;
+	int		index;
 
 	h = 0;
-	t_print->step = 1.0 * BLOC_SIZE / data_t->wall_size;
-	t_print->texPos = (t_print->deb - data_t->res_h / 2 + data_t->wall_size / 2)
-* t_print->step;
-	tex = choose_texture(data_t, t_raycast);
-	while (h < data_t->res_h)
+	t_p->step = 1.0 * BLOC_SIZE / t_m->wall_size;
+	t_p->texPos = (t_p->deb - t_m->res_h / 2 + t_m->wall_size / 2) * t_p->step;
+	tex = choose_texture(t_m, t_r);
+	while (h < t_m->res_h)
 	{
-		while (h < t_print->deb)
+		while (h < t_p->deb)
 		{
-			print_cf(data_t, h, i, 1);
+			print_cf(t_m, h, i, 1);
 			h++;
 		}
-		while (h > t_print->deb && h < t_print->end)
+		while (h > t_p->deb && h < t_p->end)
 		{
-			text_print(tex, h, t_print, data_t, i);
+			index = i * 4 + h * t_m->img.size_line;
+			text_print(tex, t_p, t_m, index);
 			h++;
 		}
-		print_cf(data_t, h, i, 0);
+		print_cf(t_m, h, i, 0);
 		h++;
 	}
 }
 
-void	calc_texture(data_t *data_t, t_raycast *t_raycast, int i)
+void	calc_texture(data_t *t_m, t_raycast *t_r, int i)
 {
-	t_print t_print[1];
+	t_print t_p[1];
 
-	t_print->deb = data_t->res_h / 2 - data_t->wall_size / 2;
-	if (t_print->deb < 0)
-		t_print->deb = 0;
-	t_print->end = t_print->deb + data_t->wall_size;
-	if (t_print->end > data_t->res_h)
-		t_print->end = data_t->res_h;
-	if (t_raycast->side == 0)
-		t_print->wallX = data_t->position_y + t_raycast->perpWallDist *
-t_raycast->ray_y;
+	t_p->deb = t_m->res_h / 2 - t_m->wall_size / 2;
+	if (t_p->deb < 0)
+		t_p->deb = 0;
+	t_p->end = t_p->deb + t_m->wall_size;
+	if (t_p->end > t_m->res_h)
+		t_p->end = t_m->res_h;
+	if (t_r->side == 0)
+		t_p->wallX = t_m->position_y + t_r->perpWallDist *
+t_r->ray_y;
 	else
-		t_print->wallX = data_t->position_x + t_raycast->perpWallDist *
-t_raycast->ray_x;
-	t_print->wallY = floor((t_print->wallX - floor(t_print->wallX)) *
+		t_p->wallX = t_m->position_x + t_r->perpWallDist *
+t_r->ray_x;
+	t_p->wallY = floor((t_p->wallX - floor(t_p->wallX)) *
 BLOC_SIZE);
-	t_print->wallX -= (int)t_print->wallX;
-	t_print->texX = (int)(t_print->wallX * BLOC_SIZE);
-	if (t_raycast->side == 0 && t_raycast->ray_x > 0)
-		t_print->texX = BLOC_SIZE - t_print->texX - 1;
-	if (t_raycast->side == 1 && t_raycast->ray_y < 0)
-		t_print->texX = BLOC_SIZE - t_print->texX - 1;
-	print_wall(data_t, t_raycast, i, t_print);
+	t_p->wallX -= (int)t_p->wallX;
+	t_p->texX = (int)(t_p->wallX * BLOC_SIZE);
+	if (t_r->side == 0 && t_r->ray_x > 0)
+		t_p->texX = BLOC_SIZE - t_p->texX - 1;
+	if (t_r->side == 1 && t_r->ray_y < 0)
+		t_p->texX = BLOC_SIZE - t_p->texX - 1;
+	print_wall(t_m, t_r, i, t_p);
 }

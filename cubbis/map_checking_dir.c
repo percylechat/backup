@@ -6,50 +6,50 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 19:03:00 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/10 19:03:02 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/11 15:34:48 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		check_N(data_t *data_t, int x, int y)
+int		check_n(data_t *t_m, int x, int y)
 {
 	while (y >= 0)
 	{
-		if (data_t->maptab[y][x] == '1')
+		if (t_m->maptab[y][x] == '1')
 			return (1);
 		y--;
 	}
 	return (0);
 }
 
-int		check_S(data_t *data_t, int x, int y)
+int		check_s(data_t *t_m, int x, int y)
 {
-	while (y < data_t->line)
+	while (y < t_m->line)
 	{
-		if (data_t->maptab[y][x] == '1')
+		if (t_m->maptab[y][x] == '1')
 			return (1);
 		y++;
 	}
 	return (0);
 }
 
-int		check_W(data_t *data_t, int x, int y)
+int		check_w(data_t *t_m, int x, int y)
 {
 	while (x >= 0)
 	{
-		if (data_t->maptab[y][x] == '1')
+		if (t_m->maptab[y][x] == '1')
 			return (1);
 		x--;
 	}
 	return (0);
 }
 
-int		check_E(data_t *data_t, int x, int y)
+int		check_e(data_t *t_m, int x, int y)
 {
-	while (x < data_t->column_size[y])
+	while (x < t_m->column_size[y])
 	{
-		if (data_t->maptab[y][x] == '1')
+		if (t_m->maptab[y][x] == '1')
 			return (1);
 		x++;
 	}

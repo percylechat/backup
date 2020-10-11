@@ -18,9 +18,8 @@
 # define FOV 60.0
 
 # define KEYPRESS 2
-# define KEYRELEASE 3
 # define KEYPRESSMASK 1
-# define KEYRELEASEMASK 10
+# define CLICK 33
 # define KEY_S 122
 # define KEY_Z 115
 # define KEY_Q 113
@@ -77,10 +76,10 @@ struct data_t
 	// info map
 	t_col		   color_floor;
 	t_col		   color_ceiling;
-	char		  *tex_N;
-	char		  *tex_W;
-	char		  *tex_S;
-	char		  *tex_E;
+	char		  *tex_n;
+	char		  *tex_w;
+	char		  *tex_s;
+	char		  *tex_e;
 	char		  *tex_sprite;
 	char		  *map;
 	int		   column;
@@ -99,10 +98,10 @@ struct data_t
 	int		   wall_size;
 	int			tot_sprite;
 	char		*sprite_spot;
-	t_tex N_tex;
-	t_tex S_tex;
-	t_tex E_tex;
-	t_tex W_tex;
+	t_tex n_tex;
+	t_tex s_tex;
+	t_tex e_tex;
+	t_tex w_tex;
 };
 
 typedef struct s_raycast t_raycast;
@@ -164,7 +163,7 @@ struct s_sprite
 };
 
 
-void drawRays3d(data_t *data_t);
+void raycasting(data_t *data_t);
 void	check_step(t_raycast *t_raycast, data_t *data_t);
 char		*ft_itoa(int n);
 
@@ -172,7 +171,7 @@ char		*ft_itoa(int n);
 ** cub3d_utils
 */
 int 	ft_issave(char *txt);
-void 	give_angle_EW(data_t *data_t);
+void 	give_angle_ew(data_t *data_t);
 void	give_angle(data_t *data_t);
 int		check_for_obstacle(int x, int y, data_t *data_t, t_sprite *t_sprite);
 int		new_image(data_t *data_t);
@@ -186,10 +185,10 @@ char	**ft_split_map(data_t *data_t);
 /*
 ** get_texture
 */
-t_tex	get_tex_N(data_t *data_t);
-t_tex	get_tex_W(data_t *data_t);
-t_tex	get_tex_E(data_t *data_t);
-t_tex	get_tex_S(data_t *data_t);
+t_tex	get_tex_n(data_t *data_t);
+t_tex	get_tex_w(data_t *data_t);
+t_tex	get_tex_e(data_t *data_t);
+t_tex	get_tex_s(data_t *data_t);
 void	get_texture(data_t *data_t);
 
 /*
@@ -218,10 +217,10 @@ void check_map(data_t *data_t);
 /*
 ** map_checking_dir
 */
-int check_E(data_t *data_t, int x, int y);
-int check_S(data_t *data_t, int x, int y);
-int check_W(data_t *data_t, int x, int y);
-int check_N(data_t *data_t, int x, int y);
+int check_e(data_t *data_t, int x, int y);
+int check_s(data_t *data_t, int x, int y);
+int check_w(data_t *data_t, int x, int y);
+int check_n(data_t *data_t, int x, int y);
 
 /*
 **ft_save
@@ -284,7 +283,7 @@ t_tex choose_texture(data_t *data_t,t_raycast *t_raycast);
 /*
 ** texture
 */
-void	text_print(t_tex tex, int h, t_print *t_print, data_t *data_t, int i);
+void	text_print(t_tex t_t, t_print *t_p, data_t *t_m, int index);
 void	print_cf(data_t *data_t, int h, int i, int g);
 void	print_wall(data_t *data_t, t_raycast *t_raycast, int i, t_print *t_print);
 void	calc_texture(data_t *data_t, t_raycast *t_raycast, int i);

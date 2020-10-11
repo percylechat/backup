@@ -6,10 +6,10 @@ void 	ft_quit_map(data_t *data_t, char *str)
 
 	i = 0;
 	ft_putstr_fd(str, 1);
-	free(data_t->tex_N);
-	free(data_t->tex_S);
-	free(data_t->tex_W);
-	free(data_t->tex_E);
+	free(data_t->tex_n);
+	free(data_t->tex_s);
+	free(data_t->tex_w);
+	free(data_t->tex_e);
 	free(data_t->tex_sprite);
 	free(data_t->map);
 	while (i < data_t->line + 1)
@@ -29,14 +29,14 @@ void 	ft_quit_map(data_t *data_t, char *str)
 void	error_sanity_check(data_t *data_t)
 {
 	ft_putstr_fd("Error\nIncomplete map data.", 1);
-	if (data_t->tex_N)
-		free(data_t->tex_N);
-	if (data_t->tex_S)
-		free(data_t->tex_S);
-	if (data_t->tex_W)
-		free(data_t->tex_W);
-	if (data_t->tex_E)
-		free(data_t->tex_E);
+	if (data_t->tex_n)
+		free(data_t->tex_n);
+	if (data_t->tex_s)
+		free(data_t->tex_s);
+	if (data_t->tex_w)
+		free(data_t->tex_w);
+	if (data_t->tex_e)
+		free(data_t->tex_e);
 	if (data_t->tex_sprite)
 		free(data_t->tex_sprite);
 	free(data_t->map);
@@ -46,14 +46,14 @@ void	error_sanity_check(data_t *data_t)
 void	error_color(data_t *data_t)
 {
 	ft_putstr_fd("Error\nColors should be separated by commas, each value between 0 and 255", 1);
-	if (data_t->tex_N)
-		free(data_t->tex_N);
-	if (data_t->tex_S)
-		free(data_t->tex_S);
-	if (data_t->tex_W)
-		free(data_t->tex_W);
-	if (data_t->tex_E)
-		free(data_t->tex_E);
+	if (data_t->tex_n)
+		free(data_t->tex_n);
+	if (data_t->tex_s)
+		free(data_t->tex_s);
+	if (data_t->tex_w)
+		free(data_t->tex_w);
+	if (data_t->tex_e)
+		free(data_t->tex_e);
 	if (data_t->tex_sprite)
 		free(data_t->tex_sprite);
 	exit(0);

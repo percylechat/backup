@@ -124,7 +124,7 @@ int  ft_keyboard_press(int key, data_t *data_t)
 		ft_quit_map(data_t, "Error\nFailed to create image");
 		return (0);
 	}
-	drawRays3d(data_t);
+	raycasting(data_t);
 	print_minimap(data_t);
 	return (0);
 }

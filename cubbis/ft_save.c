@@ -66,8 +66,8 @@ void	ft_save(data_t *data_t)
 	write(fd, &t_save->zero, sizeof(int));
 	write(fd, &t_save->zero, sizeof(int));
 
-	int x = data_t->res_w;
-	int y = data_t->res_h;
+	// int x = data_t->res_w;
+	// int y = data_t->res_h;
 	if (!(file = malloc(sizeof(char) * (t_save->size))))
 		return;
 	// write_header(file, x, y);

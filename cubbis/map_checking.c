@@ -6,91 +6,91 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:57:53 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/10 18:57:55 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/11 15:41:05 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	sprite_roundup(data_t *data_t, int x, int y)
+void	sprite_roundup(data_t *t_m, int x, int y)
 {
 	char	*add;
-	char *temp;
+	char	*temp;
 
 	if (!(add = malloc(sizeof(char) * 3)))
-		return;
+		return ;
 	add[0] = y;
 	add[1] = x;
 	add[2] = '\0';
-	data_t->tot_sprite += 1;
-	if (!data_t->sprite_spot)
+	t_m->tot_sprite += 1;
+	if (!t_m->sprite_spot)
 	{
-		data_t->sprite_spot = ft_strdup(add);
+		t_m->sprite_spot = ft_strdup(add);
 		temp = NULL;
 	}
 	else
 	{
-		temp = ft_strjoin(data_t->sprite_spot, add);
-		free(data_t->sprite_spot);
-		data_t->sprite_spot = ft_strdup(temp);
+		temp = ft_strjoin(t_m->sprite_spot, add);
+		free(t_m->sprite_spot);
+		t_m->sprite_spot = ft_strdup(temp);
 	}
 	free(temp);
 	free(add);
 }
 
-int 	init_map(data_t *data_t, int y, int x)
+int		init_map(data_t *t_m, int y, int x)
 {
-	if (((check_N(data_t, x, y) + check_S(data_t, x, y) + check_E(data_t, x, y)
-+ check_W(data_t, x, y)) != 4 && data_t->maptab[y][x] != '1' &&
-data_t->maptab[y][x] != ' ') || (data_t->maptab[y][x] != '0' &&
-data_t->maptab[y][x] != 'W' && data_t->maptab[y][x] != 'N' &&
-data_t->maptab[y][x] != 'S' && data_t->maptab[y][x] != 'E' &&
-data_t->maptab[y][x] != '2' && data_t->maptab[y][x] != '1' &&
-data_t->maptab[y][x] != ' '))
+	if (((check_n(t_m, x, y) + check_s(t_m, x, y) + check_e(t_m, x, y) +
+check_w(t_m, x, y)) != 4 && t_m->maptab[y][x] != '1' &&
+t_m->maptab[y][x] != ' ') || (t_m->maptab[y][x] != '0' &&
+t_m->maptab[y][x] != 'W' && t_m->maptab[y][x] != 'N' &&
+t_m->maptab[y][x] != 'S' && t_m->maptab[y][x] != 'E' &&
+t_m->maptab[y][x] != '2' && t_m->maptab[y][x] != '1' &&
+t_m->maptab[y][x] != ' '))
 		return (-1);
-	if (data_t->maptab[y][x] == 'W' || data_t->maptab[y][x] == 'N' ||
-data_t->maptab[y][x] == 'S' || data_t->maptab[y][x] == 'E')
+	if (t_m->maptab[y][x] == 'W' || t_m->maptab[y][x] == 'N' ||
+t_m->maptab[y][x] == 'S' || t_m->maptab[y][x] == 'E')
 	{
-		data_t->orientation = data_t->maptab[y][x];
-		data_t->position_x = x + 0.5;
-		data_t->position_y = y + 0.5;
-		give_angle(data_t);
+		t_m->orientation = t_m->maptab[y][x];
+		t_m->position_x = x + 0.5;
+		t_m->position_y = y + 0.5;
+		give_angle(t_m);
 	}
-	if (data_t->maptab[y][x] == '2')
-		sprite_roundup(data_t, x, y);
+	if (t_m->maptab[y][x] == '2')
+		sprite_roundup(t_m, x, y);
 	return (0);
 }
 
-int		sanity_check(data_t *data_t)
+int		sanity_check(data_t *t_m)
 {
-	if (!data_t->res_w || !data_t->res_h || !data_t->tex_S || !data_t->tex_E ||
-!data_t->tex_N || !data_t->tex_W || !data_t->tex_sprite || !data_t->map ||
-!data_t->color_floor.r || !data_t->color_ceiling.r)
+	if (!t_m->res_w || !t_m->res_h || !t_m->tex_s || !t_m->tex_e ||
+!t_m->tex_n || !t_m->tex_w || !t_m->tex_sprite || !t_m->map ||
+!t_m->color_floor.r || !t_m->color_ceiling.r)
 		return (1);
 	return (0);
 }
 
-void	check_map(data_t *data_t)
+void	check_map(data_t *t_m)
 {
 	int x;
 	int y;
 
 	x = 0;
 	y = 0;
-	if (sanity_check(data_t) != 0)
+	if (sanity_check(t_m) != 0)
 	{
-		error_sanity_check(data_t);
-		return;
+		error_sanity_check(t_m);
+		return ;
 	}
-	data_t->maptab = ft_split_map(data_t);
-	while (y < data_t->line)
+	t_m->maptab = ft_split_map(t_m);
+	while (y < t_m->line)
 	{
-		while (x < data_t->column_size[y])
+		while (x < t_m->column_size[y])
 		{
-			if (init_map(data_t, y, x) != 0)
+			if (init_map(t_m, y, x) != 0)
 			{
-				ft_quit_map(data_t, "Error\nInvalid map");
-				return;
+				ft_quit_map(t_m, "Error\nInvalid map");
+				return ;
 			}
 			x++;
 		}

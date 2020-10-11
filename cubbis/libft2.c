@@ -6,13 +6,12 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 11:36:39 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/08/04 15:37:19 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/11 13:16:11 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-//tells if character is a digit or not.
 int		ft_isdigit(int c)
 {
 	if (c < 48 || c > 57)
@@ -20,7 +19,6 @@ int		ft_isdigit(int c)
 	return (1);
 }
 
-//moves memory from a place to another.
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t			i;
