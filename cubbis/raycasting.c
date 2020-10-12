@@ -6,13 +6,13 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 16:14:46 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/11 16:19:52 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/12 16:16:13 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	check_step(t_raycast *t_r, data_t *t_m)
+void	check_step(t_raycast *t_r, t_main *t_m)
 {
 	if (t_r->ray_x < 0)
 	{
@@ -36,7 +36,7 @@ void	check_step(t_raycast *t_r, data_t *t_m)
 	}
 }
 
-void	check_intersec(t_raycast *t_r, data_t *t_m, t_sprite *t_s)
+void	check_intersec(t_raycast *t_r, t_main *t_m, t_sprite *t_s)
 {
 	if (t_r->sideDistX < t_r->sideDistY)
 	{
@@ -54,7 +54,7 @@ void	check_intersec(t_raycast *t_r, data_t *t_m, t_sprite *t_s)
 		t_r->hit = 1;
 }
 
-void	init_raycast(data_t *t_m, t_raycast *t_r, t_sprite *t_s, int i)
+void	init_raycast(t_main *t_m, t_raycast *t_r, t_sprite *t_s, int i)
 {
 	t_r->hit = 0;
 	t_r->mapX = (int)t_m->position_x;
@@ -62,9 +62,14 @@ void	init_raycast(data_t *t_m, t_raycast *t_r, t_sprite *t_s, int i)
 	t_r->camerax = 2 * i / t_m->res_w - 1;
 	t_r->ray_x = t_m->direction_x + t_m->camera_x * t_r->camerax;
 	t_r->ray_y = t_m->direction_y + t_m->camera_y * t_r->camerax;
-	t_r->deltaDistX = (t_r->ray_y == 0) ? 0 : ((t_r->ray_x == 0) ? 1 : fabs(1 / t_r->ray_x));
-	t_r->deltaDistY = (t_r->ray_x == 0) ? 0 : ((t_r->ray_y == 0) ? 1 : fabs(1 /
-t_r->ray_y));
+	if (t_r->ray_y == 0)
+		t_r->deltaDistX = 0;
+	else
+		t_r->deltaDistX = (t_r->ray_x == 0) ? 1 : fabs(1 / t_r->ray_x);
+	if (t_r->ray_x == 0)
+		t_r->deltaDistY = 0;
+	else
+		t_r->deltaDistY = (t_r->ray_y == 0) ? 1 : fabs(1 / t_r->ray_y);
 	check_step(t_r, t_m);
 	while (t_r->hit == 0)
 		check_intersec(t_r, t_m, t_s);
@@ -76,7 +81,7 @@ t_r->stepX) / 2) / t_r->ray_x;
 t_r->stepY) / 2) / t_r->ray_y;
 }
 
-void	raycasting(data_t *t_m)
+void	raycasting(t_main *t_m)
 {
 	int			i;
 	t_raycast	t_r[1];

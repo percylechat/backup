@@ -1,81 +1,77 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_save.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/12 16:34:14 by budal-bi          #+#    #+#             */
+/*   Updated: 2020/10/12 16:56:29 by budal-bi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-//WIP
-//should create a bmp file of the first screen of option is called during execution.
-//should be called by main.
-
-void 	write_img(data_t *data_t, t_save *t_save, int fd)
+void	write_img(t_main *t_m, int fd)
 {
-	int x;
-	unsigned int index;
-	int y;
+	int				x;
+	unsigned int	index;
+	int				y;
 
-	y = (int)data_t->res_h;
+	y = (int)t_m->res_h;
 	while (y)
 	{
 		x = 0;
-		while (x < data_t->res_w)
+		while (x < t_m->res_w)
 		{
-			index = (y * t_save->sl+ x * 4);
-			write(fd, &data_t->img.content[index], 1);
-			write(fd, &data_t->img.content[index + 1], 1);
-			write(fd, &data_t->img.content[index + 2], 1);
+			index = (y * t_m->img.sl + x * 4);
+			write(fd, &t_m->img.content[index], 1);
+			write(fd, &t_m->img.content[index + 1], 1);
+			write(fd, &t_m->img.content[index + 2], 1);
 			x++;
 		}
 		y--;
 	}
 }
 
-void 		init_save(data_t *data_t, t_save *t_save)
+void	init_save(t_main *t_m, t_save *t_s, int fd)
 {
-	t_save->one = 1;
-	t_save->info = 54;
-	t_save->header = 40;
-	t_save->zero = 0;
-	t_save->h = (int)data_t->res_h;
-	t_save->w = (int)data_t->res_w;
-	t_save->size = t_save->info + (t_save->h * data_t->img.size_line);
+	t_s->one = 1;
+	t_s->info = 54;
+	t_s->bpp = 24;
+	t_s->header = 40;
+	t_s->zero = 0;
+	t_s->h = (int)t_m->res_h;
+	t_s->w = (int)t_m->res_w;
+	t_s->size = t_s->info + (t_s->h * t_m->img.sl);
+	write(fd, "BM", 2);
+	write(fd, &t_s->size, sizeof(int));
+	write(fd, &t_s->zero, sizeof(int));
+	write(fd, &t_s->info, sizeof(int));
+	write(fd, &t_s->header, sizeof(int));
 }
 
-void	ft_save(data_t *data_t)
+void	ft_save(t_main *t_m)
 {
-	int fd;
-	t_save t_save[1];
-	char *file;
+	int		fd;
+	t_save	t_s[1];
 
 	if ((fd = open("save.bmp", O_CREAT | O_WRONLY | O_TRUNC, 0666)) < 0)
 	{
-		ft_quit(data_t);
-		return;
+		ft_quit(t_m);
+		return ;
 	}
-	init_save(data_t, t_save);
-	write(fd, "BM", 2);
-	write(fd, &t_save->size, sizeof(int));
-	write(fd, &t_save->zero, sizeof(int));
-	write(fd, &t_save->info, sizeof(int));
-	write(fd, &t_save->header, sizeof(int));
-	write(fd, &t_save->w, sizeof(int));
-	write(fd, &t_save->h, sizeof(int));
-	write(fd, &t_save->one, sizeof(short int));
-	int t = 24;
-	write(fd, &t, sizeof(short int));
-	write(fd, &t_save->zero, sizeof(int));
-	write(fd, &t_save->zero, sizeof(int));
-	write(fd, &t_save->zero, sizeof(int));
-	write(fd, &t_save->zero, sizeof(int));
-	write(fd, &t_save->zero, sizeof(int));
-	write(fd, &t_save->zero, sizeof(int));
-
-	// int x = data_t->res_w;
-	// int y = data_t->res_h;
-	if (!(file = malloc(sizeof(char) * (t_save->size))))
-		return;
-	// write_header(file, x, y);
-
-	write_img(data_t, t_save, fd);
-	// write(fd, file, t_save->size);
-	write(1, "ping", 4);
-	sleep(4);
+	init_save(t_m, t_s, fd);
+	write(fd, &t_s->w, sizeof(int));
+	write(fd, &t_s->h, sizeof(int));
+	write(fd, &t_s->one, sizeof(short int));
+	write(fd, &t_s->bpp, sizeof(short int));
+	write(fd, &t_s->zero, sizeof(int));
+	write(fd, &t_s->zero, sizeof(int));
+	write(fd, &t_s->zero, sizeof(int));
+	write(fd, &t_s->zero, sizeof(int));
+	write(fd, &t_s->zero, sizeof(int));
+	write(fd, &t_s->zero, sizeof(int));
+	write_img(t_m, fd);
 	close(fd);
-	ft_quit(data_t);
 }

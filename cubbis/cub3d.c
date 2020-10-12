@@ -6,14 +6,13 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:14:51 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/11 16:48:56 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/12 18:22:31 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-//beginning of an error handling protocol. Called in Main.
-int	error_handling_start(int argc, char **argv)
+int		error_handling_start(int argc, char **argv)
 {
 	if (argc > 3 || argc < 2)
 	{
@@ -33,7 +32,7 @@ int	error_handling_start(int argc, char **argv)
 	return (1);
 }
 
-void		ft_quit(data_t *t_m)
+void	ft_quit(t_main *t_m)
 {
 	int i;
 
@@ -59,7 +58,7 @@ void		ft_quit(data_t *t_m)
 	exit(0);
 }
 
-int 	launch_img(data_t *t_m)
+int		launch_img(t_main *t_m)
 {
 	if (new_image(t_m) == 0)
 	{
@@ -79,21 +78,14 @@ t_m->e_tex.address == NULL || t_m->w_tex.address == NULL)
 	return (1);
 }
 
-int 	launch_mlx(data_t *t_m, int argc, char **argv)
+int		launch_mlx(t_main *t_m, int argc, char **argv)
 {
-	// int rh;
-	// int rw;
-
 	if ((t_m->mlx_prog = mlx_init()) == NULL)
 	{
 		ft_quit_map(t_m, "Error\nFailed to launch Xserver");
 		return (0);
 	}
-	// mlx_get_screen_size(t_m->mlx_prog, &rw, &rh);
-	// if (t_m->res_w > rw)
-		// t_m->res_w = rw;
-	// if (t_m->res_h > rh)
-		// t_m->res_h = rh;
+	// check_res(t_m);
 	if (argc == 3 && ft_issave(argv[2]) == 1)
 	{
 		if (launch_img(t_m) == 0)
@@ -101,7 +93,8 @@ int 	launch_mlx(data_t *t_m, int argc, char **argv)
 		ft_save(t_m);
 		return (0);
 	}
-	if ((t_m->mlx_win = mlx_new_window(t_m->mlx_prog, t_m->res_w, t_m->res_h, "Cub3D")) == NULL)
+	if ((t_m->mlx_win = mlx_new_window(t_m->mlx_prog, t_m->res_w, t_m->res_h,
+"Cub3D")) == NULL)
 	{
 		ft_quit_map(t_m, "Error\nFailed to create window");
 		return (0);
@@ -111,15 +104,16 @@ int 	launch_mlx(data_t *t_m, int argc, char **argv)
 	return (1);
 }
 
-// void 	ft_click(data_t *t_m)
+// void 	ft_click(int button,int x,int y,t_main *t_m)
 // {
 // 	printf("%s\n", "hello");
-// 	// ft_quit_map(t_m);
+// 	printf("%d %d %d\n",button,  x, y);
+// 	ft_quit_map(t_m, "stop");
 // }
 
 int		main(int argc, char **argv)
 {
-	data_t	t_m[1];
+	t_main	t_m[1];
 
 	if (error_handling_start(argc, argv) == 0)
 		return (0);
@@ -129,7 +123,7 @@ int		main(int argc, char **argv)
 		return (0);
 	raycasting(t_m);
 	mlx_hook(t_m->mlx_win, KEYPRESS, KEYPRESSMASK, ft_keyboard_press, &t_m);
-	// mlx_mouse_hook(t_m->mlx_win, ft_quit, &t_m);
+	// mlx_hook(t_m->mlx_win, CLICK, CLICKMASK, ft_click, &t_m);
 	mlx_loop(t_m->mlx_prog);
 	return (0);
 }

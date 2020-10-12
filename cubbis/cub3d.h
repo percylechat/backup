@@ -12,44 +12,41 @@
 # include <publib.h>
 # include <math.h>
 
-# define BUFFER_SIZE 300
+# define BS 300
 # define BLOC_SIZE 64.0
 # define CHARARCTER_SIZE 32
 # define FOV 60.0
 
 # define KEYPRESS 2
 # define KEYPRESSMASK 1
+# define CLICKMASK 1
 # define CLICK 33
 # define KEY_S 122
 # define KEY_Z 115
 # define KEY_Q 113
 # define KEY_D 100
-# define KEY_A 97
-# define KEY_E 101
+# define KEY_A 65361
+# define KEY_E 65363
 # define KEY_ESC 65307
-# define DR 0.0174533
 
-typedef struct s_sav t_save;
-struct s_sav
+typedef struct s_save t_save;
+struct s_save
 {
 	int size;
 	int bpp;
-	int sl;
-	int endian;
 	int zero;
 	int header;
 	int info;
 	short int one;
 	int w;
 	int h;
-	char *img;
 };
 
 typedef struct s_tex t_tex;
 struct s_tex
 {
 	int		bits_per_pixel;
-	int		size_line;
+	int		sl;
 	int		endian;
 	void	*address;
 	char	*content;
@@ -63,17 +60,15 @@ struct s_col
 	int b;
 };
 
-typedef struct data_t data_t;
-struct data_t
+typedef struct s_main t_main;
+struct s_main
 {
-  //uti mlx
 	void		  *mlx_prog;
 	void		  *mlx_win;
 	void		  *mlx_img;
 	t_tex		img;
 	float		   res_w;
 	float		   res_h;
-	// info map
 	t_col		   color_floor;
 	t_col		   color_ceiling;
 	char		  *tex_n;
@@ -86,7 +81,6 @@ struct data_t
 	int			column_size[1024];
 	int		   line;
 	char		**maptab;
-	//info character
 	char		orientation;
 	double		direction_x;
 	double		direction_y;
@@ -94,7 +88,6 @@ struct data_t
 	double		camera_y;
 	double		position_x;
 	double		position_y;
-	// //screen display
 	int		   wall_size;
 	int			tot_sprite;
 	char		*sprite_spot;
@@ -160,115 +153,122 @@ struct s_sprite
 	int tex_x;
 	int tex_y;
 	int wall_y;
+	int n_s;
 };
 
 
-void raycasting(data_t *data_t);
-void	check_step(t_raycast *t_raycast, data_t *data_t);
+void raycasting(t_main *t_m);
+void	check_step(t_raycast *t_r, t_main *t_m);
 char		*ft_itoa(int n);
 
 /*
 ** cub3d_utils
 */
 int 	ft_issave(char *txt);
-void 	give_angle_ew(data_t *data_t);
-void	give_angle(data_t *data_t);
-int		check_for_obstacle(int x, int y, data_t *data_t, t_sprite *t_sprite);
-int		new_image(data_t *data_t);
+void 	give_angle_ew(t_main *t_m);
+void	give_angle(t_main *t_m);
+int		check_for_obstacle(int x, int y, t_main *t_m, t_sprite *t_s);
+int		new_image(t_main *t_m);
 
 /*
 ** cub3d_utils2
 */
+char	*set_reste(char *reste);
+void 	check_res(t_main *t_m);
+t_tex	get_tex_sp(t_main *t_m);
 char	*line_copy(char *src, int i);
-char	**ft_split_map(data_t *data_t);
+char	**ft_split_map(t_main *t_m);
 
 /*
 ** get_texture
 */
-t_tex	get_tex_n(data_t *data_t);
-t_tex	get_tex_w(data_t *data_t);
-t_tex	get_tex_e(data_t *data_t);
-t_tex	get_tex_s(data_t *data_t);
-void	get_texture(data_t *data_t);
+t_tex	get_tex_n(t_main *t_m);
+t_tex	get_tex_w(t_main *t_m);
+t_tex	get_tex_e(t_main *t_m);
+t_tex	get_tex_s(t_main *t_m);
+void	get_texture(t_main *t_m);
 
 /*
 ** cub3D.c
 */
-int error_handling_start(int argc, char **argv);
-int check_for_obstacle(int x, int y, data_t *data_t, t_sprite *t_sprite);
-void		ft_quit(data_t *data_t);
-int main(int argc, char **argv);
+int		error_handling_start(int argc, char **argv);
+int		check_for_obstacle(int x, int y, t_main *t_m, t_sprite *t_s);
+void	ft_quit(t_main *t_m);
+int		main(int argc, char **argv);
 
 /*
 ** file_handling
 */
-void	get_res(char *line, int i, data_t *data_t);
-void	fill_map(char *line, data_t *data_t);
-void	get_content(char *line, data_t *data_t);
-void	file_handling(char *name, data_t *data_t);
+void	get_res(char *line, int i, t_main *t_m);
+void	fill_map(char *line, t_main *t_m);
+void	get_content(char *line, t_main *t_m);
+void	file_handling(char *name, t_main *t_m);
 
 /*
 ** map_checking
 */
-void	sprite_roundup(data_t *data_t, int x, int y);
-int 	init_map(data_t *data_t, int y, int x);
-void check_map(data_t *data_t);
+void	sprite_roundup(t_main *t_m, int x, int y);
+int 	init_map(t_main *t_m, int y, int x);
+void	check_map(t_main *t_m);
 
 /*
 ** map_checking_dir
 */
-int check_e(data_t *data_t, int x, int y);
-int check_s(data_t *data_t, int x, int y);
-int check_w(data_t *data_t, int x, int y);
-int check_n(data_t *data_t, int x, int y);
+void	check_rotate(t_main *t_m);
+int		check_e(t_main *t_m, int x, int y);
+int		check_s(t_main *t_m, int x, int y);
+int		check_w(t_main *t_m, int x, int y);
+int		check_n(t_main *t_m, int x, int y);
 
 /*
 **ft_save
 */
-void	ft_save(data_t *data_t);
+void	write_img(t_main *t_m, int fd);
+void	init_save(t_main *t_m, t_save *t_s, int fd);
+void	ft_save(t_main *t_m);
 
 /*
 ** sprite
 */
-t_tex	get_tex_sp(data_t *data_t);
+int		actual_print(t_main *t_m, t_sprite *t_s, t_tex tex_sp);
 int		*sort_sprite(int *temp);
-void	calc_sprite(data_t *data_t, t_sprite *t_sprite);
-void	sprite_size(t_sprite *t_sprite, data_t *data_t, int k);
-void 	print_sprite(data_t *data_t, t_sprite *t_sprite);
+void	calc_sprite(t_main *t_m, t_sprite *t_s);
+void	sprite_size(t_sprite *t_s, t_main *t_m, int k);
+void	print_sprite(t_main *t_m, t_sprite *t_s);
 
 /*
 ** move
 */
-void ft_keyboard_release(int key, data_t *data_t);
-int  ft_keyboard_press(int key, data_t *data_t);
-void ft_move_updown(data_t *data_t, int m);
+void	ft_keyboard_release(int key, t_main *t_m);
+int		ft_keyboard_press(int key, t_main *t_m);
+void	ft_move_updown(t_main *t_m, int m);
 
 /*
 ** print_screen
 */
-void   give_udlr(data_t *data_t);
-void find_vert_dist(data_t *data_t, float ray);
-void find_hor_dist(data_t *data_t, float ray);
-void print_column(data_t *data_t, int i, int side);
-void new_screen(data_t *data_t);
+void	give_udlr(t_main *t_m);
+void	find_vert_dist(t_main *t_m, float ray);
+void	find_hor_dist(t_main *t_m, float ray);
+void	print_column(t_main *t_m, int i, int side);
+void	new_screen(t_main *t_m);
 
 /*
 ** print_minimap
 */
-void	print_minimap(data_t *data_t);
-int	check_for_obstacle_m(int x, int y, data_t *data_t);
+void	print_minimap(t_main *t_m);
+int		check_for_obstacle_m(int x, int y, t_main *t_m);
 
 /*
 ** ft_error
 */
-void	error_color(data_t *data_t);
-void	error_sanity_check(data_t *data_t);
-void 	ft_quit_map(data_t *data_t, char *str);
+void	error_color(t_main *t_m);
+void	error_sanity_check(t_main *t_m);
+void	ft_quit_map(t_main *t_m, char *str);
 
 /*
 ** get_color
 */
-void			get_color(char *line, int i, data_t *data_t);
+void			get_color(char *line, int i, t_main *t_m);
 int				get_green(char *line, int i);
 int				get_blue(char *line, int i);
 unsigned int	color_pixel(int r, int g, int b);
@@ -276,17 +276,17 @@ unsigned int	color_pixel(int r, int g, int b);
 /*
 ** get_texture
 */
-t_tex	*get_tex(data_t *data_t, char *path);
-void 	init_texture(data_t *data_t);
-t_tex choose_texture(data_t *data_t,t_raycast *t_raycast);
+t_tex	*get_tex(t_main *t_m, char *path);
+void	init_texture(t_main *t_m);
+t_tex	choose_texture(t_main *t_m,t_raycast *t_r);
 
 /*
 ** texture
 */
-void	text_print(t_tex t_t, t_print *t_p, data_t *t_m, int index);
-void	print_cf(data_t *data_t, int h, int i, int g);
-void	print_wall(data_t *data_t, t_raycast *t_raycast, int i, t_print *t_print);
-void	calc_texture(data_t *data_t, t_raycast *t_raycast, int i);
+void	text_print(t_tex t_t, t_print *t_p, t_main *t_m, int index);
+void	print_cf(t_main *t_m, int h, int i, int g);
+void	print_wall(t_main *t_m, t_raycast *t_r, int i, t_print *t_print);
+void	calc_texture(t_main *t_m, t_raycast *t_r, int i);
 
 /*
 ** get_next_line

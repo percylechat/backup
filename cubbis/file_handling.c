@@ -6,13 +6,13 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:24:25 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/11 15:39:51 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/12 15:54:53 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	get_res(char *line, int i, data_t *t_m)
+void	get_res(char *line, int i, t_main *t_m)
 {
 	t_m->res_w = ft_atoi(&line[i + 1]);
 	while (ft_isdigit(line[i]) == 0)
@@ -26,7 +26,7 @@ void	get_res(char *line, int i, data_t *t_m)
 		t_m->res_h = 200;
 }
 
-void	fill_map(char *line, data_t *t_m)
+void	fill_map(char *line, t_main *t_m)
 {
 	char	*temp;
 
@@ -51,7 +51,7 @@ void	fill_map(char *line, data_t *t_m)
 	}
 }
 
-void	get_content(char *line, data_t *t_m)
+void	get_content(char *line, t_main *t_m)
 {
 	int		i;
 
@@ -76,7 +76,7 @@ void	get_content(char *line, data_t *t_m)
 		fill_map(line, t_m);
 }
 
-void	file_handling(char *name, data_t *t_m)
+void	file_handling(char *name, t_main *t_m)
 {
 	int		fd;
 	char	*line;

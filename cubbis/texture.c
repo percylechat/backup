@@ -6,49 +6,42 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:33:32 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/11 15:56:00 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/12 15:55:37 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	text_print(t_tex t_t, t_print *t_p, data_t *t_m, int index)
+void	text_print(t_tex t_t, t_print *t_p, t_main *t_m, int index)
 {
 	t_p->texY = (int)t_p->texPos & ((int)BLOC_SIZE - 1);
 	t_p->texPos += t_p->step;
-	t_m->img.content[index + 3] =
-t_t.content[t_p->texX * 4 + t_t.size_line * t_p->texY + 3];
-	t_m->img.content[index] =
-t_t.content[t_p->texX * 4 + t_t.size_line * t_p->texY];
-	t_m->img.content[index + 1] =
-t_t.content[t_p->texX * 4 + t_t.size_line * t_p->texY + 1];
-	t_m->img.content[index + 2] =
-t_t.content[t_p->texX * 4 + t_t.size_line * t_p->texY + 2];
+	t_m->img.content[index + 3] = t_t.content[t_p->texX * 4 + t_t.sl *
+t_p->texY + 3];
+	t_m->img.content[index] = t_t.content[t_p->texX * 4 + t_t.sl * t_p->texY];
+	t_m->img.content[index + 1] = t_t.content[t_p->texX * 4 + t_t.sl *
+t_p->texY + 1];
+	t_m->img.content[index + 2] = t_t.content[t_p->texX * 4 + t_t.sl *
+t_p->texY + 2];
 }
 
-void	print_cf(data_t *t_m, int h, int i, int g)
+void	print_cf(t_main *t_m, int h, int i, int g)
 {
 	if (g == 1)
 	{
-		t_m->img.content[i * 4 + h * t_m->img.size_line] =
-t_m->color_ceiling.r;
-		t_m->img.content[i * 4 + h * t_m->img.size_line + 1] =
-t_m->color_ceiling.g;
-		t_m->img.content[i * 4 + h * t_m->img.size_line + 2] =
-t_m->color_ceiling.b;
+		t_m->img.content[i * 4 + h * t_m->img.sl] = t_m->color_ceiling.r;
+		t_m->img.content[i * 4 + h * t_m->img.sl + 1] = t_m->color_ceiling.g;
+		t_m->img.content[i * 4 + h * t_m->img.sl + 2] = t_m->color_ceiling.b;
 	}
 	else
 	{
-		t_m->img.content[i * 4 + h * t_m->img.size_line] =
-t_m->color_floor.r;
-		t_m->img.content[i * 4 + h * t_m->img.size_line + 1] =
-t_m->color_floor.g;
-		t_m->img.content[i * 4 + h * t_m->img.size_line + 2] =
-t_m->color_floor.b;
+		t_m->img.content[i * 4 + h * t_m->img.sl] = t_m->color_floor.r;
+		t_m->img.content[i * 4 + h * t_m->img.sl + 1] = t_m->color_floor.g;
+		t_m->img.content[i * 4 + h * t_m->img.sl + 2] = t_m->color_floor.b;
 	}
 }
 
-void	print_wall(data_t *t_m, t_raycast *t_r, int i, t_print *t_p)
+void	print_wall(t_main *t_m, t_raycast *t_r, int i, t_print *t_p)
 {
 	t_tex	tex;
 	int		h;
@@ -67,7 +60,7 @@ void	print_wall(data_t *t_m, t_raycast *t_r, int i, t_print *t_p)
 		}
 		while (h > t_p->deb && h < t_p->end)
 		{
-			index = i * 4 + h * t_m->img.size_line;
+			index = i * 4 + h * t_m->img.sl;
 			text_print(tex, t_p, t_m, index);
 			h++;
 		}
@@ -76,7 +69,7 @@ void	print_wall(data_t *t_m, t_raycast *t_r, int i, t_print *t_p)
 	}
 }
 
-void	calc_texture(data_t *t_m, t_raycast *t_r, int i)
+void	calc_texture(t_main *t_m, t_raycast *t_r, int i)
 {
 	t_print t_p[1];
 

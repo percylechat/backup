@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:10:47 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/11 15:17:36 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/12 15:54:30 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ txt[4] != 'v' || txt[5] != 'e')
 	return (1);
 }
 
-void	give_angle_ew(data_t *t_m)
+void	give_angle_ew(t_main *t_m)
 {
 	t_m->direction_y = 0;
 	t_m->camera_x = 0;
@@ -36,7 +36,7 @@ void	give_angle_ew(data_t *t_m)
 	}
 }
 
-void	give_angle(data_t *t_m)
+void	give_angle(t_main *t_m)
 {
 	if (t_m->orientation == 'E' || t_m->orientation == 'W')
 	{
@@ -57,7 +57,7 @@ void	give_angle(data_t *t_m)
 	}
 }
 
-int		check_for_obstacle(int x, int y, data_t *t_m, t_sprite *t_sp)
+int		check_for_obstacle(int x, int y, t_main *t_m, t_sprite *t_sp)
 {
 	if (x < 0 || y < 0 || x > t_m->column_size[y] || y >= t_m->line)
 		return (0);
@@ -72,7 +72,7 @@ int		check_for_obstacle(int x, int y, data_t *t_m, t_sprite *t_sp)
 		return (0);
 }
 
-int		new_image(data_t *t_m)
+int		new_image(t_main *t_m)
 {
 	if ((t_m->mlx_img = mlx_new_image(t_m->mlx_prog, t_m->res_w, t_m->res_h)) ==
 	NULL)
@@ -81,6 +81,6 @@ int		new_image(data_t *t_m)
 		return (0);
 	}
 	t_m->img.content = mlx_get_data_addr(t_m->mlx_img, &t_m->img.bits_per_pixel,
-	&t_m->img.size_line, &t_m->img.endian);
+	&t_m->img.sl, &t_m->img.endian);
 	return (1);
 }

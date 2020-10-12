@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:21:50 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/11 15:41:41 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/12 15:55:03 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int				get_green(char *line, int i)
 	return (ft_atoi(&line[i]));
 }
 
-void			get_color(char *line, int i, data_t *t_m)
+void			get_color(char *line, int i, t_main *t_m)
 {
 	int	r;
 	int	g;

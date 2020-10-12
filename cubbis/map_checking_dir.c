@@ -6,13 +6,25 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 19:03:00 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/11 15:34:48 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/12 17:15:47 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		check_n(data_t *t_m, int x, int y)
+void	check_rotate(t_main *t_m)
+{
+	if (t_m->direction_x > 1)
+		t_m->direction_x = ((t_m->direction_x - 1) - 1) * -1;
+	if (t_m->direction_y > 1)
+		t_m->direction_y = ((t_m->direction_y - 1) - 1) * -1;
+	if (t_m->direction_x < -1)
+		t_m->direction_x = ((t_m->direction_x + 1) + 1) * -1;
+	if (t_m->direction_y < -1)
+		t_m->direction_y = ((t_m->direction_y + 1) + 1) * -1;
+}
+
+int		check_n(t_main *t_m, int x, int y)
 {
 	while (y >= 0)
 	{
@@ -23,7 +35,7 @@ int		check_n(data_t *t_m, int x, int y)
 	return (0);
 }
 
-int		check_s(data_t *t_m, int x, int y)
+int		check_s(t_main *t_m, int x, int y)
 {
 	while (y < t_m->line)
 	{
@@ -34,7 +46,7 @@ int		check_s(data_t *t_m, int x, int y)
 	return (0);
 }
 
-int		check_w(data_t *t_m, int x, int y)
+int		check_w(t_main *t_m, int x, int y)
 {
 	while (x >= 0)
 	{
@@ -45,7 +57,7 @@ int		check_w(data_t *t_m, int x, int y)
 	return (0);
 }
 
-int		check_e(data_t *t_m, int x, int y)
+int		check_e(t_main *t_m, int x, int y)
 {
 	while (x < t_m->column_size[y])
 	{

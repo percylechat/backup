@@ -5,7 +5,7 @@
 
 //called by ft_keyboard_press in move.c
 //print the minimap.
-void    print_minimap(data_t *data_t)
+void    print_minimap(t_main *t_m)
 {
 	int m_w;
 	int m_h;
@@ -16,21 +16,21 @@ void    print_minimap(data_t *data_t)
 
 	i = 0;
 	j = 0;
-	m_h = (data_t->res_h / 3) / data_t->line;
-	m_w = (data_t->res_w / 2) / data_t->column ;
+	m_h = (t_m->res_h / 3) / t_m->line;
+	m_w = (t_m->res_w / 2) / t_m->column ;
 	if (m_h > m_w)
 		m_h = m_w;
 	else
 		m_w = m_h;
-	while (m_w_c < data_t->column)
+	while (m_w_c < t_m->column)
 	{
 	    while (j < m_w)
 	    {
-			while (m_h_c < data_t->line)
+			while (m_h_c < t_m->line)
 			{
 				while (i < m_h)
 				{
-					mlx_pixel_put(data_t->mlx_prog, data_t->mlx_win, j + (m_w_c * m_w), i + (m_h_c * m_h), check_for_obstacle_m(m_w_c, m_h_c, data_t));
+					mlx_pixel_put(t_m->mlx_prog, t_m->mlx_win, j + (m_w_c * m_w), i + (m_h_c * m_h), check_for_obstacle_m(m_w_c, m_h_c, t_m));
 					i++;
 				}
 				m_h_c++;
@@ -45,15 +45,15 @@ void    print_minimap(data_t *data_t)
 }
 
 //check for content of coordinates and returns appropriate colors.
-int	check_for_obstacle_m(int x, int y, data_t *data_t)
+int	check_for_obstacle_m(int x, int y, t_main *t_m)
 {
-	if (data_t->maptab[y][x] == '1')
+	if (t_m->maptab[y][x] == '1')
 		return (1+(1<<16)+(255<<8));
-	else if (data_t->maptab[y][x] == '2')
+	else if (t_m->maptab[y][x] == '2')
 		return (1+(255<<16)+(1<<8));
-	else if (data_t->maptab[y][x] == '0')
+	else if (t_m->maptab[y][x] == '0')
 		return (255+(1<<16)+(1<<8));
-	else if (data_t->maptab[y][x] != ' ')
+	else if (t_m->maptab[y][x] != ' ')
 		return (1+(255<<8)+(255<<16));
 	else
 		return (1+(1<<16)+(1<<8));

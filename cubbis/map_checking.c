@@ -6,13 +6,13 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:57:53 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/11 15:41:05 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/12 15:55:21 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	sprite_roundup(data_t *t_m, int x, int y)
+void	sprite_roundup(t_main *t_m, int x, int y)
 {
 	char	*add;
 	char	*temp;
@@ -38,7 +38,7 @@ void	sprite_roundup(data_t *t_m, int x, int y)
 	free(add);
 }
 
-int		init_map(data_t *t_m, int y, int x)
+int		init_map(t_main *t_m, int y, int x)
 {
 	if (((check_n(t_m, x, y) + check_s(t_m, x, y) + check_e(t_m, x, y) +
 check_w(t_m, x, y)) != 4 && t_m->maptab[y][x] != '1' &&
@@ -61,7 +61,7 @@ t_m->maptab[y][x] == 'S' || t_m->maptab[y][x] == 'E')
 	return (0);
 }
 
-int		sanity_check(data_t *t_m)
+int		sanity_check(t_main *t_m)
 {
 	if (!t_m->res_w || !t_m->res_h || !t_m->tex_s || !t_m->tex_e ||
 !t_m->tex_n || !t_m->tex_w || !t_m->tex_sprite || !t_m->map ||
@@ -70,7 +70,7 @@ int		sanity_check(data_t *t_m)
 	return (0);
 }
 
-void	check_map(data_t *t_m)
+void	check_map(t_main *t_m)
 {
 	int x;
 	int y;

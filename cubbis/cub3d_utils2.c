@@ -6,11 +6,44 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:20:44 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/11 15:19:28 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/12 17:04:10 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+// void 		check_res(t_main *t_m)
+// {
+// 	int rh;
+// 	int rw;
+//
+// 	mlx_get_screen_size(t_m->mlx_prog, &rw, &rh);
+// 	if (t_m->res_w > rw)
+// 		t_m->res_w = rw;
+// 	if (t_m->res_h > rh)
+// 		t_m->res_h = rh;
+// }
+
+char	*set_reste(char *reste)
+{
+	reste = malloc(1);
+	reste[0] = '\0';
+	return (reste);
+}
+
+t_tex	get_tex_sp(t_main *t_m)
+{
+	int		size;
+	t_tex	tex_sp;
+
+	size = (int)BLOC_SIZE;
+	if ((tex_sp.address = mlx_xpm_file_to_image(t_m->mlx_prog,
+t_m->tex_sprite, &size, &size)) == NULL)
+		return (tex_sp);
+	tex_sp.content = mlx_get_data_addr(tex_sp.address, &tex_sp.bits_per_pixel,
+&tex_sp.sl, &tex_sp.endian);
+	return (tex_sp);
+}
 
 char	*line_copy(char *src, int i)
 {
@@ -29,7 +62,7 @@ char	*line_copy(char *src, int i)
 	return (dst);
 }
 
-char	**ft_split_map(data_t *t_m)
+char	**ft_split_map(t_main *t_m)
 {
 	int		i;
 	int		k;

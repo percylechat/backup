@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 16:33:29 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/10 18:40:01 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/12 17:03:52 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,12 @@ int		get_next_line(int fd, char **line)
 	int			res;
 	static char	*reste = NULL;
 
-	if (fd < 0 || !line || BUFFER_SIZE <= 0 || !(buffer = malloc(sizeof(char) *
-BUFFER_SIZE + 1)))
+	if (!line || !(buffer = malloc(sizeof(1) * BS + 1)))
 		return (-1);
 	*line = NULL;
 	if (!reste)
-	{
-		reste = malloc(1);
-		reste[0] = '\0';
-	}
-	while ((res = read(fd, buffer, BUFFER_SIZE)) > 0)
+		reste = set_reste(reste);
+	while ((res = read(fd, buffer, BS)) > 0)
 	{
 		buffer[res] = '\0';
 		buffer = new_buffer(buffer, reste);
