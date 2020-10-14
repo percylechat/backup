@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 16:16:54 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/12 17:18:24 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/14 12:16:26 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,6 @@ int		ft_keyboard_press(int key, t_main *t_m)
 		ft_rotate(t_m, 0);
 	else if (key == KEY_ESC)
 		ft_quit(t_m);
-	else
-		printf("fail: %d\n", key);
 	mlx_destroy_image(t_m->mlx_prog, t_m->mlx_img);
 	if (new_image(t_m) == 0)
 	{
@@ -117,6 +115,5 @@ int		ft_keyboard_press(int key, t_main *t_m)
 		return (0);
 	}
 	raycasting(t_m);
-	print_minimap(t_m);
 	return (0);
 }

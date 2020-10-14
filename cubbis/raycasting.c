@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 16:14:46 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/12 16:16:13 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/14 13:01:49 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,69 +16,69 @@ void	check_step(t_raycast *t_r, t_main *t_m)
 {
 	if (t_r->ray_x < 0)
 	{
-		t_r->stepX = -1;
-		t_r->sideDistX = (t_m->position_x - t_r->mapX) * t_r->deltaDistX;
+		t_r->step_x = -1;
+		t_r->side_x = (t_m->position_x - t_r->map_x) * t_r->delta_x;
 	}
 	else
 	{
-		t_r->stepX = 1;
-		t_r->sideDistX = (t_r->mapX + 1.0 - t_m->position_x) * t_r->deltaDistX;
+		t_r->step_x = 1;
+		t_r->side_x = (t_r->map_x + 1.0 - t_m->position_x) * t_r->delta_x;
 	}
 	if (t_r->ray_y < 0)
 	{
-		t_r->stepY = -1;
-		t_r->sideDistY = (t_m->position_y - t_r->mapY) * t_r->deltaDistY;
+		t_r->step_y = -1;
+		t_r->side_y = (t_m->position_y - t_r->map_y) * t_r->delta_y;
 	}
 	else
 	{
-		t_r->stepY = 1;
-		t_r->sideDistY = (t_r->mapY + 1.0 - t_m->position_y) * t_r->deltaDistY;
+		t_r->step_y = 1;
+		t_r->side_y = (t_r->map_y + 1.0 - t_m->position_y) * t_r->delta_y;
 	}
 }
 
 void	check_intersec(t_raycast *t_r, t_main *t_m, t_sprite *t_s)
 {
-	if (t_r->sideDistX < t_r->sideDistY)
+	if (t_r->side_x < t_r->side_y)
 	{
-		t_r->sideDistX += t_r->deltaDistX;
-		t_r->mapX += t_r->stepX;
+		t_r->side_x += t_r->delta_x;
+		t_r->map_x += t_r->step_x;
 		t_r->side = 0;
 	}
 	else
 	{
-		t_r->sideDistY += t_r->deltaDistY;
-		t_r->mapY += t_r->stepY;
+		t_r->side_y += t_r->delta_y;
+		t_r->map_y += t_r->step_y;
 		t_r->side = 1;
 	}
-	if (check_for_obstacle(t_r->mapX, t_r->mapY, t_m, t_s) > 0)
+	if (check_for_obstacle(t_r->map_x, t_r->map_y, t_m, t_s) > 0)
 		t_r->hit = 1;
 }
 
 void	init_raycast(t_main *t_m, t_raycast *t_r, t_sprite *t_s, int i)
 {
 	t_r->hit = 0;
-	t_r->mapX = (int)t_m->position_x;
-	t_r->mapY = (int)t_m->position_y;
+	t_r->map_x = (int)t_m->position_x;
+	t_r->map_y = (int)t_m->position_y;
 	t_r->camerax = 2 * i / t_m->res_w - 1;
 	t_r->ray_x = t_m->direction_x + t_m->camera_x * t_r->camerax;
 	t_r->ray_y = t_m->direction_y + t_m->camera_y * t_r->camerax;
 	if (t_r->ray_y == 0)
-		t_r->deltaDistX = 0;
+		t_r->delta_x = 0;
 	else
-		t_r->deltaDistX = (t_r->ray_x == 0) ? 1 : fabs(1 / t_r->ray_x);
+		t_r->delta_x = (t_r->ray_x == 0) ? 1 : fabs(1 / t_r->ray_x);
 	if (t_r->ray_x == 0)
-		t_r->deltaDistY = 0;
+		t_r->delta_y = 0;
 	else
-		t_r->deltaDistY = (t_r->ray_y == 0) ? 1 : fabs(1 / t_r->ray_y);
+		t_r->delta_y = (t_r->ray_y == 0) ? 1 : fabs(1 / t_r->ray_y);
 	check_step(t_r, t_m);
 	while (t_r->hit == 0)
 		check_intersec(t_r, t_m, t_s);
 	if (t_r->side == 0)
-		t_r->perpWallDist = (t_r->mapX - t_m->position_x + (1 -
-t_r->stepX) / 2) / t_r->ray_x;
+		t_r->wall_dist = (t_r->map_x - t_m->position_x + (1 -
+t_r->step_x) / 2) / t_r->ray_x;
 	else
-		t_r->perpWallDist = (t_r->mapY - t_m->position_y + (1 -
-t_r->stepY) / 2) / t_r->ray_y;
+		t_r->wall_dist = (t_r->map_y - t_m->position_y + (1 -
+t_r->step_y) / 2) / t_r->ray_y;
 }
 
 void	raycasting(t_main *t_m)
@@ -97,9 +97,9 @@ void	raycasting(t_main *t_m)
 	while (i <= t_m->res_w)
 	{
 		init_raycast(t_m, t_r, t_s, i);
-		t_m->wall_size = (int)(t_m->res_h / t_r->perpWallDist);
+		t_m->wall_size = (int)(t_m->res_h / t_r->wall_dist);
 		calc_texture(t_m, t_r, i);
-		t_s->buffer[i] = t_r->perpWallDist;
+		t_s->buffer[i] = t_r->wall_dist;
 		t_m->wall_size = 0;
 		i += 1;
 	}
