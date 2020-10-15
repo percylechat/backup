@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 12:18:55 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/15 12:38:50 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/15 17:27:04 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,6 @@ void						get_texture(t_main *t_m);
 /*
 ** cub3D.c
 */
-int							error_handling_start(int argc, char **argv);
 int							check_for_obstacle(int x, int y, t_main *t_m,
 t_sprite *t_s);
 int							ft_quit(t_main *t_m);
@@ -213,7 +212,7 @@ int							main(int argc, char **argv);
 /*
 ** file_handling
 */
-void						get_res(char *line, int i, t_main *t_m);
+int							get_res(char *line, int i, t_main *t_m);
 void						fill_map(char *line, t_main *t_m);
 void						get_content(char *line, t_main *t_m);
 void						file_handling(char *name, t_main *t_m);
@@ -237,6 +236,7 @@ int							check_n(t_main *t_m, int x, int y);
 /*
 **ft_save
 */
+int							ft_quit_save(t_main *t_m);
 void						write_img(t_main *t_m, int fd);
 void						init_save(t_main *t_m, t_save *t_s, int fd);
 void						ft_save(t_main *t_m);
@@ -278,6 +278,8 @@ int							check_for_obstacle_m(int x, int y, t_main *t_m);
 void						error_color(t_main *t_m);
 void						error_sanity_check(t_main *t_m);
 void						ft_quit_map(t_main *t_m, char *str);
+void						error_res(t_main *t_m);
+int							error_handling_start(int argc, char **argv);
 
 /*
 ** get_color

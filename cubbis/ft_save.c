@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 16:34:14 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/12 16:56:29 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/15 17:26:44 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,30 @@ void	init_save(t_main *t_m, t_save *t_s, int fd)
 	write(fd, &t_s->header, sizeof(int));
 }
 
+int		ft_quit_save(t_main *t_m)
+{
+	int i;
+
+	i = 0;
+	free(t_m->tex_n);
+	free(t_m->tex_s);
+	free(t_m->tex_w);
+	free(t_m->tex_e);
+	free(t_m->tex_sprite);
+	free(t_m->map);
+	while (i < t_m->line + 1)
+		free(t_m->maptab[i++]);
+	free(t_m->maptab);
+	free(t_m->sprite_spot);
+	mlx_destroy_image(t_m->mlx_prog, t_m->mlx_img);
+	mlx_destroy_image(t_m->mlx_prog, t_m->n_tex.address);
+	mlx_destroy_image(t_m->mlx_prog, t_m->s_tex.address);
+	mlx_destroy_image(t_m->mlx_prog, t_m->e_tex.address);
+	mlx_destroy_image(t_m->mlx_prog, t_m->w_tex.address);
+	free(t_m->mlx_prog);
+	exit(0);
+}
+
 void	ft_save(t_main *t_m)
 {
 	int		fd;
@@ -74,4 +98,5 @@ void	ft_save(t_main *t_m)
 	write(fd, &t_s->zero, sizeof(int));
 	write_img(t_m, fd);
 	close(fd);
+	ft_quit_save(t_m);
 }

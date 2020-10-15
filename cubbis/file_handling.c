@@ -6,13 +6,13 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:24:25 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/14 16:21:54 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/15 17:20:47 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	get_res(char *line, int i, t_main *t_m)
+int		get_res(char *line, int i, t_main *t_m)
 {
 	t_m->res_w = ft_atoi(&line[i + 1]);
 	while (ft_isdigit(line[i]) == 0)
@@ -20,10 +20,12 @@ void	get_res(char *line, int i, t_main *t_m)
 	while (ft_isdigit(line[i]) != 0)
 		i++;
 	t_m->res_h = ft_atoi(&line[i]);
-	if (t_m->res_w < 200)
-		t_m->res_w = 200;
-	if (t_m->res_h < 200)
-		t_m->res_h = 200;
+	if (t_m->res_w <= 0 || t_m->res_h <= 0)
+	{
+		error_res(t_m);
+		return (1);
+	}
+	return (0);
 }
 
 void	fill_map(char *line, t_main *t_m)
@@ -61,7 +63,10 @@ void	get_content(char *line, t_main *t_m)
 	if (line[i] == 'C' || line[i] == 'F')
 		get_color(line, i, t_m);
 	else if (line[i] == 'R')
-		get_res(line, i, t_m);
+	{
+		if (get_res(line, i, t_m) == 1)
+			return ;
+	}
 	else if (line[i] == 'N')
 		t_m->tex_n = ft_strtrim(&line[i + 2], " ");
 	else if (line[i] == 'W')

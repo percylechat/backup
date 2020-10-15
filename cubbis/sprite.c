@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 16:22:42 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/15 12:37:36 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/15 17:36:26 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,6 @@ t_m->sp_tex.content[t_s->tex_x * 4 + t_m->sp_tex.sl * t_s->tex_y + 2];
 
 void	print_sprite(t_main *t_m, t_sprite *t_s)
 {
-	// t_tex	tex_sp;
-	//
-	// tex_sp = get_tex_sp(t_m);
-	// if (t_m->sp_tex.address == NULL)
-	// 	ft_quit_map(t_m, "Error\nCannot open sprite texture");
 	calc_sprite(t_m, t_s);
 	while (t_s->n_s / 3 != t_m->tot_sprite)
 	{

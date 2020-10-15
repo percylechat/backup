@@ -1,10 +1,12 @@
-R 1240 800
+
+F  1 , 1 , 255
 NO pics/ajvp.xpm
 SO pics/mpm6.xpm
 WE pics/vxps.xpm
+R 1240 800
 EA pics/odhh.xpm
 S pics/n6wx.xpm
-F  1 , 1 , 255
+
 C 1 , 255, 1
 
    11111111111111

@@ -6,33 +6,13 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:14:51 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/15 14:41:05 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/15 17:37:33 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		error_handling_start(int argc, char **argv)
-{
-	if (argc > 3 || argc < 2)
-	{
-		ft_putstr_fd("Error\nWrong number of arguments", 1);
-		return (0);
-	}
-	else if (strstr(argv[1], ".cub") == NULL)
-	{
-		ft_putstr_fd("Error\nWrong map extension", 1);
-		return (0);
-	}
-	else if (argc == 3 && ft_issave(argv[2]) != 1)
-	{
-		ft_putstr_fd("Error\nWrong option", 1);
-		return (0);
-	}
-	return (1);
-}
-
-int	ft_quit(t_main *t_m)
+int		ft_quit(t_main *t_m)
 {
 	int i;
 
@@ -70,8 +50,8 @@ int		launch_img(t_main *t_m)
 	t_m->w_tex = get_tex_w(t_m);
 	t_m->sp_tex = get_tex_sp(t_m);
 	if (t_m->n_tex.address == NULL || t_m->s_tex.address == NULL ||
-t_m->e_tex.address == NULL || t_m->w_tex.address == NULL || t_m->sp_tex.address
-== NULL)
+t_m->e_tex.address == NULL || t_m->w_tex.address == NULL ||
+t_m->sp_tex.address == NULL)
 	{
 		ft_quit_map(t_m, "Error\nCannot open texture");
 		return (0);
@@ -105,12 +85,15 @@ int		launch_mlx(t_main *t_m, int argc, char **argv)
 	return (1);
 }
 
-// void 	ft_click(int button, int x, int y, t_main *t_m)
-// {
-// 	printf("%s\n", "hello");
-// 	printf("%d %d %d\n",button,  x, y);
-// 	ft_quit_map(t_m, "stop");
-// }
+void	init_values(t_main *t_m)
+{
+	t_m->sprite_spot = '\0';
+	t_m->tex_e = NULL;
+	t_m->tex_w = NULL;
+	t_m->tex_n = NULL;
+	t_m->tex_s = NULL;
+	t_m->tex_sprite = NULL;
+}
 
 int		main(int argc, char **argv)
 {
@@ -118,8 +101,8 @@ int		main(int argc, char **argv)
 
 	if (error_handling_start(argc, argv) == 0)
 		return (0);
+	init_values(t_m);
 	file_handling(argv[1], t_m);
-	t_m->sprite_spot = '\0';
 	check_map(t_m);
 	if (launch_mlx(t_m, argc, argv) == 0)
 		return (0);
