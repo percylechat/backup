@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/17 16:22:42 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/14 12:47:11 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/15 12:37:36 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,37 +92,37 @@ t_s->trans_y));
 	t_s->wall_x = t_s->start_w;
 }
 
-int		actual_print(t_main *t_m, t_sprite *t_s, t_tex tex_sp)
+int		actual_print(t_main *t_m, t_sprite *t_s)
 {
 	int d;
 
 	d = t_s->wall_y * 256 - t_m->res_h * 128 + t_s->sprite_h * 128;
 	t_s->tex_y = ((d * BLOC_SIZE) / t_s->sprite_h) / 256;
-	t_s->color = color_pixel(tex_sp.content[t_s->tex_x * 4 +
-	tex_sp.sl * t_s->tex_y + 2], tex_sp.content[t_s->tex_x * 4 +
-	tex_sp.sl * t_s->tex_y + 1], tex_sp.content[t_s->tex_x * 4 +
-	tex_sp.sl * t_s->tex_y]);
+	t_s->color = color_pixel(t_m->sp_tex.content[t_s->tex_x * 4 +
+	t_m->sp_tex.sl * t_s->tex_y + 2], t_m->sp_tex.content[t_s->tex_x * 4 +
+	t_m->sp_tex.sl * t_s->tex_y + 1], t_m->sp_tex.content[t_s->tex_x * 4 +
+	t_m->sp_tex.sl * t_s->tex_y]);
 	if (t_s->color != 0)
 	{
 		t_m->img.content[t_s->wall_x * 4 + t_s->wall_y * t_m->img.sl + 3] =
-tex_sp.content[t_s->tex_x * 4 + tex_sp.sl * t_s->tex_y + 3];
+t_m->sp_tex.content[t_s->tex_x * 4 + t_m->sp_tex.sl * t_s->tex_y + 3];
 		t_m->img.content[t_s->wall_x * 4 + t_s->wall_y * t_m->img.sl] =
-tex_sp.content[t_s->tex_x * 4 + tex_sp.sl * t_s->tex_y];
+t_m->sp_tex.content[t_s->tex_x * 4 + t_m->sp_tex.sl * t_s->tex_y];
 		t_m->img.content[t_s->wall_x * 4 + t_s->wall_y * t_m->img.sl + 1] =
-tex_sp.content[t_s->tex_x * 4 + tex_sp.sl * t_s->tex_y + 1];
+t_m->sp_tex.content[t_s->tex_x * 4 + t_m->sp_tex.sl * t_s->tex_y + 1];
 		t_m->img.content[t_s->wall_x * 4 + t_s->wall_y * t_m->img.sl + 2] =
-tex_sp.content[t_s->tex_x * 4 + tex_sp.sl * t_s->tex_y + 2];
+t_m->sp_tex.content[t_s->tex_x * 4 + t_m->sp_tex.sl * t_s->tex_y + 2];
 	}
 	return (t_s->wall_y + 1);
 }
 
 void	print_sprite(t_main *t_m, t_sprite *t_s)
 {
-	t_tex	tex_sp;
-
-	tex_sp = get_tex_sp(t_m);
-	if (tex_sp.address == NULL)
-		ft_quit_map(t_m, "Error\nCannot open sprite texture");
+	// t_tex	tex_sp;
+	//
+	// tex_sp = get_tex_sp(t_m);
+	// if (t_m->sp_tex.address == NULL)
+	// 	ft_quit_map(t_m, "Error\nCannot open sprite texture");
 	calc_sprite(t_m, t_s);
 	while (t_s->n_s / 3 != t_m->tot_sprite)
 	{
@@ -136,7 +136,7 @@ t_s->buffer[t_s->wall_x])
 			{
 				t_s->wall_y = t_s->start_h;
 				while (t_s->wall_y < t_s->end_h)
-					t_s->wall_y = actual_print(t_m, t_s, tex_sp);
+					t_s->wall_y = actual_print(t_m, t_s);
 			}
 			t_s->wall_x++;
 		}

@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:14:51 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/12 18:22:31 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/15 14:41:05 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		error_handling_start(int argc, char **argv)
 	return (1);
 }
 
-void	ft_quit(t_main *t_m)
+int	ft_quit(t_main *t_m)
 {
 	int i;
 
@@ -46,8 +46,7 @@ void	ft_quit(t_main *t_m)
 	while (i < t_m->line + 1)
 		free(t_m->maptab[i++]);
 	free(t_m->maptab);
-	if (t_m->sprite_spot)
-		free(t_m->sprite_spot);
+	free(t_m->sprite_spot);
 	mlx_destroy_image(t_m->mlx_prog, t_m->mlx_img);
 	mlx_destroy_image(t_m->mlx_prog, t_m->n_tex.address);
 	mlx_destroy_image(t_m->mlx_prog, t_m->s_tex.address);
@@ -69,8 +68,10 @@ int		launch_img(t_main *t_m)
 	t_m->s_tex = get_tex_s(t_m);
 	t_m->e_tex = get_tex_e(t_m);
 	t_m->w_tex = get_tex_w(t_m);
+	t_m->sp_tex = get_tex_sp(t_m);
 	if (t_m->n_tex.address == NULL || t_m->s_tex.address == NULL ||
-t_m->e_tex.address == NULL || t_m->w_tex.address == NULL)
+t_m->e_tex.address == NULL || t_m->w_tex.address == NULL || t_m->sp_tex.address
+== NULL)
 	{
 		ft_quit_map(t_m, "Error\nCannot open texture");
 		return (0);
@@ -104,7 +105,7 @@ int		launch_mlx(t_main *t_m, int argc, char **argv)
 	return (1);
 }
 
-// void 	ft_click(int button,int x,int y,t_main *t_m)
+// void 	ft_click(int button, int x, int y, t_main *t_m)
 // {
 // 	printf("%s\n", "hello");
 // 	printf("%d %d %d\n",button,  x, y);
@@ -118,12 +119,15 @@ int		main(int argc, char **argv)
 	if (error_handling_start(argc, argv) == 0)
 		return (0);
 	file_handling(argv[1], t_m);
+	t_m->sprite_spot = '\0';
 	check_map(t_m);
 	if (launch_mlx(t_m, argc, argv) == 0)
 		return (0);
 	raycasting(t_m);
 	mlx_hook(t_m->mlx_win, KEYPRESS, KEYPRESSMASK, ft_keyboard_press, &t_m);
+	// mlx_hook(t_m->mlx_win, 17, 0, ft_quit, &t_m);
 	// mlx_hook(t_m->mlx_win, CLICK, CLICKMASK, ft_click, &t_m);
 	mlx_loop(t_m->mlx_prog);
+	ft_quit(t_m);
 	return (0);
 }

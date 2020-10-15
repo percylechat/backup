@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:24:25 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/12 15:54:53 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/14 16:21:54 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	file_handling(char *name, t_main *t_m)
 {
 	int		fd;
 	char	*line;
+	int		check;
 
 	t_m->column = 0;
 	t_m->line = 0;
@@ -88,12 +89,14 @@ void	file_handling(char *name, t_main *t_m)
 		ft_putstr_fd("Error\nCan't open map file", 1);
 		return ;
 	}
-	while (get_next_line(fd, &line) != 0)
+	while ((check = get_next_line(fd, &line)) != 0 && check != -1)
 	{
 		if (line)
 			get_content(line, t_m);
 		free(line);
 	}
+	if (check == -1)
+		return ;
 	if (line != NULL)
 		get_content(line, t_m);
 	free(line);

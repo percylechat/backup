@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 12:18:55 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/14 13:11:46 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/15 12:38:50 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ struct						s_main
 	t_tex					s_tex;
 	t_tex					e_tex;
 	t_tex					w_tex;
+	t_tex					sp_tex;
 };
 
 typedef struct s_raycast	t_raycast;
@@ -206,7 +207,7 @@ void						get_texture(t_main *t_m);
 int							error_handling_start(int argc, char **argv);
 int							check_for_obstacle(int x, int y, t_main *t_m,
 t_sprite *t_s);
-void						ft_quit(t_main *t_m);
+int							ft_quit(t_main *t_m);
 int							main(int argc, char **argv);
 
 /*
@@ -243,8 +244,7 @@ void						ft_save(t_main *t_m);
 /*
 ** sprite
 */
-int							actual_print(t_main *t_m, t_sprite *t_s, t_tex
-tex_sp);
+int							actual_print(t_main *t_m, t_sprite *t_s);
 int							*sort_sprite(int *temp);
 void						calc_sprite(t_main *t_m, t_sprite *t_s);
 void						sprite_size(t_sprite *t_s, t_main *t_m, int k);

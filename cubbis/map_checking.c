@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:57:53 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/12 15:55:21 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/15 14:41:55 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,17 @@ void	sprite_roundup(t_main *t_m, int x, int y)
 	add[1] = x;
 	add[2] = '\0';
 	t_m->tot_sprite += 1;
-	if (!t_m->sprite_spot)
+	if (t_m->sprite_spot == NULL)
 	{
 		t_m->sprite_spot = ft_strdup(add);
+		// t_m->sprite_spot = add;
 		temp = NULL;
 	}
 	else
 	{
 		temp = ft_strjoin(t_m->sprite_spot, add);
-		free(t_m->sprite_spot);
+		// if (t_m->sprite_spot)
+			free(t_m->sprite_spot);
 		t_m->sprite_spot = ft_strdup(temp);
 	}
 	free(temp);
@@ -40,6 +42,9 @@ void	sprite_roundup(t_main *t_m, int x, int y)
 
 int		init_map(t_main *t_m, int y, int x)
 {
+	// if (!(t_m->sprite_spot = malloc(sizeof(char))))
+	// 	return (-1);
+	// t_m->sprite_spot = NULL;
 	if (((check_n(t_m, x, y) + check_s(t_m, x, y) + check_e(t_m, x, y) +
 check_w(t_m, x, y)) != 4 && t_m->maptab[y][x] != '1' &&
 t_m->maptab[y][x] != ' ') || (t_m->maptab[y][x] != '0' &&
