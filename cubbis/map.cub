@@ -1,13 +1,11 @@
-
-F  1 , 1 , 255
-NO pics/ajvp.xpm
-SO pics/mpm6.xpm
-WE pics/vxps.xpm
-R 1240 800
-EA pics/odhh.xpm
-S pics/n6wx.xpm
-
-C 1 , 255, 1
+C 1 , 255,  1
+NO srcs/pics/wall1.xpm
+SO srcs/pics/wall2.xpm
+WE srcs/pics/wall3.xpm
+F 1 , 255, 1
+R 1240  800
+EA srcs/pics/wall4.xpm
+S srcs/pics/chat.xpm
 
    11111111111111
    10001000000001
