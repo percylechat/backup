@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 12:18:55 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/22 15:20:58 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/22 21:49:10 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_gnl		t_gnl;
 struct						s_gnl
 {
 	char					*line;
-	char					*reste;
 	char					*buffer;
 	int						fd;
 };
@@ -181,9 +180,9 @@ void						raycasting(t_main *t_m);
 void						check_step(t_raycast *t_r, t_main *t_m);
 char						*ft_itoa(int n);
 
-int		ft_chrlen(const char *s, char c);
-int		get_next_line(int fd, t_gnl *t_g);
-void	end_gnl(t_gnl *t_g);
+int							ft_chrlen(const char *s, char c);
+int							get_next_line(int fd, t_gnl *t_g);
+void						end_gnl(t_gnl *t_g);
 
 /*
 ** cub3d_utils
@@ -227,7 +226,7 @@ int							main(int argc, char **argv);
 int							get_res(char *line, int i, t_main *t_m, t_gnl *t_g);
 void						fill_map(char *line, t_main *t_m);
 int							get_content(char *line, t_main *t_m, t_gnl *t_g);
-void						file_handling(char *name, t_main *t_m);
+int							file_handling(char *name, t_main *t_m);
 
 /*
 ** map_checking
@@ -290,7 +289,7 @@ int							error_handling_start(int argc, char **argv);
 /*
 ** get_color
 */
-int							get_color(char *line, int i, t_main *t_m);//, t_gnl *t_g);
+int							get_color(char *line, int i, t_main *t_m);
 int							get_green(char *line, int i);
 int							get_blue(char *line, int i);
 unsigned int				color_pixel(int r, int g, int b);
@@ -316,12 +315,9 @@ void						calc_texture(t_main *t_m, t_raycast *t_r, int i);
 ** get_next_line
 */
 char						*new_buffer(char *buffer, char *reste);
-char	*ft_run(t_gnl *t_g);
-//char						*ft_run(char *reste, char *buffer, char **line);
+char						*ft_run(t_gnl *t_g);
 char						*ulti_run(char *reste, char **line, int bs);
-char	*ft_run_end(t_gnl *t_g);
-// char						*ft_run_end(char *reste, char **line);
-//int							get_next_line(int fd, char **line);
+char						*ft_run_end(t_gnl *t_g);
 
 /*
 ** get_next_line_utilis

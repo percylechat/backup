@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 16:31:55 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/22 12:05:35 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/22 19:09:08 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	error_sanity_check(t_main *t_m)
 
 void	error_color(t_main *t_m, char c)
 {
-	printf("%c\n", c);
 	if (t_m->color_floor.r == 500 && c == 'F')
 		ft_putstr_fd("Error\nFloor color missing", 1);
 	else if (t_m->color_ceiling.r == 500 && c == 'C')

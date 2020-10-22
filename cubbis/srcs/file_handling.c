@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:24:25 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/22 15:21:20 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:55:55 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	end_gnl(t_gnl *t_g)
 {
-	write(1, "errgnl", 6);
 	free(t_g->line);
 	free(t_g->buffer);
-	// free(t_g->reste);
 	close(t_g->fd);
 	return ;
 }
@@ -43,7 +41,6 @@ void	fill_map(char *line, t_main *t_m)
 {
 	char	*temp;
 
-	// printf("line; %s\n", line);
 	if (line[0] != '\0' && line[0] != '\n')
 	{
 		if (t_m->line == 0)
@@ -70,13 +67,12 @@ int	get_content(char *line, t_main *t_m, t_gnl *t_g)
 	int		i;
 
 	i = 0;
-	printf("line: %s\n", line);
 	while (line[i] == ' ')
 		i++;
 	if (line[i] == 'R')
 		return (get_res(line, i, t_m, t_g));
 	else if (line[i] == 'C' || line[i] == 'F')
-		return (get_color(line, i, t_m));//, t_g));
+		return (get_color(line, i, t_m));
 	else if (line[i] == 'N')
 		t_m->tex_n = ft_strtrim(&line[i + 2], " ");
 	else if (line[i] == 'W')
@@ -108,33 +104,33 @@ int		ft_custom_strchr(const char *s)
 	return (-1);
 }
 
-void	file_handling(char *name, t_main *t_m)
+int	file_handling(char *name, t_main *t_m)
 {
 	t_gnl	t_g[1];
 	int		check;
 	int res;
+	int i;
+	int end;
 
-	t_g->reste = NULL;
 	t_g->line = NULL;
-	if ((t_g->fd = open(name, O_RDONLY, O_NOFOLLOW)) == -1)
+	i = 0;
+	if (((t_g->fd = open(name, O_RDONLY, O_NOFOLLOW)) == -1) || (!(t_g->buffer
+= malloc(sizeof(char) * BS + 1))))
 	{
 		ft_putstr_fd("Error\nCan't open map file", 1);
-		return ;
+		return (1);
 	}
-	if (!(t_g->buffer = malloc(sizeof(char) * BS + 1)))
-		return;
 	res = read(t_g->fd, t_g->buffer, BS);
-	if (res == -1)
-		return ;
-	if (res == 0)
-		return ;
+	if (res <= 0)
+	{
+		ft_putstr_fd("Error\nCan't open map file", 1);
+		end_gnl(t_g);
+		return (1);
+	}
 	t_g->buffer[res] = '\0';
-	int i = 0;
-	// int j = 0;
 	while (i < res)
 	{
-		int end = ft_custom_strchr(&t_g->buffer[i]);
-		printf("envoi: %d %d\n", i, end + i);
+		end = ft_custom_strchr(&t_g->buffer[i]);
 		if (end > 0)
 		{
 			free(t_g->line);
@@ -143,7 +139,7 @@ void	file_handling(char *name, t_main *t_m)
 			if (check == 1)
 			{
 				end_gnl(t_g);
-				return ;
+				return (1);
 			}
 			i += end + 1;
 		}
@@ -155,64 +151,7 @@ void	file_handling(char *name, t_main *t_m)
 		}
 		else
 			i += end + 1;
-		// printf("%d %d %d",i, end, res);
 	}
 	end_gnl(t_g);
+	return (0);
 }
-
-
-
-
-	// while ((check = get_next_line(t_g->fd, t_g)) > 0)
-	// {
-	// 	if (t_g->line)
-	// 	{
-	// 		res = get_content(t_g->line, t_m, t_g);
-	// 		if (res == 1)
-	// 			return ;
-	// 	}
-	// }
-	// if (check == -1)
-	// {
-	// 	free(t_g->line);
-	// 	return ;
-	// }
-	// if (t_g->line != NULL)
-	// 	get_content(t_g->line, t_m, t_g);
-	// write(1, "lol", 3);
-	// end_gnl(t_g);
-	// if (!(line = malloc(sizeof(char) * BS + 1)))
-	// {
-	// 	ft_putstr_fd("Error\nInsufficient memory", 1);
-	// 	return;
-	// }
-	// if ((check = read(fd, line, BS)) <= 0)
-	// {
-	// 	ft_putstr_fd("Error\nEmpty file", 1);
-	// 	return ;
-	// }
-	// while (line[j])
-	// {
-	// 	while (k == 0)
-	// 		k = ft_custom_strchr(line);
-	// 	if (k == -1)
-	// 	{
-	// 		free(line);
-	// 		close(fd);
-	// 		return ;
-	// 	}
-	// 	line[k] = '\0';
-	// 	if (get_content(ft_substr(line, j, k), t_m) == 1)
-	// 	{
-	// 		free(line);
-	// 		close(fd);
-	// 		return ;
-	// 	}
-	// 	line[k] = '\n';
-	// 	temp = ft_substr(line, k + 1, BS + 1 - k);
-	// 	free(line);
-	// 	line = ft_strdup(temp);
-	// 	free(temp);
-	// 	j = k;
-	// }
-// }

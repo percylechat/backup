@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:21:50 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/22 15:20:34 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/22 19:09:20 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int				get_green(char *line, int i)
 	return (ft_atoi(&line[i]));
 }
 
-int			get_color(char *line, int i, t_main *t_m)//, t_gnl *t_g)
+int			get_color(char *line, int i, t_main *t_m)
 {
 	int	r;
 	int	g;
@@ -60,11 +60,9 @@ int			get_color(char *line, int i, t_main *t_m)//, t_gnl *t_g)
 	b = ft_atoi(&line[i + 1]);
 	g = get_green(line, i + 1);
 	r = get_blue(line, i + 1);
-	printf("%d %d %d\n", r, g, b);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
-		// end_gnl(t_g);
-		error_color(t_m, line[i]);
+		error_color(t_m, 'A');
 		return (1);
 	}
 	if (line[i] == 'C')

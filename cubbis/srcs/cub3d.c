@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:14:51 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/22 10:44:11 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/22 18:52:24 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ int		main(int argc, char **argv)
 	if (error_handling_start(argc, argv) == 0)
 		return (0);
 	init_values(t_m);
-	file_handling(argv[1], t_m);
+	if (file_handling(argv[1], t_m) == 1)
+		return (0);
 	check_map(t_m);
 	if (launch_mlx(t_m, argc, argv) == 0)
 		return (0);

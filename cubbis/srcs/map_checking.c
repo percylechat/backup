@@ -6,7 +6,7 @@
 /*   By: budal-bi <budal-bi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:57:53 by budal-bi          #+#    #+#             */
-/*   Updated: 2020/10/22 15:17:56 by budal-bi         ###   ########.fr       */
+/*   Updated: 2020/10/22 21:27:24 by budal-bi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,11 @@ int		sanity_check(t_main *t_m)
 {
 	if (t_m->color_ceiling.r == 500)
 	{
-		write(1, "test1", 5);
 		error_color(t_m, 'C');
 		return (1);
 	}
 	if (t_m->color_floor.r == 500)
 	{
-		write(1, "test2", 5);
 		error_color(t_m, 'F');
 		return (1);
 	}
