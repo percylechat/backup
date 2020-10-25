@@ -8,20 +8,29 @@
 void	ft_save(data_t *data_t)
 {
 	int fd;
-	unsigned int size;
+	int size;
 	int zero;
-	unsigned int header;
-	unsigned int info;
+	int header;
+	int info;
+	short int one;
+	short int four;
+	int bpp;
+	int sl;
+	int endian;
 
+	one = 1;
+	four = 32;
 	info = 54;
 	header = 40;
 	zero = 0;
-	size = 54 + data_t->res_h * data_t->res_w * 4;
-	if (fd = open("/home/budal-bi/Workspace/C/cub3d/save.bmp", O_CREAT, S_IRWXO) < 0)
+	if ((fd = open("save.bmp", O_CREAT | O_WRONLY | O_TRUNC, 0666)) < 0)
 	{
-		error;
+		ft_quit(data_t);
+		return;
 	}
-
+	mlx_get_data_addr(data_t->mlx_img, &bpp, &sl, &endian);
+        size = 54 + (data_t->res_h * sl);
+	printf("%d %d %d", bpp, sl, size);
 	write(fd, "BM", 2);
 //hardoding of res, need math and hexa convertor
 	write(fd, &size, sizeof(int));
@@ -30,16 +39,20 @@ void	ft_save(data_t *data_t)
 	write(fd, &header, sizeof(int));
 	write(fd, &data_t->res_w, sizeof(int));
 	write(fd, &data_t->res_h, sizeof(int));
-	write(fd, &(zero + 1), sizeof(short int));
-	write(fd, &(zero + 4), sizeof(short int));
+	write(fd, &one, sizeof(short int));
+	write(fd, &bpp, sizeof(short int));
 	write(fd, &zero, sizeof(int));
 	write(fd, &zero, sizeof(int));
 	write(fd, &zero, sizeof(int));
 	write(fd, &zero, sizeof(int));
 	write(fd, &zero, sizeof(int));
 	write(fd, &zero, sizeof(int));
-	while (zero < (data_t->res_h * data_t->res_w * 4))
+	zero = data_t->res_h * data_t->res_w * 4;
+	while (zero > 0)
 	{
-		write(fd, &data_t->mlx_win[i], 1);
+		write(fd, &data_t->mlx_win[zero--], 1);
 	}
+	write(1, "ping", 4);
+	close(fd);
+	//ft_quit(data_t);
 }

@@ -1,17 +1,26 @@
+
 C 1 , 255,  1
-NO srcs/pics/wall1.xpm
+
+
+NO          srcs/pics/wall1.xpm
 SO srcs/pics/wall2.xpm
+
 WE srcs/pics/wall3.xpm
-F 1 , 255, 1
-R 1240  800
-EA srcs/pics/wall4.xpm
+
+
+R     1240  800
+
+F 1 ,           255, 1
+      EA srcs/pics/wall4.xpm
+
+
 S srcs/pics/chat.xpm
 
    11111111111111
    10001000000001
-   10000200000001
-   10000000020001
-   10W00000000001
+   10000000000001
+   1000W00000001
+   10000000000001
    10000000000001
    10000000000001
    10000000000111

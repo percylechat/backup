@@ -1,0 +1,19 @@
+C 1, 255, 1
+F    255, 1, 1
+R 800 600
+NO srcs/pics/wall1.xpm
+SO srcs/pics/wall2.xpm
+EA srcs/pics/wall3.xpm
+S srcs/pics/chat.xpm
+WE srcs/pics/wall4.xpm
+
+   1111111
+   1000001
+   1000001
+  10001001
+ 1000000000000000000001
+1000000001
+100000001
+10N000201
+100000001
+111111111

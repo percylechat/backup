@@ -1,11 +1,11 @@
-R 640 400
-NO pics/redbrick.xpm
-SO pics/colorstone.xpm
-WE pics/bluebrick.xpm
-EA pics/text1.xpm
-S pics/barrel.xpm
-F    243 ,  120 , 184
-C 225 ,  30 ,                    0
+R 1280 800
+NO pics/ajvp.xpm
+SO pics/mpm6.xpm
+WE pics/vxps.xpm
+EA pics/odhh.xpm
+S pics/n6wx.xpm
+F  75, 240, 240
+C 123, 223, 91
 
    11111111111111
    10001000000001
